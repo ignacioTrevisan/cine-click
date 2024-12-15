@@ -3,7 +3,7 @@ import { IoClipboardOutline, IoLogInOutline, IoPersonOutline, IoSearchOutline } 
 
 export const Navbar = () => {
     return (
-        <div className="sticky w-full bg-red-400 flex justify-center items-center">
+        <div className="fixed z-10 w-full bg-gray-200 flex justify-center items-center">
 
 
             <div className="relative my-3 w-[200px] sm:w-[400px]">

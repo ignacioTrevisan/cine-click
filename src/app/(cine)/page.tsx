@@ -26,11 +26,12 @@ export default function Home() {
         { name: "transformer", path: "/images/transformer.jpg", slug: 'slug_test_transformer' },
     ];
     return (
-        <>
-            <Navbar />
+        <div className='w-full row'>
+            <div className='h-[50px]' />
             <MostImportantReleasesCard />
+            <div className='h-[10px]' />
             <ThisWeekCard title={'Ésta semana'} Movies={MoviesThisWeek} />
             <ThisWeekCard title={'Próximamente'} Movies={MoviesSoon} delay={2600} />
-        </>
+        </div>
     );
 };
