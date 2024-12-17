@@ -13,7 +13,10 @@ interface FormInput {
     adult: boolean,
     dates: Date[]
 }
-export const MovieForm = () => {
+interface Props {
+    isMobile?: boolean
+}
+export const MovieForm = ({ isMobile = false }: Props) => {
     const { handleSubmit, register, formState: { isValid }, getValues, setValue, watch } =
         useForm<FormInput>({
             // defaultValues:
@@ -59,7 +62,8 @@ export const MovieForm = () => {
     }
     const { closeSideBar } = SideBarStore()
     return (
-        <form className="grid px-5 mb-16 grid-cols-1 sm:px-0 sm:grid-cols-2 gap-3 mr-5" onSubmit={handleSubmit(onSubmit)} onClick={() => closeSideBar()}>
+        <form className="grid px-5 mb-16 grid-cols-1 sm:px-0 sm:grid-cols-2 gap-3 mr-5" onSubmit={handleSubmit(onSubmit)}
+            onClick={() => isMobile && closeSideBar()}>
             {/* Textos */}
             <div className="w-full">
                 <div className="flex flex-col mb-2">

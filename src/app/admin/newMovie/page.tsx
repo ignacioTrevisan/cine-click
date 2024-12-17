@@ -11,7 +11,14 @@ export default function AddNewMovie() {
     return (
         <div className=' w-full pl-2  '>
             <h1 className='text-4xl'>Configuración de peliculas</h1>
-            <MovieForm />
+            <div className='sm:hidden block'>
+
+                <MovieForm isMobile={true} />
+            </div>
+            <div className='sm:block hidden'>
+
+                <MovieForm isMobile={false} />
+            </div>
         </div>
     );
 };
