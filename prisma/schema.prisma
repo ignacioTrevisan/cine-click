@@ -12,3 +12,100 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+enum Tags {
+  Acción
+  Aventura
+  Comedia
+  Drama
+  Terror
+  Ciencia_Ficción
+  Fantasía
+  Suspenso
+  Romance
+  Musical
+  Animada
+  Documental
+  Crimen
+  Bélica
+  Histórica
+  Western
+  Deportes
+  Policial
+  Thriller_Psicológico
+  Superhéroes
+  Noir
+  Biográfica
+  Artes_Marciales
+  Espionaje
+  Zombis
+  Apocalíptica
+  Catástrofes
+}
+
+enum Role {
+  admin
+  user
+}
+
+model Movie {
+  id               String             @id @default(uuid())
+  title            String
+  description      String
+  durationMin      Int
+  tags             String
+  PrincipalImage   PrincipalImage[]
+  Images           Images[]
+  MovieTransmition MovieTransmition[]
+}
+
+model PrincipalImage {
+  id      Int    @id @default(autoincrement())
+  Url     String
+  movie   Movie  @relation(fields: [movieId], references: [id])
+  movieId String @unique
+}
+
+model Images {
+  id      Int    @id @default(autoincrement())
+  Url     String
+  movie   Movie  @relation(fields: [movieId], references: [id])
+  movieId String
+}
+
+model User {
+  id          String    @id @default(uuid())
+  name        String
+  email       String    @unique
+  emailVerify DateTime?
+  role        Role      @default(user)
+  image       String?
+  Ticket      Ticket[]
+}
+
+model MovieTheater {
+  id               String             @id @default(uuid())
+  capacity         Int
+  MovieTransmition MovieTransmition[]
+}
+
+model MovieTransmition {
+  id             String       @id @default(uuid())
+  movie          Movie        @relation(fields: [movieId], references: [id])
+  movieId        String
+  date           DateTime
+  time           DateTime
+  Price          Float
+  movieTheater   MovieTheater @relation(fields: [movieTheaterId], references: [id])
+  movieTheaterId String
+  Ticket         Ticket[]
+}
+
+model Ticket {
+  id                 String           @id @default(uuid())
+  movieTransmition   MovieTransmition @relation(fields: [movieTransmitionId], references: [id])
+  movieTransmitionId String
+  user               User             @relation(fields: [userId], references: [id])
+  userId             String
+  createdAt          DateTime         @default(now())
+}
