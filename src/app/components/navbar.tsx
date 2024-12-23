@@ -1,10 +1,16 @@
-import React from 'react'
-import { IoClipboardOutline, IoLogInOutline, IoPersonOutline, IoSearchOutline } from 'react-icons/io5'
+'use client'
+import { IoLogInOutline, IoPersonOutline, IoSearchOutline } from 'react-icons/io5'
+import { DeleteJWT } from '../core/use-cases/auth/deleteJWT'
 
 export const Navbar = () => {
+    const closeSession = async () => {
+        const resp = await DeleteJWT();
+        if (resp.ok) {
+            window.location.replace('/auth/login')
+        }
+    }
     return (
         <div className="fixed z-10 w-full bg-gray-200 flex justify-center items-center">
-
 
             <div className="relative my-3 w-[200px] sm:w-[400px]">
                 <IoSearchOutline size={20} className='absolute top-2 left-2' />
@@ -34,8 +40,12 @@ export const Navbar = () => {
                     />
 
                 </div>
-                <div className="relative my-3 ml-2 items-center sm:flex hidden ">
-                    <IoLogInOutline size={20} className='absolute  left-2' />
+                <div className="relative my-3 ml-2 items-center sm:flex hidden "
+                    onClick={() => closeSession()}
+                >
+                    <IoLogInOutline size={20} className='absolute  left-2'
+
+                    />
 
                     <button
                         className='w-full bg-gray-50 rounded pl-10 py-1 pr-10 border-b-2 text-sm border-gray-200 focus:outline-none focus:border-blue-500'
@@ -43,7 +53,9 @@ export const Navbar = () => {
                         Cerrar sesión
                     </button>
                 </div>
-                <div className="relative my-3 ml-2 items-center sm:hidden flex h-8 ">
+                <div className="relative my-3 ml-2 items-center sm:hidden flex h-8 "
+                    onClick={() => closeSession()}
+                >
                     <IoLogInOutline size={20} className='absolute left-2' />
 
                     <button

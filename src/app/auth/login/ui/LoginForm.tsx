@@ -1,11 +1,11 @@
 "use client";
 
+import { Login } from '@/app/core/use-cases/auth/login';
 import Link from 'next/link'
 
-import { useEffect } from 'react';
-import { useFormState, useFormStatus } from 'react-dom';
+import { useFormStatus } from 'react-dom';
 import { useForm } from 'react-hook-form';
-import { BsArrowRight, BsExclamationCircle } from 'react-icons/bs';
+import { BsArrowRight } from 'react-icons/bs';
 
 export interface FormInputs {
 
@@ -15,24 +15,13 @@ export interface FormInputs {
 
 export const LoginForm = () => {
     const { register, handleSubmit, formState } = useForm<FormInputs>();
-    // const [state, dispatch] = useFormState( undefined)
-    // useEffect(() => {
-    //     if (state === 'authenticated') {
-    //         window.location.replace('/')
-    //     }
-    // }, [state])
+
     const onSubmit = async (data: FormInputs) => {
-        console.log({ data })
-        // const { email, name, password } = data;
+        const resp = await Login({ email: data.email, password: data.password })
 
-        // const resp = await RegisterUser(name, email, password);
-        // if (resp.ok) {
-
-        //     const formData = new FormData();
-        //     formData.append('email', email.toLowerCase());
-        //     formData.append('password', password);
-        //     dispatch(formData);
-        // }
+        if (resp.ok) {
+            window.location.replace('/')
+        }
     }
     return (
         <form className="flex flex-col mb-10"

@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
 import { redirect } from 'next/navigation';
+import { verifyJWT } from '../core/use-cases/auth/verifyJWT';
+
 
 
 export const metadata: Metadata = {
@@ -11,6 +13,11 @@ export default async function ShopLayout({ children }: {
     children: React.ReactNode
 }) {
 
+    const resp = await verifyJWT();
+
+    if (resp.ok) {
+        redirect('/');
+    }
 
 
     return (
