@@ -1,5 +1,6 @@
 "use client"
 
+import { AddMovie } from "@/app/core/use-cases/movies/addMovie";
 import { SideBarStore } from "@/app/store/sideBarStore";
 import { useForm } from "react-hook-form";
 
@@ -29,37 +30,35 @@ export const MovieForm = ({ isMobile = false }: Props) => {
             // }
         })
     const onSubmit = async (data: FormInput) => {
+        console.log('hola')
         console.log({ data })
-        //     const form = new FormData();
-        //     const { images, ...productValue } = data;
-        //     if (product.id) {
 
-        //         form.append('id', product.id ?? '')
-        //     }
-        //     if (images) {
-        //         for (let i = 0; i < images.length; i++) {
-        //             form.append('images', images[i])
-        //         }
-        //     }
-        //     form.append('title', productValue.title)
-        //     form.append('tags', productValue.tags)
-        //     form.append('description', productValue.description)
-        //     form.append('gender', productValue.gender)
-        //     form.append('inStock', productValue.inStock.toString())
-        //     form.append('price', productValue.price.toString())
-        //     form.append('slug', productValue.slug)
-        //     form.append('categoryId', productValue.categoryId)
-        //     form.append('sizes', productValue.sizes.toString())
-        //     const { ok, product: newProduct } = await AddUpdateProducts(form);
-        //     if (ok) {
-        //         router.replace(`/admin/products/${newProduct!.slug}`)
-        //     }
-        // }
+        const title = data.title;
+        const description = data.description;
+        const durationMin = 120; // Replace with actual duration logic
+        const tags = ['Acción', 'Comedia']
+        const PrincipalImage = 'url';
+        const Images = ['url2', 'url3']
 
-        // const handleDelete = async (id: string, url: string) => {
-        //     const resp = await DeleteProductImages(id, url);
-        //     console.log(resp)
+
+        const { ok } = await AddMovie({
+            title,
+            description,
+            durationMin,
+            tags,
+            PrincipalImage,
+            Images
+        });
+        if (ok) {
+            alert('Pelicula creada con exito')
+        } else {
+            alert('Ocurrio un error al intentar subir la pelicula, por favor vuelva a intentarlo más tarde')
+        }
     }
+    // const handleDelete = async (id: string, url: string) => {
+    //     const resp = await DeleteProductImages(id, url);
+    //     console.log(resp)
+    // }
     const { closeSideBar } = SideBarStore()
     return (
         <form className="grid px-5 mb-16 grid-cols-1 sm:px-0 sm:grid-cols-2 gap-3 mr-5" onSubmit={handleSubmit(onSubmit)}
@@ -107,7 +106,7 @@ export const MovieForm = ({ isMobile = false }: Props) => {
                     </label>
                 </div>
 
-                <button className="btn-primary w-full">
+                <button className="btn-primary w-full" type="submit">
                     Guardar
                 </button>
 

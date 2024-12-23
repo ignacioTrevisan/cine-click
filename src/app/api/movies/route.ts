@@ -28,15 +28,17 @@ export async function POST(request: Request) {
             Images,
             tags
         }
+        console.log(bodyForVerify)
         const productParsed = movieSchema.safeParse(bodyForVerify);
         if (!productParsed.success) {
+            console.log('no valido')
             console.log(productParsed.error)
-            return {
-                ok: false
-            }
+            return NextResponse.json({ ok: false, msg: 'Datos no válidos' }, { status: 400 });
+        } else {
+            console.log('por el momento valida')
         }
         const prismaTx = await prisma.$transaction(async (tx) => {
-            const movie = await prisma.movie.create({
+            const movie = await tx.movie.create({
                 data: {
                     title: title,
                     description: description,
@@ -44,8 +46,9 @@ export async function POST(request: Request) {
                     tags: tags,
                 }
             });
+            console.log('Principal image movie created with ID:', movie.id); // Verifica si el ID está presente
 
-            const PrincipalImagePrisma = await prisma.principalImage.create({
+            const PrincipalImagePrisma = await tx.principalImage.create({
                 data: {
                     Url: PrincipalImage,
                     movieId: movie.id
@@ -55,9 +58,11 @@ export async function POST(request: Request) {
             const parsedImages: string[] = Array.isArray(Images) && Images.every((img) => typeof img === "string")
                 ? Images
                 : [];
+            console.log('Parsed Images:', parsedImages); // Verifica el contenido de parsedImages
+            console.log('Secondaria image movie created with ID:', movie.id); // Verifica si el ID está presente
 
             const parsedImagesPrisma = parsedImages.map((img) =>
-                prisma.images.create({
+                tx.images.create({
                     data: {
                         Url: img,
                         movieId: movie.id,
@@ -66,11 +71,13 @@ export async function POST(request: Request) {
             );
             await Promise.all(parsedImagesPrisma);
 
+            return movie; // Asegúrate de devolver algo de la transacción
+        });
 
+        console.log('Prisma transaction result:', prismaTx); // Verifica lo que devuelve la transacción
 
-        })
-        const response = NextResponse.json({ ok: true, prismaTx }, { status: 200 });
-        return response
+        const response = NextResponse.json({ ok: true, movie: prismaTx }, { status: 200 });
+        return response;
     } catch (error) {
         console.error('Error en /api/movie:', error);
 
