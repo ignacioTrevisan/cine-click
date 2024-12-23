@@ -53,7 +53,7 @@ model Movie {
   title            String
   description      String
   durationMin      Int
-  tags             String
+  tags             Tags[]
   PrincipalImage   PrincipalImage[]
   Images           Images[]
   MovieTransmition MovieTransmition[]
