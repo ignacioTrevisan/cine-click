@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
 import { Table } from './ui/table';
+import { GetAllMovies } from '@/app/core/use-cases/movies/getMovies';
+import { GetAllTheathers } from '@/app/core/use-cases/thether/getAllTheathers';
 
 
 export const metadata: Metadata = {
@@ -7,7 +9,18 @@ export const metadata: Metadata = {
     description: 'Billboard Description'
 };
 
-export default function Billboard() {
+export default async function Billboard() {
+    const allMovies = await GetAllMovies();
+    const allTheathers = await GetAllTheathers();
+
+    if (!allMovies.ok || !allTheathers.ok) {
+        return <div>Error</div>
+    }
+
+    const movieExample = [
+        { id: 1, movie: "Batman" },
+        { id: 2, movie: "Barbie" },
+    ]
     const tableData = [
         { id: 1, salon: "1", movie: "Batman", price: 100, tags: "Acción" },
         { id: 2, salon: "2", movie: "Barbie", price: 120, tags: "Comedia" },
@@ -18,8 +31,16 @@ export default function Billboard() {
 
     return (
         <div className=' w-full pl-2  '>
-            <h1 className='text-4xl'>Peliculas a proyectar</h1>
-            <Table />
+            <h1 className='text-2xl sm:text-4xl ml-10'>Peliculas a proyectar</h1>
+            <div className='sm:hidden block'>
+
+                <Table isMobile={true} movie={allMovies.data!} theathers={allTheathers.data as { id: string, capacity: number, name: string }[]} />
+            </div>
+            <div className='sm:block hidden'>
+
+                <Table isMobile={false} movie={allMovies.data!} theathers={allTheathers.data as { id: string, capacity: number, name: string }[]} />
+            </div>
+
         </div>
     );
 };

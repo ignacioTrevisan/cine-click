@@ -8,11 +8,11 @@ import { SideBarStore } from '@/app/store/sideBarStore'
 
 export const Sidebar = () => {
 
-    const { isOpenSideBar, openSideBar, closeSideBar } = SideBarStore()
+    const { isOpenSideBar, openSideBar } = SideBarStore()
     return (
         <div className='z-10'>
 
-            <div className={`${isOpenSideBar ? 'hidden' : 'block'} relative left-0 top-0 sm:hidden w-[40px] flex items-start justify-start cursor-pointer`}
+            <div className={`${isOpenSideBar ? 'hidden' : 'block'} absolute left-0 top-0 sm:hidden w-[40px] flex items-start justify-start cursor-pointer`}
 
             >   <button onClick={() => openSideBar()}>
 

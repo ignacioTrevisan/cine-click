@@ -53,6 +53,7 @@ model Movie {
   title            String
   description      String
   durationMin      Int
+  isAdult          Boolean?           @default(false)
   tags             Tags[]
   PrincipalImage   PrincipalImage[]
   Images           Images[]
@@ -88,6 +89,7 @@ model MovieTheater {
   id               String             @id @default(uuid())
   capacity         Int
   MovieTransmition MovieTransmition[]
+  name             String
 }
 
 model MovieTransmition {
@@ -95,7 +97,7 @@ model MovieTransmition {
   movie          Movie        @relation(fields: [movieId], references: [id])
   movieId        String
   date           DateTime
-  time           DateTime
+  time           String
   Price          Float
   movieTheater   MovieTheater @relation(fields: [movieTheaterId], references: [id])
   movieTheaterId String

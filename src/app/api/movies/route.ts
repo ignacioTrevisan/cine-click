@@ -11,6 +11,7 @@ const movieSchema = z.object({
     tags: z.array(string()),
     PrincipalImage: z.string(),
     Images: z.array(string()),
+    isAdult: z.boolean()
 })
 
 export async function POST(request: Request) {
@@ -19,34 +20,37 @@ export async function POST(request: Request) {
     response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
     response.headers.set('Access-Control-Allow-Credentials', 'true');
     try {
-        const { title, description, durationMin, tags, PrincipalImage, Images } = await request.json();
+        const { title, description, durationMin, tags, PrincipalImage, Images, isAdult } = await request.json();
         const bodyForVerify = {
             title,
             description,
-            durationMin,
+            durationMin: +durationMin,
             PrincipalImage,
             Images,
-            tags
+            tags,
+            isAdult
         }
-        console.log(bodyForVerify)
+        console.log({ bodyForVerify })
         const productParsed = movieSchema.safeParse(bodyForVerify);
         if (!productParsed.success) {
-            console.log('no valido')
+
             console.log(productParsed.error)
-            return NextResponse.json({ ok: false, msg: 'Datos no válidos' }, { status: 400 });
-        } else {
-            console.log('por el momento valida')
+            throw Error('Formato no valido para la duración de la pelicula')
+        }
+        if (isNaN(+durationMin)) {
+            throw Error('Formato no valido para la duración de la pelicula')
         }
         const prismaTx = await prisma.$transaction(async (tx) => {
             const movie = await tx.movie.create({
                 data: {
                     title: title,
                     description: description,
-                    durationMin: durationMin,
+                    durationMin: +durationMin,
                     tags: tags,
+                    isAdult: isAdult
                 }
             });
-            console.log('Principal image movie created with ID:', movie.id); // Verifica si el ID está presente
+
 
             const PrincipalImagePrisma = await tx.principalImage.create({
                 data: {
@@ -58,8 +62,8 @@ export async function POST(request: Request) {
             const parsedImages: string[] = Array.isArray(Images) && Images.every((img) => typeof img === "string")
                 ? Images
                 : [];
-            console.log('Parsed Images:', parsedImages); // Verifica el contenido de parsedImages
-            console.log('Secondaria image movie created with ID:', movie.id); // Verifica si el ID está presente
+
+
 
             const parsedImagesPrisma = parsedImages.map((img) =>
                 tx.images.create({
@@ -74,19 +78,32 @@ export async function POST(request: Request) {
             return movie; // Asegúrate de devolver algo de la transacción
         });
 
-        console.log('Prisma transaction result:', prismaTx); // Verifica lo que devuelve la transacción
 
         const response = NextResponse.json({ ok: true, movie: prismaTx }, { status: 200 });
         return response;
     } catch (error) {
         console.error('Error en /api/movie:', error);
+        throw Error('Ocurrió un error, por favor intente nuevamente más tarde.')
 
-        return NextResponse.json(
-            {
-                msg: 'Ocurrió un error, por favor intente nuevamente más tarde.',
-                ok: false
-            },
-            { status: 500 }
-        );
+    }
+}
+
+export async function GET(request: Request) {
+    const response = NextResponse.next();
+    response.headers.set('Access-Control-Allow-Origin', 'http://localhost:3000'); // Tu frontend
+    response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    response.headers.set('Access-Control-Allow-Credentials', 'true');
+    try {
+        const movies = await prisma.movie.findMany({
+            include: {
+                PrincipalImage: true,
+                Images: true
+            }
+        });
+        const response = NextResponse.json({ ok: true, movies }, { status: 200 });
+        return response;
+    } catch (error) {
+        console.error('Error en /api/movie:', error);
+        throw Error('Ocurrió un error, por favor intente nuevamente más tarde.')
     }
 }
