@@ -49,15 +49,17 @@ enum Role {
 }
 
 model Movie {
-  id               String             @id @default(uuid())
-  title            String
-  description      String
-  durationMin      Int
-  isAdult          Boolean?           @default(false)
-  tags             Tags[]
-  PrincipalImage   PrincipalImage[]
-  Images           Images[]
-  MovieTransmition MovieTransmition[]
+  id                String              @id @default(uuid())
+  title             String
+  description       String
+  durationMin       Int
+  isAdult           Boolean?            @default(false)
+  tags              Tags[]
+  PrincipalImage    PrincipalImage[]
+  Images            Images[]
+  MovieTransmition  MovieTransmition[]
+  MovieToNewRelease MovieToNewRelease[]
+  MovieSoon         MovieSoon?
 }
 
 model PrincipalImage {
@@ -111,4 +113,14 @@ model Ticket {
   user               User             @relation(fields: [userId], references: [id])
   userId             String
   createdAt          DateTime         @default(now())
+}
+
+model MovieToNewRelease {
+  movie   Movie  @relation(fields: [movieId], references: [id])
+  movieId String @unique
+}
+
+model MovieSoon {
+  movie   Movie  @relation(fields: [movieId], references: [id])
+  movieId String @unique
 }

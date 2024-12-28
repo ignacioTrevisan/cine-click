@@ -15,7 +15,7 @@ export const SidebarButton = ({ url, text, icon, path }: Props) => {
     console.log(pathUrl)
     return (
 
-        <Link href={url} className={`w-full h-[30px] flex items-center gap-1 cursor-pointer ${pathUrl === path && 'bg-gray-400 text-white'} hover:bg-gray-500 p-1 hover:text-white`}>
+        <Link href={url} className={`w-full h-[30px] flex items-center gap-1 ml-2 cursor-pointer ${pathUrl === path && 'bg-gray-400 text-white'} hover:bg-gray-500 p-1 hover:text-white`}>
             {icon}{text}
 
         </Link>

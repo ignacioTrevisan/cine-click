@@ -38,7 +38,7 @@ export const Sidebar = () => {
                     <div className='mt-10 sm:m-5' />
                     <div >
 
-                        <SidebarButton text='Configurar cartelera' path='' icon={<BiMoviePlay />} url='#' />
+                        <SidebarButton text='Configurar cartelera' path='/admin/billboardConfig' icon={<BiMoviePlay />} url='/admin/billboardConfig' />
                     </div >
                     <div className='mt-10 sm:m-5' />
                     <div >
