@@ -1,6 +1,6 @@
 'use client'
 import { SidebarButton } from './sidebarButton'
-import { IoAddOutline, IoFileTrayStackedOutline, IoHomeOutline, IoReorderFourOutline, IoSettingsOutline } from 'react-icons/io5'
+import { IoFileTrayStackedOutline, IoHomeOutline, IoReorderFourOutline, IoSettingsOutline } from 'react-icons/io5'
 import { BiMoviePlay } from 'react-icons/bi'
 import { TiPlusOutline } from 'react-icons/ti'
 
@@ -10,16 +10,16 @@ export const Sidebar = () => {
 
     const { isOpenSideBar, openSideBar } = SideBarStore()
     return (
-        <div className='z-10'>
+        <div className='z-10 h-screen'>
 
-            <div className={`${isOpenSideBar ? 'hidden' : 'block'} absolute left-0 top-0 sm:hidden w-[40px] flex items-start justify-start cursor-pointer`}
+            <div className={`${isOpenSideBar ? 'hidden' : 'block'} absolute left-0 top-0 sm:hidden w-[40px] flex items-start justify-start cursor-pointer `}
 
             >   <button onClick={() => openSideBar()}>
 
                     <IoReorderFourOutline size={34} />
                 </button>
             </div>
-            <div className={` ${isOpenSideBar ? 'sticky h-screen w-[300px]' : 'absolute w-[0px]'}  ${isOpenSideBar ? 'left-0' : '-left-[270px]'} block sm:left-0 transition-all pt-[10px] ${isOpenSideBar && 'bg-gray-300'}  sm:bg-gray-300 overflow-hidden`}>
+            <div className={` ${isOpenSideBar ? 'sticky  w-[300px]' : 'absolute w-[0px]'}  ${isOpenSideBar ? 'left-0' : '-left-[270px]'} block sm:left-0 transition-all pt-[10px] h-screen min-h-screen ${isOpenSideBar && 'bg-gray-300'}  sm:bg-gray-300 overflow-hidden`}>
                 <div className={`${isOpenSideBar ? 'block' : 'hidden'} `}>
                     <div >
 

@@ -13,7 +13,7 @@ export default async function RootLayout({ children, }: Readonly<{ children: Rea
         redirect('/auth/login');
     }
     return (
-        <div className="flex">
+        <div className="flex min-h-screen">
             <Sidebar />
             {children}
         </div>

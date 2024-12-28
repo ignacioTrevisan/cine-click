@@ -1,3 +1,5 @@
+import { revalidatePath } from "next/cache";
+
 interface Props {
     title: string;
     description: string;
@@ -18,7 +20,7 @@ export const AddMovie = async ({ title, description, durationMin, tags, Principa
         });
 
         const data = await resp.json();
-        console.log({ data })
+        revalidatePath('/admin/billboard')
         return {
             ok: true,
             data

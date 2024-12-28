@@ -1,8 +1,11 @@
 'use server'
 
 import prisma from "@/lib/prisma";
+import { MovieTransmition } from "@prisma/client";
 import { NextResponse } from "next/server";
 import { z } from "zod";
+import { ApiResponse } from '../../infraestructure/interfaces/api-response';
+import { Datum } from "@/app/infraestructure/interfaces/billboard-response";
 
 
 // const movieTransmitionSchema = z.object({
@@ -36,7 +39,6 @@ export async function POST(request: Request): Promise<NextResponse<{ ok: boolean
 
         const findMovieTransmition = await prisma.movieTransmition.findFirst({
             where: {
-
                 date: date,
                 time: time,
                 movieTheaterId: movieTheaterId
@@ -64,4 +66,22 @@ export async function POST(request: Request): Promise<NextResponse<{ ok: boolean
 
     }
 
+}
+
+export async function GET(request: Request): Promise<NextResponse<ApiResponse<Datum[]>>> {
+    const response = NextResponse.next();
+    response.headers.set('Access-Control-Allow-Origin', 'http://localhost:3000');
+    response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    response.headers.set('Access-Control-Allow-Credentials', 'true');
+    try {
+        const movieTransmitions = await prisma.movieTransmition.findMany({
+            include: {
+                movie: true,
+                movieTheater: true
+            }
+        }) as Datum[];
+        return NextResponse.json({ ok: true, data: movieTransmitions }, { status: 200 })
+    } catch (error) {
+        return NextResponse.json({ ok: false, msg: 'No se pudo obtener las transmisiones de las peliculas, por favor vuelva a intentarlo más tarde' }, { status: 203 })
+    }
 }

@@ -12,7 +12,7 @@ export default async function AddNewMovie() {
     const tags = await GetTags();
     return (
         <div className=' w-full pl-2  '>
-            <h1 className='text-2xl sm:text-4xl'>Configuración de peliculas</h1>
+            <h1 className='text-2xl sm:text-4xl ml-10'>Configuración de peliculas</h1>
             <div className='sm:hidden block'>
 
                 <MovieForm isMobile={true} tagsEnum={tags.tags} />

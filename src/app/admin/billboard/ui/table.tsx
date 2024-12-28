@@ -1,7 +1,7 @@
 "use client"
 
 import { SideBarStore } from "@/app/store/sideBarStore";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DatePicker, { registerLocale, setDefaultLocale } from "react-datepicker";
 import { addHours } from 'date-fns';
 import './modal.css';
@@ -9,8 +9,9 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { es } from 'date-fns/locale/es';
 import { useForm } from "react-hook-form";
 import { Movie } from "@/app/infraestructure/interfaces/movies-response";
-import { date } from "zod";
+
 import { NewTransmition } from "@/app/core/use-cases/billboard/newTransmition";
+import { Datum } from "@/app/infraestructure/interfaces/billboard-response";
 
 
 
@@ -18,6 +19,7 @@ interface Props {
     isMobile: boolean;
     movie: Movie[];
     theathers: { id: string, capacity: number, name: string }[];
+    billboard: Datum[]
 }
 interface FormValue {
     title: string;
@@ -44,66 +46,44 @@ interface FormInput {
 
 
 
-export const Table = ({ isMobile, movie, theathers }: Props) => {
-    console.log({ movie })
+export const Table = ({ isMobile, movie, theathers, billboard }: Props) => {
+
     const { handleSubmit, register, formState: { isValid }, getValues, setValue, watch } =
         useForm<FormInput>({
-
         })
     const [filterSalon, setFilterSalon] = useState(""); // Estado para el salón
-    const [filterMovie, setFilterMovie] = useState(""); // Estado para el nombre de la película
 
+    useEffect(() => {
+        registerLocale('es', es);
+        setDefaultLocale('es');
+    }, []);
     // Datos de ejemplo (reemplaza esto con tus datos reales)
-    const tableData = [
-        { id: 1, salon: "1", movie: "Batman", price: 100, tags: "Acción", fecha: "24/12/2024", hora: "22:00" },
-        { id: 2, salon: "2", movie: "Barbie", price: 120, tags: "Comedia", fecha: "24/12/2024", hora: "22:00" },
-        { id: 3, salon: "3", movie: "Oppenheimer", price: 150, tags: "Drama", fecha: "24/12/2024", hora: "22:00" },
-        { id: 4, salon: "4", movie: "Dune", price: 130, tags: "Ciencia Ficción", fecha: "24/12/2024", hora: "22:00" },
-        { id: 5, salon: "2", movie: "Frozen", price: 90, tags: "Animada", fecha: "24/12/2024", hora: "22:00" },
-        { id: 6, salon: "1", movie: "Batman", price: 100, tags: "Acción", fecha: "24/12/2024", hora: "22:00" },
-        { id: 7, salon: "2", movie: "Barbie", price: 120, tags: "Comedia", fecha: "24/12/2024", hora: "22:00" },
-        { id: 8, salon: "3", movie: "Oppenheimer", price: 150, tags: "Drama", fecha: "24/12/2024", hora: "22:00" },
-        { id: 9, salon: "4", movie: "Dune", price: 130, tags: "Ciencia Ficción", fecha: "24/12/2024", hora: "22:00" },
-        { id: 10, salon: "2", movie: "Frozen", price: 90, tags: "Animada", fecha: "24/12/2024", hora: "22:00" },
-        { id: 11, salon: "1", movie: "Batman", price: 100, tags: "Acción", fecha: "24/12/2024", hora: "22:00" },
-        { id: 12, salon: "2", movie: "Barbie", price: 120, tags: "Comedia", fecha: "24/12/2024", hora: "22:00" },
-        { id: 13, salon: "3", movie: "Oppenheimer", price: 150, tags: "Drama", fecha: "24/12/2024", hora: "22:00" },
-        { id: 14, salon: "4", movie: "Dune", price: 130, tags: "Ciencia Ficción", fecha: "24/12/2024", hora: "22:00" },
-        { id: 15, salon: "2", movie: "Frozen", price: 90, tags: "Animada", fecha: "24/12/2024", hora: "22:00" },
-        { id: 16, salon: "1", movie: "Batman", price: 100, tags: "Acción", fecha: "24/12/2024", hora: "22:00" },
-        { id: 17, salon: "2", movie: "Barbie", price: 120, tags: "Comedia", fecha: "24/12/2024", hora: "22:00" },
-        { id: 18, salon: "3", movie: "Oppenheimer", price: 150, tags: "Drama", fecha: "24/12/2024", hora: "22:00" },
-        { id: 19, salon: "4", movie: "Dune", price: 130, tags: "Ciencia Ficción", fecha: "24/12/2024", hora: "22:00" },
-        { id: 20, salon: "2", movie: "Frozen", price: 90, tags: "Animada", fecha: "24/12/2024", hora: "22:00" },
-        { id: 21, salon: "1", movie: "Batman", price: 100, tags: "Acción", fecha: "24/12/2024", hora: "22:00" },
-
-    ];
-
 
     const [search, setSearch] = useState("");
     const [isOpen, setIsOpen] = useState(false);
-    const [Movies, setMovies] = useState<{ id: string, movie: string }[]>(movie.map((movie) => ({ id: movie.id, movie: movie.title })));
+    const Movies = movie.map((movie) => ({ id: movie.id, movie: movie.title }));
     const [MovieSelected, setMovieSelected] = useState<{ id: string, movie: string }>()
-    const [selectedSalon, setSelectedSalon] = useState("1");
+    const [selectedSalon, setSelectedSalon] = useState(theathers[0].id);
 
     const handleOptionClick = (option: string) => {
         setMovieSelected(Movies.find((movie) => movie.movie === option));
         setIsOpen(false)
     }
 
-    const filteredOptions = Movies.filter(option =>
+    const moviesToAddAtTransmition = Movies.filter(option =>
         option.movie.toLowerCase().includes(search.toLowerCase())
     );
 
-    const filteredData = tableData
+
+
+    const filteredData = billboard
         .filter((row) => {
             return (
-                (filterSalon === "" || row.salon === filterSalon) &&
-                (filterMovie === "" || row.movie.toLowerCase().includes(filterMovie.toLowerCase()))
+                (filterSalon === "" || row.movieTheaterId === filterSalon) &&
+                (row.movie.title.toLowerCase().includes(search.toLowerCase()))
             );
         })
-        .sort((a, b) => b.id - a.id);
-
+        .sort((a, b) => +b.id - +a.id);
 
     const [formValue, setFormValue] = useState({
         title: '',
@@ -141,10 +121,16 @@ export const Table = ({ isMobile, movie, theathers }: Props) => {
             movieTheaterId: selectedSalon,
         }
         //TODO: AGREGAR MENSAJE DE ALERTA DE QUE SE SUBIO CORRECTAMENTE
+
         const resp = await NewTransmition(bodyFormPost);
     }
+    const [loaded, setLoaded] = useState(false)
+    useEffect(() => {
+        setLoaded(true)
+    }, [])
 
     return (
+
         <div className="p-4" onClick={() => isMobile ? closeSideBar() : {}}>
             {/* Filtros */}
             <div className="mb-4 flex flex-wrap gap-4 items-center">
@@ -160,10 +146,10 @@ export const Table = ({ isMobile, movie, theathers }: Props) => {
                         onChange={(e) => setFilterSalon(e.target.value)}
                     >
                         <option value="">Todos</option>
-                        <option value="1">Salon 1</option>
-                        <option value="2">Salon 2</option>
-                        <option value="3">Salon 3</option>
-                        <option value="4">Salon 4</option>
+                        {theathers.map((t) => (
+                            <option key={t.id} value={t.id}>{t.name}</option>
+                        ))}
+
                     </select>
                 </div>
 
@@ -177,46 +163,49 @@ export const Table = ({ isMobile, movie, theathers }: Props) => {
                         type="text"
                         placeholder="Nombre de la película"
                         className="p-2 border rounded-md bg-gray-200"
-                        value={filterMovie}
-                        onChange={(e) => setFilterMovie(e.target.value)}
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
                     />
                 </div>
             </div>
 
+
             {/* Tabla */}
-            <div className="overflow-x-auto h-[250px]">
-                <table className="table-auto border-collapse w-full">
-                    <thead>
-                        <tr>
-                            <th className="border px-2 py-1 text-xs sm:text-sm">ID</th>
-                            <th className="border px-2 py-1 text-xs sm:text-sm">Salón</th>
-                            <th className="border px-2 py-1 text-xs sm:text-sm">Película</th>
-                            <th className="border px-2 py-1 text-xs sm:text-sm">Tags</th>
-                            <th className="border px-2 py-1 text-xs sm:text-sm">Fecha</th>
-                            <th className="border px-2 py-1 text-xs sm:text-sm">Hora</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {filteredData.map((row) => (
-                            <tr key={row.id}>
-                                <td className="border px-2 py-1 text-xs sm:text-sm">{row.id}</td>
-                                <td className="border px-2 py-1 text-xs sm:text-sm">{row.salon}</td>
-                                <td className="border px-2 py-1 text-xs sm:text-sm">{row.movie}</td>
-                                <td className="border px-2 py-1 text-xs sm:text-sm">{row.tags}</td>
-                                <td className="border px-2 py-1 text-xs sm:text-sm">{row.fecha}</td>
-                                <td className="border px-2 py-1 text-xs sm:text-sm">{row.hora}</td>
-                            </tr>
-                        ))}
-                        {filteredData.length === 0 && (
+            {loaded &&
+                < div className="overflow-x-auto h-[250px]">
+                    <table className="table-auto border-collapse w-full">
+                        <thead>
                             <tr>
-                                <td colSpan={6} className="text-center py-4">
-                                    No hay resultados que coincidan con los filtros.
-                                </td>
+                                <th className="border px-2 py-1 text-xs sm:text-sm">ID</th>
+                                <th className="border px-2 py-1 text-xs sm:text-sm">Salón</th>
+                                <th className="border px-2 py-1 text-xs sm:text-sm">Película</th>
+                                <th className="border px-2 py-1 text-xs sm:text-sm">Tags</th>
+                                <th className="border px-2 py-1 text-xs sm:text-sm">Fecha</th>
+                                <th className="border px-2 py-1 text-xs sm:text-sm">Hora</th>
                             </tr>
-                        )}
-                    </tbody>
-                </table>
-            </div>
+                        </thead>
+                        <tbody>
+                            {filteredData.map((row) => (
+                                <tr key={row.id}>
+                                    <td className="border px-2 py-1 text-xs sm:text-sm">{row.id}</td>
+                                    <td className="border px-2 py-1 text-xs sm:text-sm">{row.movieTheater.name}</td>
+                                    <td className="border px-2 py-1 text-xs sm:text-sm">{row.movie.title}</td>
+                                    <td className="border px-2 py-1 text-xs sm:text-sm">{row.movie.tags}</td>
+                                    <td className="border px-2 py-1 text-xs sm:text-sm">{new Date(row.date).toLocaleDateString()}</td>
+                                    <td className="border px-2 py-1 text-xs sm:text-sm">{row.time}</td>
+                                </tr>
+                            ))}
+                            {filteredData.length === 0 && (
+                                <tr>
+                                    <td colSpan={6} className="text-center py-4">
+                                        No hay resultados que coincidan con los filtros.
+                                    </td>
+                                </tr>
+                            )}
+                        </tbody>
+                    </table>
+                </div>
+            }
 
 
             {/* Nueva pelicula */}
@@ -263,8 +252,8 @@ export const Table = ({ isMobile, movie, theathers }: Props) => {
 
                     {isOpen && (
                         <ul className="absolute z-10 w-full bg-white border border-gray-300 rounded-md shadow-lg overflow-y-auto">
-                            {filteredOptions.length > 0 ? (
-                                filteredOptions.map((option, index) => (
+                            {moviesToAddAtTransmition.length > 0 ? (
+                                moviesToAddAtTransmition.map((option, index) => (
                                     <li
                                         key={index}
                                         onClick={() => handleOptionClick(option.movie)}
@@ -294,6 +283,7 @@ export const Table = ({ isMobile, movie, theathers }: Props) => {
                             timeCaption='Hora'
 
                         />
+                        //TODO: Las fechas solo tienen que ser de 3 en
                     </div>
                 </div>
                 {/* <button className="btn btn-primary" onClick={() => { console.log(MovieSelected) }}>Confirmar</button> */}

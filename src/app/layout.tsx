@@ -26,11 +26,17 @@ export default function RootLayout({ children, }: Readonly<{ children: React.Rea
 
   return (
     <html lang="en">
-      <body
-        className={`${montserrat.className}  antialiased`}
-      >
-        {children}
+      <body>
+
+        <main
+          className={`${montserrat.className}  antialiased min-h-screen h-screen `}>
+
+
+          {children}
+        </main>
       </body>
+
+
     </html>
   );
 }
