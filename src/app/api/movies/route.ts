@@ -30,7 +30,6 @@ export async function POST(request: Request) {
             tags,
             isAdult
         }
-        console.log({ bodyForVerify })
         const productParsed = movieSchema.safeParse(bodyForVerify);
         if (!productParsed.success) {
 

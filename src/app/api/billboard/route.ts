@@ -31,11 +31,7 @@ export async function POST(request: Request): Promise<NextResponse<{ ok: boolean
             Price,
             movieTheaterId
         } = await request.json();
-        console.log({ movieId })
-        console.log({ date })
-        console.log({ time })
-        console.log({ Price })
-        console.log({ movieTheaterId })
+
 
         const findMovieTransmition = await prisma.movieTransmition.findFirst({
             where: {

@@ -23,7 +23,6 @@ export const RegisterForm = () => {
     //     }
     // }, [state])
     const onSubmit = async (data: FormInputs) => {
-        console.log({ data })
         // const { email, name, password } = data;
 
         // const resp = await RegisterUser(name, email, password);

@@ -18,7 +18,6 @@ export async function GET(request: Request): Promise<ApiResponse> {
             return NextResponse.json({ ok: false, msg: 'No se encontraron cookies en la solicitud' }, { status: 401 });
         }
         const token = authHeader.split(' ')[1];
-        console.log({ token })
         const decoded = jwt.verify(token, process.env.JWT_SECRET!) as any;
         const newToken = jwt.sign(
             {
@@ -38,7 +37,6 @@ export async function GET(request: Request): Promise<ApiResponse> {
             secure: process.env.NODE_ENV === 'production',
             sameSite: 'strict'
         });
-        console.log({ response })
         return NextResponse.json({ ok: true, msg: 'Token autorizado y actualizado correctamente' }, { status: 200 });
     } catch (error) {
         console.log(error)

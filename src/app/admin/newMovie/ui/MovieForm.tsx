@@ -23,7 +23,6 @@ interface Props {
     tagsEnum: string[]
 }
 export const MovieForm = ({ isMobile = false, tagsEnum }: Props) => {
-    console.log({ tagsEnum })
     const { handleSubmit, register, formState: { isValid }, getValues, setValue, watch } =
         useForm<FormInput>({
             // defaultValues:
@@ -69,7 +68,6 @@ export const MovieForm = ({ isMobile = false, tagsEnum }: Props) => {
 
 
     const onSubmit = async (data: FormInput) => {
-        console.log({ data })
         if (!data.images || !data.PrincipalImage) {
             console.error("Images or PrincipalImage is null or undefined");
             return;

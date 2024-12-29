@@ -3,64 +3,27 @@
 import { SideBarStore } from "@/app/store/sideBarStore"
 import Image from "next/image"
 import { useState } from "react"
-import { SaveChangesButton } from "./saveChangesButton"
+import { Movie } from "@/app/infraestructure/interfaces/movies-response"
+import { NewRelease, Soon } from "@/app/infraestructure/interfaces/billboardConfig-response"
+import { CheckBox } from "./checkBox"
 
 interface Props {
-    isMobile: boolean
+    isMobile: boolean,
+    movie: Movie[],
+    billboardConfig: { soon: Soon[], newRelease: NewRelease[] }
 }
-export const Table = ({ isMobile }: Props) => {
+export const Table = ({ isMobile, movie, billboardConfig }: Props) => {
 
     const [search, setSearch] = useState("")
     const { closeSideBar } = SideBarStore();
-    const tableData = [
-        {
-            img: '/images/avengers.jpg',
-            ID: 'ABC123',
-            name: 'avengers',
-            Tags: 'Acción',
-            Adult: false
-        },
-        {
-            img: '/images/kraven.jpg',
-            ID: 'DEF456',
-            name: 'kraven',
-            Tags: 'Aventura',
-            Adult: false
-        },
-        {
-            img: '/images/bagman2.jpg',
-            ID: 'GHI789',
-            name: 'bagman2',
-            Tags: 'Acción',
-            Adult: true
-        },
-        {
-            img: '/images/Godzilla.jpg',
-            ID: 'JKL012',
-            name: 'Godzilla',
-            Tags: 'Acción',
-            Adult: false
-        },
-        {
-            img: '/images/transformer.jpg',
-            ID: 'MNO345',
-            name: 'transformer',
-            Tags: 'Acción',
-            Adult: false
-        },
-        {
-            img: '/images/Venom.jpg',
-            ID: 'PQR678',
-            name: 'Venom',
-            Tags: 'Acción',
-            Adult: false
-        }
-    ]
+    const filterData = movie.filter((f) => f.title.includes(search))
 
-
+    const toogleMode = (id: string, modo: string) => {
+        console.log({ id })
+        console.log({ modo })
+    }
     return (
         <div className="grid mt-10 ml-2 w-full" onClick={() => (isMobile ? closeSideBar() : {})}>
-            <SaveChangesButton />
             <label>Buscar por nombre</label>
             <input
                 type="text"
@@ -82,20 +45,30 @@ export const Table = ({ isMobile }: Props) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {tableData.map((m) => (
-                            <tr key={m.ID}>
+                        {filterData.map((m) => (
+                            <tr key={m.id}>
                                 <td className="border px-4 py-2">
-                                    <Image src={m.img} alt={`${m.name} image`} width={150} height={150} />
+                                    <Image src={m.PrincipalImage[0].Url} alt={`${m.title} image`} width={150} height={150} />
                                 </td>
-                                <td className="border px-4 py-2">{m.ID}</td>
-                                <td className="border px-4 py-2">{m.name}</td>
-                                <td className="border px-4 py-2">{m.Tags}</td>
-                                <td className="border px-4 py-2">{m.Adult ? 'Si' : 'No'}</td>
+                                <td className="border px-4 py-2">{m.id}</td>
+                                <td className="border px-4 py-2">{m.title}</td>
+                                <td className="border px-4 py-2">{m.tags.join('-')}</td>
+                                <td className="border px-4 py-2">{m.isAdult ? 'Si' : 'No'}</td>
                                 <td className="border px-4 py-2">
-                                    <input type="checkbox" value={'false'} />
+                                    <CheckBox
+                                        isChecked={!!billboardConfig.newRelease.find((f) => f.movieId === m.id)}
+                                        id={m.id}
+                                        mode="NewRelease"
+                                    />
+
                                 </td>
                                 <td className="border px-4 py-2">
-                                    <input type="checkbox" value={'false'} />
+                                    <CheckBox
+                                        isChecked={!!billboardConfig.soon.find((f) => f.movieId === m.id)}
+                                        id={m.id}
+                                        mode="soon"
+                                    />
+
                                 </td>
                             </tr>
                         ))}

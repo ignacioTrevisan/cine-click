@@ -25,7 +25,7 @@ export const NewTransmition = async (bodyFormPost: bodyFormPost): Promise<ApiRes
         // Promise<NextResponse<{ ok: boolean, msg: string }>>
         const data = await resp.json();
         revalidatePath('/admin/billboard')
-        console.log(data);
+
         return {
             ok: true
         }

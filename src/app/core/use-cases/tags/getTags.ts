@@ -9,7 +9,6 @@ export const GetTags = async (): Promise<{ ok: boolean, tags: string[] }> => {
         });
         console.log('getting tags')
         const data = await resp.json() as { ok: boolean, tags: string[] };
-        console.log({ data })
         return data;
     } catch (error) {
         throw new Error('Ocurrio un error al intentar obtener los tags, por favor vuelva a intentarlo más tarde')
