@@ -53,6 +53,7 @@ model Movie {
   title             String
   description       String
   durationMin       Int
+  slug              String              @unique
   isAdult           Boolean?            @default(false)
   tags              Tags[]
   PrincipalImage    PrincipalImage[]

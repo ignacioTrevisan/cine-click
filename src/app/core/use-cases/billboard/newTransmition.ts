@@ -22,12 +22,13 @@ export const NewTransmition = async (bodyFormPost: bodyFormPost): Promise<ApiRes
             body: JSON.stringify({ ...bodyFormPost }),
 
         })
-        // Promise<NextResponse<{ ok: boolean, msg: string }>>
-        const data = await resp.json();
+
+        const data = await resp.json() as { ok: boolean, msg: string };
         revalidatePath('/admin/billboard')
 
         return {
-            ok: true
+            ok: data.ok,
+            msg: data.msg
         }
     } catch (error) {
         throw Error('Error al intentar subir la transmision')

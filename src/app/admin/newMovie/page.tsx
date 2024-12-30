@@ -11,8 +11,8 @@ export const metadata: Metadata = {
 export default async function AddNewMovie() {
     const tags = await GetTags();
     return (
-        <div className=' w-full pl-2  '>
-            <h1 className='text-2xl sm:text-4xl ml-10'>Configuración de peliculas</h1>
+        <div className=' w-full p-5 '>
+            <h1 className='text-2xl sm:text-4xl ml-10 mb-5 mt-5'>Configuración de peliculas</h1>
             <div className='sm:hidden block'>
 
                 <MovieForm isMobile={true} tagsEnum={tags.tags} />

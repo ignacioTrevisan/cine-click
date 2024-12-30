@@ -4,8 +4,11 @@ import { AddMovie } from "@/app/core/use-cases/movies/addMovie";
 import { UploadImagesToCloudinary } from "@/app/helpers/uploadImagesToCloudinary";
 import { SideBarStore } from "@/app/store/sideBarStore";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { Toaster, toast } from 'sonner'
+
+
 
 interface FormInput {
     title: string,
@@ -66,13 +69,13 @@ export const MovieForm = ({ isMobile = false, tagsEnum }: Props) => {
         }
     };
 
-
+    const [isLoading, setisLoading] = useState(false)
     const onSubmit = async (data: FormInput) => {
         if (!data.images || !data.PrincipalImage) {
             console.error("Images or PrincipalImage is null or undefined");
             return;
         }
-
+        setisLoading(true)
         const Images = await UploadImagesToCloudinary({ images: Array.from(data.images) });
         const PrincipalImage = await UploadImagesToCloudinary({ images: Array.from(data.PrincipalImage) });
 
@@ -93,14 +96,18 @@ export const MovieForm = ({ isMobile = false, tagsEnum }: Props) => {
             tags: tagsMovie, //TODO: Hay que validar los tags
             PrincipalImage: PrincipalImage[0],
             Images: Images.filter((image): image is string => image !== null),
-            isAdult
+            isAdult,
         });
         if (ok) {
-            alert('Pelicula creada con exito') //TODO:_Modificar esto a una alerta prolija
+
+            toast('🎞️ㅤㅤㅤㅤ¡Pelicula creada con exito!', { style: { background: '#E5E7EB', color: '#333', fontSize: '16px', padding: '15px' } })
         } else {
             alert('Ocurrio un error al intentar subir la pelicula, por favor vuelva a intentarlo más tarde')
         }
+        setisLoading(false);
     }
+
+
 
     const [search, setSearch] = useState("");
     const [isOpen, setIsOpen] = useState(false);
@@ -122,15 +129,20 @@ export const MovieForm = ({ isMobile = false, tagsEnum }: Props) => {
         const newTag = tags.filter((tag) => tag !== option);
         setTags(newTag);
     }
+
+
     // const handleDelete = async (id: string, url: string) => {
     //     const resp = await DeleteProductImages(id, url);
     //     console.log(resp)
     // }
     const { closeSideBar } = SideBarStore()
+
     return (
         <form className="grid px-5 mb-16 grid-cols-1 sm:px-0 sm:grid-cols-2 gap-3 mr-5" onSubmit={handleSubmit(onSubmit)}
             onClick={() => isMobile && closeSideBar()}>
-            {/* Textos */}
+
+
+
             <div className="w-full">
                 <div className="flex flex-col mb-2">
                     <span>Título</span>
@@ -211,7 +223,7 @@ export const MovieForm = ({ isMobile = false, tagsEnum }: Props) => {
                     </label>
                 </div>
 
-                <button className="btn-primary w-full" type="submit">
+                <button className={`btn ${isLoading ? 'btn-disabled cursor-no-drop' : 'btn-primary cursor-pointer'} w-full`} type="submit">
                     Guardar
                 </button>
 

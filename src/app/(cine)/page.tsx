@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import { MostImportantReleasesCard } from './ui/mostImportantReleasesCard';
 import { Navbar } from '../components/navbar';
 import { ThisWeekCard } from './ui/ThisWeekCard';
+import { GetAllBillboardConfig } from '../core/use-cases/billboardConfig/getAllBillboardConfig';
+import { GetAllMovies } from '../core/use-cases/movies/getMovies';
 
 
 export const metadata: Metadata = {
@@ -9,7 +11,7 @@ export const metadata: Metadata = {
     description: 'Home Description'
 };
 
-export default function Home() {
+export default async function Home() {
     const MoviesSoon = [
         { name: "Nosferatu", path: "/images/Nosferatu.jpg", slug: 'slug_test_Nosferatu' },
         { name: "Megalopolis", path: "/images/Megalopolis.jpg", slug: 'slug_test_Megalopolis' },
@@ -25,6 +27,14 @@ export default function Home() {
         { name: "panda", path: "/images/panda.jpg", slug: 'slug_test_panda' },
         { name: "transformer", path: "/images/transformer.jpg", slug: 'slug_test_transformer' },
     ];
+    const movieConfig = await GetAllBillboardConfig();
+    const allMovies = await GetAllMovies();
+    if (!allMovies || !allMovies.data) return;
+    const array = movieConfig.data!.soon.map((s) => s.movieId)
+    const soon = allMovies.data.filter(pelicula =>
+        movieConfig.data!.soon.some((s: { movieId: string }) => s.movieId === pelicula.id)
+    );
+
     return (
         <div className='w-full row'>
             <div className='h-[50px]' />

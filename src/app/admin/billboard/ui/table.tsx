@@ -12,6 +12,7 @@ import { Movie } from "@/app/infraestructure/interfaces/movies-response";
 
 import { NewTransmition } from "@/app/core/use-cases/billboard/newTransmition";
 import { Datum } from "@/app/infraestructure/interfaces/billboard-response";
+import { toast } from "sonner";
 
 
 
@@ -60,6 +61,7 @@ export const Table = ({ isMobile, movie, theathers, billboard }: Props) => {
     // Datos de ejemplo (reemplaza esto con tus datos reales)
 
     const [search, setSearch] = useState("");
+    const [searchForTransmition, setsearchForTransmition] = useState("");
     const [isOpen, setIsOpen] = useState(false);
     const Movies = movie.map((movie) => ({ id: movie.id, movie: movie.title }));
     const [MovieSelected, setMovieSelected] = useState<{ id: string, movie: string }>()
@@ -71,7 +73,7 @@ export const Table = ({ isMobile, movie, theathers, billboard }: Props) => {
     }
 
     const moviesToAddAtTransmition = Movies.filter(option =>
-        option.movie.toLowerCase().includes(search.toLowerCase())
+        option.movie.toLowerCase().includes(searchForTransmition.toLowerCase())
     );
 
 
@@ -83,7 +85,8 @@ export const Table = ({ isMobile, movie, theathers, billboard }: Props) => {
                 (row.movie.title.toLowerCase().includes(search.toLowerCase()))
             );
         })
-        .sort((a, b) => +b.id - +a.id);
+        .sort((a, b) => +b.id - +a.id)
+
 
     const [formValue, setFormValue] = useState({
         title: '',
@@ -120,9 +123,13 @@ export const Table = ({ isMobile, movie, theathers, billboard }: Props) => {
             Price: +data.Price,
             movieTheaterId: selectedSalon,
         }
-        //TODO: AGREGAR MENSAJE DE ALERTA DE QUE SE SUBIO CORRECTAMENTE
-
+        //TODO: Hay que verificar que no ingresen una fecha invalida.
         const resp = await NewTransmition(bodyFormPost);
+        if (resp.ok) {
+            toast(`🎞️ㅤㅤㅤㅤ¡Pelicula agregada a la lista de transmisión con exito!`, { style: { background: '#E5E7EB', color: '#333', fontSize: '16px', padding: '15px' } })
+        } else {
+            toast(`😬ㅤㅤㅤㅤUps... ${resp.msg}`, { style: { background: '#E5E7EB', color: '#FE9900', fontSize: '16px', padding: '15px' } })
+        }
     }
     const [loaded, setLoaded] = useState(false)
     useEffect(() => {
@@ -131,7 +138,7 @@ export const Table = ({ isMobile, movie, theathers, billboard }: Props) => {
 
     return (
 
-        <div className="p-4" onClick={() => isMobile ? closeSideBar() : {}}>
+        <div className="p-4 " onClick={() => isMobile ? closeSideBar() : {}}>
             {/* Filtros */}
             <div className="mb-4 flex flex-wrap gap-4 items-center">
                 {/* Combobox de salones */}
@@ -239,11 +246,12 @@ export const Table = ({ isMobile, movie, theathers, billboard }: Props) => {
                     <span>Pelicula</span>
                     <input
                         type="text"
-                        value={MovieSelected?.movie || ""}
-                        // onChange={(e) => console.log('hola')}
-
-                        {...register('MovieSelected', { required: true })}
-                        onClick={() => setIsOpen(!isOpen)}
+                        value={searchForTransmition}
+                        onChange={(e) => setsearchForTransmition(e.target.value)}
+                        // {...register('MovieSelected', { required: true })}
+                        onClick={() => {
+                            setIsOpen(!isOpen)
+                        }}
 
                         placeholder="Buscar..."
                         className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -251,12 +259,15 @@ export const Table = ({ isMobile, movie, theathers, billboard }: Props) => {
 
 
                     {isOpen && (
-                        <ul className="absolute z-10 w-full bg-white border border-gray-300 rounded-md shadow-lg overflow-y-auto">
+                        <ul className="absolute z-10 w-full bg-white border border-gray-300 rounded-md shadow-lg overflow-y-auto max-h-[150px]">
                             {moviesToAddAtTransmition.length > 0 ? (
                                 moviesToAddAtTransmition.map((option, index) => (
                                     <li
                                         key={index}
-                                        onClick={() => handleOptionClick(option.movie)}
+                                        onClick={() => {
+                                            setsearchForTransmition(option.movie)
+                                            handleOptionClick(option.movie)
+                                        }}
                                         className="px-4 py-2 cursor-pointer hover:bg-blue-100"
                                     >
                                         {option.movie}  -ID {option.id}

@@ -4,6 +4,7 @@ import "./globals.css";
 import { inter, montserrat } from "./config/fonts";
 import { verifyJWT } from "./core/use-cases/auth/verifyJWT";
 import { redirect } from "next/navigation";
+import { Toaster } from "sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,7 +32,10 @@ export default function RootLayout({ children, }: Readonly<{ children: React.Rea
         <main
           className={`${montserrat.className}  antialiased min-h-screen h-screen `}>
 
+          <div className="relative w-full h-min-screen">
+            <Toaster />
 
+          </div>
           {children}
         </main>
       </body>
