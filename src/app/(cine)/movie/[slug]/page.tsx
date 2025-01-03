@@ -3,6 +3,9 @@ import Image from 'next/image'
 
 import { ImagesSlider } from './ui/imagesSlider';
 import { DayAvailable } from './ui/dayAvailable';
+import { GetMovieBySlug } from '@/app/core/use-cases/movies/getMovieBySlug';
+import { CalendarElement } from './ui/calendar';
+import { GetTransmitionById } from '@/app/core/use-cases/billboard/getTransmitionById';
 
 
 
@@ -27,14 +30,27 @@ export async function generateMetadata({ params }: Props, parent: ResolvingMetad
 }
 export default async function template({ params }: Props) {
     const slug = (await params).slug
-    const imagesReleases = { name: "Venom", path: "/images/Venom.jpg" }
-    const imagesSecondary = [
-        { name: "Venom1", path: "/images/particulares/1.jpg" },
-        { name: "Venom2", path: "/images/particulares/2.jpg" },
-        { name: "Venom3", path: "/images/particulares/3.jpg" },
-        { name: "Venom4", path: "/images/particulares/4.jpg" },
-        { name: "Venom5", path: "/images/particulares/5.jpg" },
-    ]
+    const movie = await GetMovieBySlug(slug);
+    const transmitions = await GetTransmitionById(movie.data?.id!);
+    if (!movie) return;
+    const imagesReleases = { name: movie.data!.title, path: movie.data!.PrincipalImage[0].Url }
+    const imagesSecondary: { name: string, path: string }[] = [];
+    movie.data?.Images.map((img, index) => {
+        imagesSecondary.push({ name: `${movie.data?.title}-${index}`, path: img.Url.trimEnd() })
+    });
+
+
+    const transmitionFormatted = transmitions.data?.map((t) => ({
+        start: new Date(+t.date.toString().split('-')[0], +t.date.toString().split('-')[1] - 1, +t.date.toString().split('-')[2].split('T')[0], +t.time.split(':')[0], +t.time.split(':')[1]),
+        end: new Date(+t.date.toString().split('-')[0], +t.date.toString().split('-')[1] - 1, +t.date.toString().split('-')[2].split('T')[0], +t.time.split(':')[0] + 3, +t.time.split(':')[1]),
+        title: 'Comprar',
+        id: t.id
+    })).filter((value, index, self) =>
+        index === self.findIndex((t) => (
+            t.start.getTime() === value.start.getTime() && t.end.getTime() === value.end.getTime()
+        ))
+    );
+
     return (
         <div className='sm:p-10 p-2'>
             <div className='pt-10'>
@@ -57,14 +73,14 @@ export default async function template({ params }: Props) {
 
                 <div className='flex w-full mt-5 justify-center'>
 
-                    <h1 className='text-xl'>Venom: El último baile (2024)</h1>
+                    <h1 className='text-xl'>{movie.data?.title}</h1>
                 </div>
                 <div className='mt-2'>
-                    <p>Eddie y Venom están a la fuga. Perseguidos por sus sendos mundos y cada vez más cercados, el dúo se ve abocado a tomar una decisión devastadora que hará que caiga el telón sobre el último baile de Venom y Eddie.</p>
+                    <p>{movie.data?.description}</p>
                 </div>
                 <h3 className='text-xl mt-5'>Días de Proyección</h3>
 
-                <DayAvailable />
+                <CalendarElement movieTransmitionFormatted={transmitionFormatted!} movieTransmitions={transmitions.data!} />
             </div>
         </div >
     );

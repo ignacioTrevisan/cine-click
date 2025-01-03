@@ -4,14 +4,16 @@ import React, { useState } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import "swiper/css";
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
+import { MovieForHomePage } from '@/app/core/entities/movies';
+
+interface Props {
+    Movies: MovieForHomePage[],
+    delay?: number
+}
 
 
-export const MostImportantReleasesCard = () => {
-    const imagesReleases = [
-        { name: "avengers", path: "/images/avengers.jpg" },
-        { name: "Godzilla", path: "/images/Godzilla.jpg" },
-        { name: "Venom", path: "/images/Venom.jpg" },
-    ];
+export const MostImportantReleasesCard = ({ Movies, delay }: Props) => {
+
     const [blur, setBlur] = useState<Record<number, boolean>>({});
 
     const handleMouseEnter = (index: number) => {
@@ -58,13 +60,13 @@ export const MostImportantReleasesCard = () => {
                             });
                         }}
                     >
-                        {imagesReleases.map((i, index) => (
+                        {Movies.map((i, index) => (
 
                             <SwiperSlide key={i.name}
                                 onMouseEnter={() => handleMouseEnter(index)}
                                 onMouseLeave={() => handleMouseLeave(index)}
                             >
-                                <div className='justify-center transition-all relative  duration-300 items-center text-[40px] hover:text-[45px] flex'>
+                                <div className='justify-center transition-all relative max-h-[500px] duration-300 items-center text-[40px] hover:text-[45px] flex'>
                                     <button className={`absolute z-10  text-white  ${blur[index] ? 'block' : 'hidden'}`}
                                         style={{ opacity: blur[index] ? '1' : '0' }}
                                     >Ver más</button>

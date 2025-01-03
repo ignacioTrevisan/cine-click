@@ -5,6 +5,7 @@ import "swiper/css";
 import Image from 'next/image';
 import { MovieForHomePage } from '@/app/core/entities/movies';
 import { useState } from 'react';
+import Link from 'next/link';
 
 interface Props {
     title: string,
@@ -67,11 +68,12 @@ export const ThisWeekCard = ({ title, Movies, delay = 2500 }: Props) => {
                                     onMouseLeave={() => handleMouseLeave(index)}
                                 >
 
-                                    <button className="absolute transition-opacity duration-300 z-10"
+                                    <Link className="absolute transition-opacity duration-300 z-10"
+                                        href={`movie/${i.slug!}`}
                                         style={{ opacity: blur[index] ? 1 : 0 }}
                                     >
                                         Ver más
-                                    </button>
+                                    </Link>
                                     <Image
                                         src={i.path}
                                         alt={`${i.name} image`}

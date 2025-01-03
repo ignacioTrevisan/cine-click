@@ -16,7 +16,7 @@ export const Table = ({ isMobile, movie, billboardConfig }: Props) => {
 
     const [search, setSearch] = useState("")
     const { closeSideBar } = SideBarStore();
-    const filterData = movie.filter((f) => f.title.includes(search))
+    const filterData = movie.filter((f) => f.title.toLowerCase().includes(search.toLowerCase()))
 
     const toogleMode = (id: string, modo: string) => {
         console.log({ id })

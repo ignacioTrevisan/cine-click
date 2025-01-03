@@ -1,12 +1,10 @@
-'use server'
+import { Datum } from '@/app/infraestructure/interfaces/billboard-response';
+import React from 'react'
+import { ApiResponse } from '../../../infraestructure/interfaces/api-response';
 
-import { ApiResponse } from "@/app/infraestructure/interfaces/api-response"
-import { Datum } from "@/app/infraestructure/interfaces/billboard-response"
-import { MovieTheater } from "@prisma/client"
-
-export const GetAllTransmition = async (): Promise<ApiResponse<Datum[]>> => {
+export const GetTransmitionById = async (id: string) => {
     try {
-        const resp = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/billboard`, {
+        const resp = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/billboard?id=${id}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

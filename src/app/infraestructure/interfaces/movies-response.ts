@@ -12,6 +12,7 @@ export interface Movie {
     tags: string[];
     PrincipalImage: Image[];
     Images: Image[];
+    slug: string
 }
 
 export interface Image {

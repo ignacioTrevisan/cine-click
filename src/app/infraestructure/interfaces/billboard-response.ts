@@ -21,6 +21,7 @@ export interface Movie {
     durationMin: number;
     isAdult: boolean;
     tags: string[];
+    slug: string
 }
 
 export interface MovieTheater {

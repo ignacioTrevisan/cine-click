@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { inter, montserrat } from "./config/fonts";
-import { verifyJWT } from "./core/use-cases/auth/verifyJWT";
-import { redirect } from "next/navigation";
+import { montserrat } from "./config/fonts";
+import "react-big-calendar/lib/css/react-big-calendar.css";
 import { Toaster } from "sonner";
 
 const geistSans = Geist({

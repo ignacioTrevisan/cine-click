@@ -93,8 +93,71 @@ export const initalData = {
                 },
                 {
                     Url: 'https://res.cloudinary.com/nachotrevisan/image/upload/v1735481776/cine-click/n9e13smafcxnrgb5s284.jpg	',
-                },],
+                },
+            ],
             principalImage: 'https://res.cloudinary.com/nachotrevisan/image/upload/v1735481779/cine-click/mhfqlxsk3nuhwhx7jwrn.jpg'
         },
+        {
+            title: "El juego del calamar (2021)",
+            description: "Cientos de personas con problemas de dinero aceptan una invitación rarísima para competir en juegos infantiles. Dentro los esperan un tentador premio y desafíos letales.",
+            durationMin: 120,
+            slug: "el_juego_del_calamar_(2021)",
+            isAdult: false,
+            tags: [
+                'Acción',
+                'Aventura',
+                'Drama'
+            ],
+            principalImage: 'https://res.cloudinary.com/nachotrevisan/image/upload/v1735591090/cine-click/gi6ayoz4debcz9a17ynz.webp',
+
+
+            images: [
+                {
+                    Url: "https://res.cloudinary.com/nachotrevisan/image/upload/v1735591088/cine-click/cooohdpbyfnpw7yhcx9w.jpg",
+                },
+                {
+                    Url: "https://res.cloudinary.com/nachotrevisan/image/upload/v1735591088/cine-click/wkkyt2grts0ig7alkood.jpg",
+                }
+            ]
+        },
+        {
+            title: 'Apocalipsis Z: el principio del fin (2024)',
+            description: 'Cuando una especie de rabia que transforma a la gente en criaturas agresivas se extiende por el planeta, Manel se aísla en casa con su gato, recurriendo a su ingenio para sobrevivir; pero pronto deberán salir a buscar comida, por tierra y por mar, sorteando muchos peligros.',
+            durationMin: 120,
+            tags: ['Aventura', 'Drama'],
+            isAdult: false,
+            slug: '_ahora_en_retransmisión_en_amazon_prime_video_ahora_en_retransmisión_ver_ahora_apocalipsis_z:_el_principio_del_fin_(2024)',
+            images: [
+                {
+                    Url: 'https://res.cloudinary.com/nachotrevisan/image/upload/v1735591458/cine-click/djazu3tlankxz2brxfis.jpg'
+                },
+                {
+                    Url: 'https://res.cloudinary.com/nachotrevisan/image/upload/v1735591458/cine-click/kulxjsz6ymsksbvawzql.jpg'
+                }
+            ],
+            principalImage: 'https://res.cloudinary.com/nachotrevisan/image/upload/v1735591461/cine-click/id454cajgh2ukykz7jkv.jpg'
+
+        },
+        {
+            title: 'Godzilla y Kong: El nuevo imperio (2024)',
+            description: 'Una aventura cinematográfica completamente nueva, que enfrentará al todopoderoso Kong y al temible Godzilla contra una colosal amenaza desconocida escondida dentro de nuestro mundo. La nueva y épica película profundizará en las historias de estos titanes, sus orígenes y los misterios de Isla Calavera y más allá, mientras descubre la batalla mítica que ayudó a forjar a estos seres extraordinarios y los unió a la humanidad para siempre.',
+            durationMin: 120,
+            tags: ['Acción', 'Aventura', 'Ciencia_Ficción'],
+            isAdult: false,
+            slug: 'godzilla_y_kong:_el_nuevo_imperio_(2024)',
+            images: [
+                {
+                    Url: 'https://res.cloudinary.com/nachotrevisan/image/upload/v1735592097/cine-click/zyr4y26iobxtr2odqpjm.jpg'
+                },
+                {
+                    Url: 'https://res.cloudinary.com/nachotrevisan/image/upload/v1735592096/cine-click/lzd19rr1nro4yr0wnnvb.jpg'
+                },
+                {
+                    Url: 'https://res.cloudinary.com/nachotrevisan/image/upload/v1735592096/cine-click/gsu6dfv7lka0pgj5opsa.jpg'
+                }
+            ],
+            principalImage: 'https://res.cloudinary.com/nachotrevisan/image/upload/v1735592098/cine-click/nf7udhf9e4qwpt78s1ri.jpg'
+
+        }
     ]
 }

@@ -9,15 +9,16 @@ interface Props {
     PrincipalImage: string | null;
     Images: string[] | null;
     isAdult: boolean;
+    slug: string
 }
-export const AddMovie = async ({ title, description, durationMin, tags, PrincipalImage, Images, isAdult }: Props) => {
+export const AddMovie = async ({ title, description, durationMin, tags, PrincipalImage, Images, isAdult, slug }: Props) => {
     try {
         const resp = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/movies`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ title, description, durationMin, tags, PrincipalImage, Images, isAdult }),
+            body: JSON.stringify({ title, description, durationMin, tags, PrincipalImage, Images, isAdult, slug }),
         });
 
         const data = await resp.json();

@@ -20,7 +20,7 @@ export async function POST(request: Request) {
     response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
     response.headers.set('Access-Control-Allow-Credentials', 'true');
     try {
-        const { title, description, durationMin, tags, PrincipalImage, Images, isAdult } = await request.json();
+        const { title, description, durationMin, tags, PrincipalImage, Images, isAdult, slug } = await request.json();
         const bodyForVerify = {
             title,
             description,
@@ -46,7 +46,8 @@ export async function POST(request: Request) {
                     description: description,
                     durationMin: +durationMin,
                     tags: tags,
-                    isAdult: isAdult
+                    isAdult: isAdult,
+                    slug
                 }
             });
 
@@ -92,17 +93,37 @@ export async function GET(request: Request) {
     response.headers.set('Access-Control-Allow-Origin', 'http://localhost:3000'); // Tu frontend
     response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
     response.headers.set('Access-Control-Allow-Credentials', 'true');
+
     try {
-        const movies = await prisma.movie.findMany({
-            include: {
-                PrincipalImage: true,
-                Images: true
+
+        const url = new URL(request.url);
+        const slug = url.searchParams.get('slug');
+
+        if (!slug) {
+            // Si no hay id, obtenemos todas las películas
+            const movies = await prisma.movie.findMany({
+                include: {
+                    PrincipalImage: true,
+                    Images: true
+                }
+            });
+            return NextResponse.json({ ok: true, movies }, { status: 200 });
+        } else {
+            // Si hay id, buscamos una película específica
+            const movie = await prisma.movie.findUnique({
+                where: { slug: slug },
+                include: {
+                    PrincipalImage: true,
+                    Images: true
+                }
+            });
+            if (!movie) {
+                return NextResponse.json({ ok: false, message: 'Movie not found' }, { status: 404 });
             }
-        });
-        const response = NextResponse.json({ ok: true, movies }, { status: 200 });
-        return response;
+            return NextResponse.json({ ok: true, data: movie }, { status: 200 });
+        }
     } catch (error) {
         console.error('Error en /api/movie:', error);
-        throw Error('Ocurrió un error, por favor intente nuevamente más tarde.')
+        return NextResponse.json({ ok: false, message: 'Ocurrió un error, por favor intente nuevamente más tarde.' }, { status: 500 });
     }
 }

@@ -26,7 +26,7 @@ interface Props {
     tagsEnum: string[]
 }
 export const MovieForm = ({ isMobile = false, tagsEnum }: Props) => {
-    const { handleSubmit, register, formState: { isValid }, getValues, setValue, watch } =
+    const { handleSubmit, register, formState: { isValid }, getValues, setValue, watch, reset } =
         useForm<FormInput>({
             // defaultValues:
             // {
@@ -97,10 +97,13 @@ export const MovieForm = ({ isMobile = false, tagsEnum }: Props) => {
             PrincipalImage: PrincipalImage[0],
             Images: Images.filter((image): image is string => image !== null),
             isAdult,
+            slug: title.toLowerCase().replace(/\s+/g, '_')
         });
+
         if (ok) {
 
             toast('🎞️ㅤㅤㅤㅤ¡Pelicula creada con exito!', { style: { background: '#E5E7EB', color: '#333', fontSize: '16px', padding: '15px' } })
+            reset()
         } else {
             alert('Ocurrio un error al intentar subir la pelicula, por favor vuelva a intentarlo más tarde')
         }

@@ -70,14 +70,31 @@ export async function GET(request: Request): Promise<NextResponse<ApiResponse<Da
     response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
     response.headers.set('Access-Control-Allow-Credentials', 'true');
     try {
-        const movieTransmitions = await prisma.movieTransmition.findMany({
-            include: {
-                movie: true,
-                movieTheater: true
-            }
-        }) as Datum[];
-        return NextResponse.json({ ok: true, data: movieTransmitions }, { status: 200 })
+        const url = new URL(request.url);
+        const id = url.searchParams.get('id');
+
+        if (id) {
+            const movieTransmitions = await prisma.movieTransmition.findMany({
+                where: { movieId: id },
+            }) as Datum[]
+            return NextResponse.json({ ok: true, data: movieTransmitions }, { status: 200 })
+
+        } else {
+            const movieTransmitions = await prisma.movieTransmition.findMany({
+                include: {
+                    movie: true,
+                    movieTheater: true,
+
+                },
+                orderBy: {
+                    date: 'asc',
+                }
+            }) as Datum[];
+            return NextResponse.json({ ok: true, data: movieTransmitions }, { status: 200 })
+
+        }
     } catch (error) {
-        return NextResponse.json({ ok: false, msg: 'No se pudo obtener las transmisiones de las peliculas, por favor vuelva a intentarlo más tarde' }, { status: 203 })
+        // console.log(error)
+        return NextResponse.json({ ok: false, msg: `No se pudo obtener las transmisiones de las peliculas, por favor vuelva a intentarlo más tarde ${error}` }, { status: 203 })
     }
 }
