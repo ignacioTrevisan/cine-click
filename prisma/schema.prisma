@@ -111,6 +111,7 @@ model Ticket {
   id                 String           @id @default(uuid())
   movieTransmition   MovieTransmition @relation(fields: [movieTransmitionId], references: [id])
   movieTransmitionId String
+  quantity           Int
   user               User             @relation(fields: [userId], references: [id])
   userId             String
   createdAt          DateTime         @default(now())
