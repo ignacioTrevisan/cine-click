@@ -99,7 +99,7 @@ model MovieTransmition {
   id             String       @id @default(uuid())
   movie          Movie        @relation(fields: [movieId], references: [id])
   movieId        String
-  date           DateTime
+  date           String
   time           String
   Price          Float
   movieTheater   MovieTheater @relation(fields: [movieTheaterId], references: [id])

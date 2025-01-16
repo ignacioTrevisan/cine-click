@@ -6,7 +6,7 @@ export interface BillboardResponse {
 export interface Datum {
     id: string;
     movieId: string;
-    date: Date;
+    date: string;
     time: string;
     Price: number;
     movieTheaterId: string;

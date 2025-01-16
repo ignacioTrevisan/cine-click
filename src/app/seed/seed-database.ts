@@ -82,7 +82,7 @@ async function secondSeed() {
                     data: {
                         movieId: movies[Math.floor(Math.random() * 8)].id.toString(),
                         movieTheaterId: theather.id,
-                        date: d,
+                        date: d.toISOString().split('T')[0],
                         time: mt.time,
                         Price: mt.Price,
                     },

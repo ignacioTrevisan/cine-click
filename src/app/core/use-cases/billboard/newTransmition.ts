@@ -6,7 +6,7 @@ import { NextResponse } from "next/server";
 
 interface bodyFormPost {
     movieId: string;
-    date: Date;
+    date: string;
     time: string;
     Price: Number;
     movieTheaterId: string;
@@ -22,7 +22,7 @@ export const NewTransmition = async (bodyFormPost: bodyFormPost): Promise<ApiRes
             body: JSON.stringify({ ...bodyFormPost }),
 
         })
-        console.log({ resp })
+
         const data = await resp.json() as { ok: boolean, msg: string };
         revalidatePath('/admin/billboard')
 
