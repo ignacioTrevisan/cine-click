@@ -6,7 +6,7 @@ import { NextResponse } from "next/server";
 
 interface bodyFormPost {
     movieId: string;
-    date: string;
+    date: Date;
     time: string;
     Price: Number;
     movieTheaterId: string;
@@ -22,7 +22,7 @@ export const NewTransmition = async (bodyFormPost: bodyFormPost): Promise<ApiRes
             body: JSON.stringify({ ...bodyFormPost }),
 
         })
-
+        console.log({ resp })
         const data = await resp.json() as { ok: boolean, msg: string };
         revalidatePath('/admin/billboard')
 
@@ -31,6 +31,7 @@ export const NewTransmition = async (bodyFormPost: bodyFormPost): Promise<ApiRes
             msg: data.msg
         }
     } catch (error) {
+        console.log(error)
         throw Error('Error al intentar subir la transmision')
     }
 }

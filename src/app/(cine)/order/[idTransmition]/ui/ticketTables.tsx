@@ -1,16 +1,30 @@
 "use client"
 
+import { PayPalButton } from "@/app/components/paypal/PayPalButton"
+import { Datum } from "@/app/infraestructure/interfaces/billboard-response"
 import { useState } from "react"
 
-export const TicketTables = () => {
+interface Props {
+    transmisions: Datum[]
+}
+export const TicketTables = ({ transmisions }: Props) => {
 
     const [pelicula, setPelicula] = useState("Avengers: Endgame")
-    const [horario, setHorario] = useState("14:30")
-    const [salon, setSalon] = useState("")
+    const [transmitionSelected, setTransmitionSelected] = useState(transmisions[0])
     const [cantidad, setCantidad] = useState(1)
-    const precioEntrada = 10 // Precio fijo por entrada
 
-    const total = cantidad * precioEntrada
+
+
+    const total = cantidad * transmitionSelected.Price;
+    const [salon, setSalon] = useState(transmisions.length > 0 ? transmisions[0].movieTheater.id : "");
+    const changeTransmition = (id: string) => {
+        const newOptionSelected = transmisions.find((t) => t.movieTheater.id === id);
+        if (!newOptionSelected) return;
+
+        setSalon(newOptionSelected.movieTheater.id);
+        setTransmitionSelected(newOptionSelected);
+        //TODO: Todavia hay que controlar el stock de entradas
+    };
     return (
         <div className="pt-[60px]">
             <div className="w-full absolute flex justify-center">
@@ -26,26 +40,29 @@ export const TicketTables = () => {
                         <div className="space-y-4">
                             <div>
                                 <h3 className="font-semibold mb-2">Título de la Película</h3>
-                                <p>{pelicula}</p>
+                                <p>{transmitionSelected.movie.title}</p>
                             </div>
                             <div>
                                 <h3 className="font-semibold mb-2">Horario de Transmisión</h3>
-                                <p>{horario}</p>
+                                <p>{transmisions[0].time}</p>
                             </div>
                             <div>
-                                <h3 className="font-semibold mb-2">Seleccionar Salón</h3>
-                                <select onChange={(e) => setSalon(e.target.value)} value={salon}>
-
-                                    <option value="">Seleccione un salón</option>
-                                    <option value="sala1">Sala 1</option>
-                                    <option value="sala2">Sala 2</option>
-                                    <option value="sala3">Sala 3</option>
+                                <h3 className="font-semibold mb-2">Seleccione salón</h3>
+                                <select
+                                    onChange={(e) => changeTransmition(e.target.value)}
+                                    value={salon}
+                                >
+                                    {transmisions.map((t) => (
+                                        <option key={t.id} value={t.movieTheater.id}>
+                                            {t.movieTheater.name}
+                                        </option>
+                                    ))}
                                 </select>
 
                             </div>
                             <div>
                                 <h3 className="font-semibold mb-2">Precio por Entrada</h3>
-                                <p>${precioEntrada.toFixed(2)}</p>
+                                <p>${transmitionSelected.Price.toFixed(2)}</p>
                             </div>
                             <div>
                                 <h3 className="font-semibold mb-2">Cantidad de Entradas</h3>
@@ -53,8 +70,11 @@ export const TicketTables = () => {
                                     type="number"
                                     min="1"
                                     value={cantidad}
+                                    className="border rounded-sm p-2"
                                     onChange={(e) => setCantidad(Number(e.target.value))}
                                 />
+                            </div>
+                            <div>
                             </div>
                         </div>
                     </div>
@@ -65,19 +85,19 @@ export const TicketTables = () => {
                             <h1 className="text-xl font-bold mb-3">Resumen de Compra</h1>
                         </div>
                         <div className="space-y-4">
-                            <div>
+                            <div className="flex gap-2">
                                 <h3 className="font-semibold mb-2">Película</h3>
                                 <p>{pelicula}</p>
                             </div>
-                            <div>
+                            <div className="flex gap-2">
                                 <h3 className="font-semibold mb-2">Horario</h3>
-                                <p>{horario}</p>
+                                <p>{transmisions[0].time}</p>
                             </div>
-                            <div>
+                            <div className="flex gap-2">
                                 <h3 className="font-semibold mb-2">Salón</h3>
-                                <p>{salon || "No seleccionado"}</p>
+                                <p>{transmitionSelected.movieTheater.name || "No seleccionado"}</p>
                             </div>
-                            <div>
+                            <div className="flex gap-2">
                                 <h3 className="font-semibold mb-2">Cantidad de Entradas</h3>
                                 <p>{cantidad}</p>
                             </div>
@@ -85,9 +105,7 @@ export const TicketTables = () => {
                                 <h3 className="font-semibold mb-2">Total a Pagar</h3>
                                 <p className="text-xl font-bold">${total.toFixed(2)}</p>
                             </div>
-                            <button type="button" className={`w-full  ${salon !== '' ? 'btn btn-primary cursor-pointer' : 'btn btn-disabled cursor-no-drop'} `} disabled={!salon}>
-                                Confirmar Compra
-                            </button>
+                            <PayPalButton />
                         </div>
                     </div>
                 </div>

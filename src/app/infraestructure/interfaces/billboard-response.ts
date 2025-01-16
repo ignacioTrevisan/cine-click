@@ -29,3 +29,6 @@ export interface MovieTheater {
     capacity: number;
     name: string;
 }
+
+
+

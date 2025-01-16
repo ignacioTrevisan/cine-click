@@ -1,5 +1,6 @@
 import type { Metadata, ResolvingMetadata } from 'next'
 import { TicketTables } from './ui/ticketTables'
+import { GetRepeatsTransmitions } from '../../../core/use-cases/transmitions/getRepeatsTransmitions';
 
 interface Props {
     params: Promise<{
@@ -26,9 +27,9 @@ export async function generateMetadata({ params }: Props, parent: ResolvingMetad
 
 export default async function OrderPage({ params }: Props) {
     const idTransmition = (await params).idTransmition
-    console.log({ idTransmition })
-
+    const transmitions = await GetRepeatsTransmitions(idTransmition);
+    if (!transmitions.data) return;
     return (
-        <TicketTables />
+        <TicketTables transmisions={transmitions.data} />
     )
 }

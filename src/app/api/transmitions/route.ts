@@ -14,13 +14,22 @@ export async function GET(request: Request) {
             return NextResponse.json({ ok: false, msg: 'Falta el id de la transmision' }, { status: 404 });
         }
         const findTransmition = await prisma.movieTransmition.findFirst({ where: { id: id } });
-
+        if (!findTransmition) {
+            return NextResponse.json({
+                ok: false,
+                msg: `No se encontro ninguna pelicula con ese id.`,
+            }, { status: 404 });
+        }
         const transmissions = await prisma.movieTransmition.findMany({
             where: {
-                date: findTransmition?.date,
-                time: findTransmition?.time,
-                movieId: findTransmition?.movieId,
+                date: findTransmition.date,
+                time: findTransmition.time,
+                movieId: findTransmition.movieId,
             },
+            include: {
+                movieTheater: true,
+                movie: true
+            }
         });
 
         return NextResponse.json({

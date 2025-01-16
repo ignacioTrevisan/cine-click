@@ -57,12 +57,12 @@ async function secondSeed() {
     const movies = await prisma.movie.findMany();
 
     const movieTransmions = [
-        { movieId: movies[0]?.id, date: new Date(), time: '10:00', Price: 20 },
-        { movieId: movies[1]?.id, date: new Date(), time: '13:00', Price: 20 },
-        { movieId: movies[2]?.id, date: new Date(), time: '16:00', Price: 20 },
-        { movieId: movies[3]?.id, date: new Date(), time: '16:00', Price: 20 },
-        { movieId: movies[4]?.id, date: new Date(), time: '19:00', Price: 20 },
-        { movieId: movies[5]?.id, date: new Date(), time: '22:00', Price: 20 },
+        { movieId: movies[0]?.id, date: new Date(), time: '09:00', Price: 20 },
+        { movieId: movies[1]?.id, date: new Date(), time: '12:00', Price: 20 },
+        { movieId: movies[2]?.id, date: new Date(), time: '15:00', Price: 20 },
+        { movieId: movies[3]?.id, date: new Date(), time: '18:00', Price: 20 },
+        { movieId: movies[4]?.id, date: new Date(), time: '21:00', Price: 20 },
+        { movieId: movies[5]?.id, date: new Date(), time: '00:00', Price: 20 },
     ];
     const dates = []
     const today = new Date();
