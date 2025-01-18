@@ -75,6 +75,12 @@ export async function POST(request: Request) {
             secure: true,
             sameSite: 'lax',
         });
+        response.cookies.set('user_id', user.id, {
+            httpOnly: false,
+            maxAge: 6 * 60 * 60,
+            path: '/',
+            secure: false,
+        });
         return response
     } catch (error) {
         console.error('Error en /api/auth/login:', error);

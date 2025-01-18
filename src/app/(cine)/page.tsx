@@ -83,7 +83,7 @@ export default async function Home() {
         }
     });
 
-    console.log(week)
+
     return (
         <div className='w-full row'>
             <div className='h-[50px]' />

@@ -23,7 +23,7 @@ export const Sidebar = () => {
                 <div className={`${isOpenSideBar ? 'block' : 'hidden'} `}>
                     <div >
 
-                        <SidebarButton text='Volver al inicio' path='' icon={<IoHomeOutline />} url='#' />
+                        <SidebarButton text='Volver al inicio' path='' icon={<IoHomeOutline />} url='/' />
                     </div>
                     <div className='mt-10 sm:m-5' />
                     <div >

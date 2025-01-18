@@ -118,8 +118,8 @@ export const Table = ({ isMobile, movie, theathers, billboard }: Props) => {
         if (!MovieSelected || !MovieSelected.id) return;
         const bodyFormPost = {
             movieId: MovieSelected.id,
-            date: data.date.toISOString().split('T')[0],
-            time: data.date.toString().split(' ')[4].slice(0, 5), // Extracting only HH:MM
+            date: data.date.toISOString(),
+            time: data.date.toString().split(' ')[4],
             Price: +data.Price,
             movieTheaterId: selectedSalon,
         }

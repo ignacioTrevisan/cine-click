@@ -7,6 +7,7 @@ import { initalData } from "./seedMovies";
 
 
 async function firstSeed() {
+    await prisma.ticket.deleteMany()
     await prisma.images.deleteMany();
     await prisma.principalImage.deleteMany();
     await prisma.movieSoon.deleteMany();

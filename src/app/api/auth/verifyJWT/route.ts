@@ -37,6 +37,12 @@ export async function GET(request: Request): Promise<ApiResponse> {
             secure: process.env.NODE_ENV === 'production',
             sameSite: 'strict'
         });
+        response.cookies.set('user_id', decoded.id, {
+            httpOnly: false,
+            maxAge: 6 * 60 * 60,
+            path: '/',
+            secure: false,
+        });
         return NextResponse.json({ ok: true, msg: 'Token autorizado y actualizado correctamente' }, { status: 200 });
     } catch (error) {
         console.log(error)

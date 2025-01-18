@@ -5,6 +5,7 @@ import { montserrat } from "./config/fonts";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { Toaster } from "sonner";
 import { PaypalProvider } from "./components/providers/paypalProvider";
+import 'animate.css';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

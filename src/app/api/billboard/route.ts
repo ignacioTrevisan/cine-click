@@ -77,6 +77,10 @@ export async function GET(request: Request): Promise<NextResponse<ApiResponse<Da
         if (id) {
             const movieTransmitions = await prisma.movieTransmition.findMany({
                 where: { movieId: id },
+                include: {
+                    movie: true,
+                    movieTheater: true,
+                }
             }) as Datum[]
             return NextResponse.json({ ok: true, data: movieTransmitions }, { status: 200 })
 

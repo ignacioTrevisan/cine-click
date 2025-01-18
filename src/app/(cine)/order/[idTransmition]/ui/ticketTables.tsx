@@ -2,7 +2,7 @@
 
 import { PayPalButton } from "@/app/components/paypal/PayPalButton"
 import { Datum } from "@/app/infraestructure/interfaces/billboard-response"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 interface Props {
     transmisions: Datum[]
@@ -12,10 +12,13 @@ export const TicketTables = ({ transmisions }: Props) => {
     const [pelicula, setPelicula] = useState("Avengers: Endgame")
     const [transmitionSelected, setTransmitionSelected] = useState(transmisions[0])
     const [cantidad, setCantidad] = useState(1)
+    const [total, setTotal] = useState(cantidad * transmitionSelected.Price);
+
+    useEffect(() => {
+        setTotal(cantidad * transmitionSelected.Price);
+    }, [cantidad, transmitionSelected]);
 
 
-
-    const total = cantidad * transmitionSelected.Price;
     const [salon, setSalon] = useState(transmisions.length > 0 ? transmisions[0].movieTheater.id : "");
     const changeTransmition = (id: string) => {
         const newOptionSelected = transmisions.find((t) => t.movieTheater.id === id);
@@ -105,7 +108,7 @@ export const TicketTables = ({ transmisions }: Props) => {
                                 <h3 className="font-semibold mb-2">Total a Pagar</h3>
                                 <p className="text-xl font-bold">${total.toFixed(2)}</p>
                             </div>
-                            <PayPalButton />
+                            <PayPalButton totalToPay={total.toString()} movieTransmitionId={transmitionSelected.id} createdAt={new Date().toISOString().split('T')[0]} quantity={cantidad} userId="2162cb21-d3c3-484f-93fe-1b9b63d4abe0" />
                         </div>
                     </div>
                 </div>

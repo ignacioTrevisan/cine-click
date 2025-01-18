@@ -24,7 +24,7 @@ export const LoginForm = () => {
         }
     }
     return (
-        <form className="flex flex-col mb-10"
+        <form className="flex flex-col mb-10 "
             onSubmit={handleSubmit(onSubmit)}
         // onSubmit={handleSubmit}
         >

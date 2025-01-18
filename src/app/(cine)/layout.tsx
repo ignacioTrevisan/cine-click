@@ -9,8 +9,10 @@ export default async function RootLayout({ children, }: Readonly<{ children: Rea
     const resp = await verifyJWT();
 
     if (!resp.ok) {
+
         redirect('/auth/login');
     }
+
     return (
         <>
             <Navbar />

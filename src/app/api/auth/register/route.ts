@@ -1,48 +1,57 @@
-import { ApiResponse } from '@/app/infraestructure/interfaces/api-response';
+'use server'
 import prisma from '@/lib/prisma';
-import { NextResponse, NextRequest } from 'next/server';
+import { NextResponse } from 'next/server';
 import bcrypt from "bcryptjs";
-import { Role } from '@prisma/client';
+import jwt from 'jsonwebtoken';
 
-
-
-
-export async function POST(request: Request): Promise<ApiResponse> {
+export async function POST(request: Request) {
     try {
-        const { email, name, role, image, password } = await request.json();
+        const { email, name, dni, password } = await request.json();
         const CryptedPassword = bcrypt.hashSync(password, 10);
 
-
-        const findUser = await prisma.user.findUnique({ where: { email } })
+        // Verificar si el usuario ya existe
+        let findUser = await prisma.user.findUnique({ where: { email } });
         if (findUser) {
             return NextResponse.json({
-                msg: 'Ya existe un usuario con estas credenciales, por favor ingrese una nueva',
+                msg: 'Ya existe un usuario con estas credenciales.',
                 ok: false
-            }, {
-                status: 400
-            })
+            }, { status: 400 });
         }
-        const UserBody = {
-            email,
-            name,
-            image,
-            password: CryptedPassword
-        };
 
-        await prisma.user.create({ data: UserBody });
-        //TODO: Al registrarse deberia logearse automaticamente.
-        return NextResponse.json({
+        findUser = await prisma.user.findUnique({ where: { dni } });
+        if (findUser) {
+            return NextResponse.json({
+                msg: 'Ya existe un usuario con estas credenciales.',
+                ok: false
+            }, { status: 400 });
+        }
+
+        // Crear nuevo usuario
+        const user = await prisma.user.create({
+            data: { email, name, dni, password: CryptedPassword }
+        });
+
+        // Generar token JWT
+        const token = jwt.sign(
+            { id: user.id, email: user.email, role: user.role, name: user.name },
+            process.env.JWT_SECRET!,
+            { expiresIn: "6h" }
+        );
+
+        // Configurar respuesta con cookies
+        const response = NextResponse.json({
             ok: true,
-            msg: 'Usuario creado correctamente.'
-        }, { status: 200 });
+            msg: 'Usuario creado correctamente.',
+        });
 
+
+
+        return response;
     } catch (error) {
-        console.log(error)
+        console.error("Error en registro:", error);
         return NextResponse.json({
-            msg: 'Ocurrió un error, por favor vuelva a intentarlo más tarde',
-            ok: false
-        }, {
-            status: 500
-        })
+            msg: 'Ocurrió un error, por favor intente más tarde.',
+            ok: false,
+        }, { status: 500 });
     }
 }
