@@ -37,7 +37,7 @@ export const CalendarElement = ({ movieTransmitionFormatted, movieTransmitions }
                         style={{ height: 500 }}
                         defaultView={'agenda'}
                     />
-                    : <h3>No hay funciones disponibles</h3>
+                    : <h3>Aún no hay funciones disponibles :(</h3>
             }
         </div>
     )

@@ -16,6 +16,7 @@ export const TicketTables = ({ transmisions }: Props) => {
 
     useEffect(() => {
         setTotal(cantidad * transmitionSelected.Price);
+        console.log(transmitionSelected)
     }, [cantidad, transmitionSelected]);
 
 
@@ -26,8 +27,25 @@ export const TicketTables = ({ transmisions }: Props) => {
 
         setSalon(newOptionSelected.movieTheater.id);
         setTransmitionSelected(newOptionSelected);
+        setCantidad(0)
         //TODO: Todavia hay que controlar el stock de entradas
     };
+
+    const cambiarCantidad = (nuevaCantidad: string) => {
+        if ((transmitionSelected.movieTheater.capacity - transmitionSelected.TicketSold) >= +nuevaCantidad) {
+
+            setCantidad(Number(nuevaCantidad))
+        } else {
+            if (transmisions.length > 1) {
+                const nuevoSalon = transmisions.find((t) => t.movieTheater.id !== transmitionSelected.movieTheater.id);
+
+                alert(`No hay suficiente espacio en el salón para esa cantidad de tickets, por favor pruebe cambiando a ${nuevoSalon?.movieTheater.name}`)
+            } else {
+                alert('No hay suficiente espacio en el salón para esa cantidad de tickets, por favor pruebe cambiando de horario o fecha')
+
+            }
+        }
+    }
     return (
         <div className="pt-[60px]">
             <div className="w-full absolute flex justify-center">
@@ -68,13 +86,13 @@ export const TicketTables = ({ transmisions }: Props) => {
                                 <p>${transmitionSelected.Price.toFixed(2)}</p>
                             </div>
                             <div>
-                                <h3 className="font-semibold mb-2">Cantidad de Entradas</h3>
+                                <h3 className="font-semibold mb-2 ">Cantidad de Entradas</h3>
                                 <input
                                     type="number"
                                     min="1"
                                     value={cantidad}
-                                    className="border rounded-sm p-2"
-                                    onChange={(e) => setCantidad(Number(e.target.value))}
+                                    className={`border rounded-sm p-2 ${cantidad === 0 && 'border-yellow-200'}`}
+                                    onChange={(e) => cambiarCantidad(e.target.value)}
                                 />
                             </div>
                             <div>
@@ -100,7 +118,7 @@ export const TicketTables = ({ transmisions }: Props) => {
                                 <h3 className="font-semibold mb-2">Salón</h3>
                                 <p>{transmitionSelected.movieTheater.name || "No seleccionado"}</p>
                             </div>
-                            <div className="flex gap-2">
+                            <div className="flex gap-2 ">
                                 <h3 className="font-semibold mb-2">Cantidad de Entradas</h3>
                                 <p>{cantidad}</p>
                             </div>

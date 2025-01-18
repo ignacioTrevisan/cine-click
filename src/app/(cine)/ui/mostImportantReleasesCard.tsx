@@ -5,6 +5,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import "swiper/css";
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import { MovieForHomePage } from '@/app/core/entities/movies';
+import Link from 'next/link';
 
 interface Props {
     Movies: MovieForHomePage[],
@@ -67,15 +68,18 @@ export const MostImportantReleasesCard = ({ Movies, delay }: Props) => {
                                 onMouseLeave={() => handleMouseLeave(index)}
                             >
                                 <div className='justify-center transition-all relative max-h-[500px] duration-300 items-center text-[40px] hover:text-[45px] flex'>
-                                    <button className={`absolute z-10  text-white  ${blur[index] ? 'block' : 'hidden'}`}
-                                        style={{ opacity: blur[index] ? '1' : '0' }}
-                                    >Ver más</button>
+                                    <Link className="absolute transition-opacity duration-300 z-10 text-white"
+                                        href={`movie/${i.slug!}`}
+                                        style={{ opacity: blur[index] ? 1 : 0 }}
+                                    >
+                                        Ver más
+                                    </Link>
                                     <Image
                                         src={i.path}
                                         alt={`${i.name} image`}
                                         width={1920}
                                         height={1080}
-                                        objectFit='cover'
+                                        objectFit='contain'
                                         className={`transition-all filter ${blur[index] ? 'blur-[8px]' : ''}`}
                                     />
                                 </div>

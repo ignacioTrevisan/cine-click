@@ -158,6 +158,97 @@ export const initalData = {
             ],
             principalImage: 'https://res.cloudinary.com/nachotrevisan/image/upload/v1735592098/cine-click/nf7udhf9e4qwpt78s1ri.jpg'
 
+        },
+        {
+            title: "Mufasa: El rey león (2024)",
+            description: "Rafiki debe transmitir la leyenda de Mufasa a la joven cachorro de león Kiara, hija de Simba y Nala, y con Timón y Pumba prestando su estilo característico. Mufasa, un cachorro huérfano, perdido y solo, conoce a un simpático león llamado Taka, heredero de un linaje real. Este encuentro casual pone en marcha un viaje de un extraordinario grupo de inadaptados que buscan su destino.",
+            durationMin: 120,
+            slug: "mufasa:_el_rey_león_(2024)",
+            isAdult: false,
+            tags: [
+                "Aventura"
+            ],
+            images: [
+                {
+                    Url: 'https://res.cloudinary.com/nachotrevisan/image/upload/v1737227833/cine-click/cnnxfonlketm7wrnfc0n.jpg'
+                },
+                {
+                    Url: 'https://res.cloudinary.com/nachotrevisan/image/upload/v1737227835/cine-click/gengslxzhmjmjp5xd5xx.jpg'
+                },
+                {
+                    Url: 'https://res.cloudinary.com/nachotrevisan/image/upload/v1737227833/cine-click/thmyiw4emfdw94dkkxcy.jpg'
+                }
+            ],
+            principalImage: 'https://res.cloudinary.com/nachotrevisan/image/upload/v1737227842/cine-click/dellk31v4knfdvxa3yv8.jpg'
+
+
+        },
+        {
+            title: "La sustancia (2024)",
+            description: "Tú, pero mejor en todos los sentidos\". Esa es la promesa de la sustancia, un producto revolucionario basado en la división celular, que crea un alter ego más joven, más bello, más perfecto.",
+            durationMin: 140,
+            slug: "la_sustancia_(2024)",
+            isAdult: false,
+            tags: [
+                "Terror",
+                "Ciencia_Ficción"
+            ],
+            images: [
+                {
+                    Url: "https://res.cloudinary.com/nachotrevisan/image/upload/v1737237291/cine-click/hkuomjqrsvo4lg7hwx9v.jpg"
+                },
+                {
+                    Url: "https://res.cloudinary.com/nachotrevisan/image/upload/v1737237290/cine-click/mbkqq9ngafkxheqkcvkl.jpg"
+                },
+                {
+                    Url: "https://res.cloudinary.com/nachotrevisan/image/upload/v1737237292/cine-click/arb5wf7ax9mw13ngmmnd.jpg"
+                }
+            ],
+            principalImage: "https://res.cloudinary.com/nachotrevisan/image/upload/v1737237294/cine-click/ppqnzkoagrc8fllpemos.jpg"
+        },
+        {
+            title: "Better Man (2024)",
+            description: "La vida y las experiencias del cantante Robbie Williams caracterizado como un simio",
+            durationMin: 140,
+            slug: "better_man_(2024)",
+            isAdult: false,
+            tags: [
+                "Musical",
+                "Comedia",
+                "Drama"
+            ],
+            images: [
+                {
+                    Url: "https://res.cloudinary.com/nachotrevisan/image/upload/v1737237714/cine-click/un5qpbiqooki357y7rag.jpg"
+                },
+                {
+                    Url: "https://res.cloudinary.com/nachotrevisan/image/upload/v1737237714/cine-click/dydsmyeoewskldgsubad.jpg"
+                },
+                {
+                    Url: "https://res.cloudinary.com/nachotrevisan/image/upload/v1737237713/cine-click/lbgomyxkulra3up4kqkb.jpg"
+                }
+            ],
+            principalImage: "https://res.cloudinary.com/nachotrevisan/image/upload/v1737237717/cine-click/hlwcin8sb8tcf3kfcyn2.jpg"
+        },
+        {
+            title: "Dexter (2006)",
+            description: "Serie de suspense que narra la historia de un hombre extraño llamado Dexter Morgan. Cuando era niño, Dexter fue maltratado y abandonado por sus padres, ahora es un exitoso e importante forense patológico... pero bajo su carismática personalidad, se esconde una terrible verdad. Dexter ha canalizado sus innatas necesidades homicidas en una segunda profesión que guarda celosamente en secreto: buscar, dar caza y asesinar brutalmente a despiadados criminales.",
+            durationMin: 180,
+            slug: "dexter_(2006)",
+            isAdult: false,
+            tags: [],
+            images: [
+                {
+                    Url: "https://res.cloudinary.com/nachotrevisan/image/upload/v1737238067/cine-click/bjaqbpygkcznw0rx0az4.jpg"
+                },
+                {
+                    Url: "https://res.cloudinary.com/nachotrevisan/image/upload/v1737238069/cine-click/odzgm4hnesrnuxnppcgc.jpg"
+                },
+                {
+                    Url: "https://res.cloudinary.com/nachotrevisan/image/upload/v1737238067/cine-click/zmfybczutohkwvnpjncl.jpg"
+                }
+            ],
+            principalImage: "https://res.cloudinary.com/nachotrevisan/image/upload/v1737238075/cine-click/ix4q9lpipowub8zcszcd.jpg"
         }
     ]
 }

@@ -1,5 +1,5 @@
 'use client'
-import { IoConstructOutline, IoLogInOutline, IoPersonOutline, IoSearchOutline } from 'react-icons/io5'
+import { IoConstructOutline, IoHomeOutline, IoLogInOutline, IoPersonOutline, IoSearchOutline } from 'react-icons/io5'
 import { DeleteJWT } from '../core/use-cases/auth/deleteJWT'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
@@ -28,7 +28,9 @@ export const Navbar = () => {
             window.location.replace('/auth/login')
         }
     }
-
+    useEffect(() => {
+        console.log(window.location.pathname);
+    }, []);
     return (
 
         loaded && User &&
@@ -46,46 +48,91 @@ export const Navbar = () => {
 
             <div className='flex justify-center'>
                 {User.role === 'user' ?
-                    <>
+                    window.location.pathname === '/' ?
 
-                        <Link href={'/profile'} className="relative my-3 ml-2 items-center sm:flex hidden ">
-                            <IoPersonOutline size={20} className='absolute  left-2' />
+                        <>
 
-                            <button
-                                className='w-full bg-gray-50 rounded pl-10 py-1 pr-10 border-b-2 text-sm border-gray-200 focus:outline-none focus:border-blue-500'
-                            >
-                                Perfil
-                            </button>
-                        </Link>
-                        <Link href={'/profile'} className="relative my-3 ml-2 items-center sm:hidden flex h-8 ">
-                            <IoPersonOutline size={20} className='absolute left-2' />
+                            <div onClick={() => window.location.replace('/profile')} className="relative my-3 ml-2 items-center sm:flex hidden ">
+                                <IoPersonOutline size={20} className='absolute  left-2' />
 
-                            <button
-                                className='w-full bg-gray-50 rounded  py-1 h-full pr-10 border-b-2 text-sm border-gray-200 focus:outline-none focus:border-blue-500'
-                            />
+                                <button
+                                    className='w-full bg-gray-50 rounded pl-10 py-1 pr-10 border-b-2 text-sm border-gray-200 focus:outline-none focus:border-blue-500'
+                                >
+                                    Perfil
+                                </button>
+                            </div>
+                            <div onClick={() => window.location.replace('/profile')} className="relative my-3 ml-2 items-center sm:hidden flex h-8 ">
+                                <IoPersonOutline size={20} className='absolute left-2' />
 
-                        </Link>
-                    </>
+                                <button
+                                    className='w-full bg-gray-50 rounded  py-1 h-full pr-10 border-b-2 text-sm border-gray-200 focus:outline-none focus:border-blue-500'
+                                />
+
+                            </div>
+                        </>
+                        :
+                        <>
+
+                            <div onClick={() => window.location.replace('/')} className="relative my-3 ml-2 items-center sm:flex hidden ">
+                                <IoHomeOutline size={20} className='absolute  left-2' />
+
+                                <button
+                                    className='w-full bg-gray-50 rounded pl-10 py-1 pr-10 border-b-2 text-sm border-gray-200 focus:outline-none focus:border-blue-500'
+                                >
+                                    Inicio
+                                </button>
+                            </div>
+                            <div onClick={() => window.location.replace('/')} className="relative my-3 ml-2 items-center sm:hidden flex h-8 ">
+                                <IoHomeOutline size={20} className='absolute left-2' />
+
+                                <button
+                                    className='w-full bg-gray-50 rounded  py-1 h-full pr-10 border-b-2 text-sm border-gray-200 focus:outline-none focus:border-blue-500'
+                                />
+
+                            </div>
+                        </>
+
                     :
-                    <>
+                    window.location.pathname === '/' ?
+                        <>
+                            <Link href={'/admin'} className="relative my-3 ml-2 items-center sm:flex hidden ">
+                                <IoConstructOutline size={20} className='absolute  left-2' />
+                                <button
+                                    className='w-full bg-gray-50 rounded pl-10 py-1 pr-10 border-b-2 text-sm border-gray-200 focus:outline-none focus:border-blue-500'
+                                >
+                                    Configuracion
+                                </button>
+                            </Link>
+                            <Link href={'/admin'} className="relative my-3 ml-2 items-center sm:hidden flex h-8 ">
+                                <IoConstructOutline size={20} className='absolute left-2' />
 
-                        <Link href={'/admin'} className="relative my-3 ml-2 items-center sm:flex hidden ">
-                            <IoConstructOutline size={20} className='absolute  left-2' />
-                            <button
-                                className='w-full bg-gray-50 rounded pl-10 py-1 pr-10 border-b-2 text-sm border-gray-200 focus:outline-none focus:border-blue-500'
-                            >
-                                Configuracion
-                            </button>
-                        </Link>
-                        <Link href={'/admin'} className="relative my-3 ml-2 items-center sm:hidden flex h-8 ">
-                            <IoConstructOutline size={20} className='absolute left-2' />
+                                <button
+                                    className='w-full bg-gray-50 rounded  py-1 h-full pr-10 border-b-2 text-sm border-gray-200 focus:outline-none focus:border-blue-500'
+                                />
 
-                            <button
-                                className='w-full bg-gray-50 rounded  py-1 h-full pr-10 border-b-2 text-sm border-gray-200 focus:outline-none focus:border-blue-500'
-                            />
+                            </Link>
+                        </>
+                        :
+                        <>
 
-                        </Link>
-                    </>
+                            <div onClick={() => window.location.replace('/')} className="relative my-3 ml-2 items-center sm:flex hidden ">
+                                <IoHomeOutline size={20} className='absolute  left-2' />
+
+                                <button
+                                    className='w-full bg-gray-50 rounded pl-10 py-1 pr-10 border-b-2 text-sm border-gray-200 focus:outline-none focus:border-blue-500'
+                                >
+                                    Inicio
+                                </button>
+                            </div>
+                            <div onClick={() => window.location.replace('/')} className="relative my-3 ml-2 items-center sm:hidden flex h-8 ">
+                                <IoHomeOutline size={20} className='absolute left-2' />
+
+                                <button
+                                    className='w-full bg-gray-50 rounded  py-1 h-full pr-10 border-b-2 text-sm border-gray-200 focus:outline-none focus:border-blue-500'
+                                />
+
+                            </div>
+                        </>
 
                 }
                 <div className="relative my-3 ml-2 items-center sm:flex hidden "

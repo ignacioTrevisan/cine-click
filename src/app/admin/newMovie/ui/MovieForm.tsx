@@ -57,17 +57,34 @@ export const MovieForm = ({ isMobile = false, tagsEnum }: Props) => {
         }
     };
 
-
+    const [errorMessage, seterrorMessage] = useState('')
     const handlePrincipalImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0]; // Verifica si hay un archivo seleccionado
         if (file) {
             const reader = new FileReader();
             reader.onload = () => {
-                setPreviewPrincipal(reader.result as string); // Actualiza la vista previa con el contenido del archivo
+                // Crear un objeto Image para obtener el tamaño
+                const image = new window.Image();
+                image.onload = () => {
+                    const { width, height } = image;
+                    // Verifica las dimensiones
+                    if (width !== 1920 || height !== 1080) {
+                        seterrorMessage(
+                            `El tamaño recomendado para la imagen principal es 1920x1080. 
+                            Actualmente, esta imagen tiene un tamaño de ${width}x${height}, lo que podría afectar su visualización en la cartelera.`
+                        );
+                    } else {
+                        seterrorMessage('')
+                    }
+                    // Actualiza la vista previa
+                    setPreviewPrincipal(reader.result as string);
+                };
+                image.src = reader.result as string; // Establece la URL de la imagen
             };
             reader.readAsDataURL(file); // Lee el archivo como una URL base64
         }
     };
+
 
     const [isLoading, setisLoading] = useState(false)
     const onSubmit = async (data: FormInput) => {
@@ -77,7 +94,7 @@ export const MovieForm = ({ isMobile = false, tagsEnum }: Props) => {
         }
         setisLoading(true)
         const Images = await UploadImagesToCloudinary({ images: Array.from(data.images) });
-        const PrincipalImage = await UploadImagesToCloudinary({ images: Array.from(data.PrincipalImage) });
+        const PrincipalImage = await UploadImagesToCloudinary({ images: Array.from(data.PrincipalImage), isPrincipalImage: true });
 
         if (!Images || !PrincipalImage) {
             console.error("UploadImagesToCloudinary returned null or undefined");
@@ -256,7 +273,6 @@ export const MovieForm = ({ isMobile = false, tagsEnum }: Props) => {
                         className="p-2 border rounded-md bg-gray-200"
                         accept="image/png, image/jpeg, image/avif"
                     />
-
                     {previewPrincipal && (
                         <Image
                             src={previewPrincipal}
@@ -266,6 +282,9 @@ export const MovieForm = ({ isMobile = false, tagsEnum }: Props) => {
                             height={200}
                         />
                     )}
+                    {errorMessage &&
+                        <span className="text-red-500">{errorMessage}</span>
+                    }
 
                 </div>
                 <div className="flex flex-col mb-2">

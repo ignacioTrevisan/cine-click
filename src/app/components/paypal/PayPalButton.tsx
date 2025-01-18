@@ -23,7 +23,7 @@ export const PayPalButton = ({
 
     const [{ isPending }] = usePayPalScriptReducer();
 
-    if (isPending) {
+    if (isPending || quantity === 0) {
         return (
             <div className="animate-pulse mb-16">
                 <div className="h-11 bg-gray-300 rounded"></div>
@@ -62,7 +62,6 @@ export const PayPalButton = ({
                     console.error("Error en el flujo de PayPal:", err);
                 }}
             />
-            <p>{totalToPay}</p>
         </>
     );
 };

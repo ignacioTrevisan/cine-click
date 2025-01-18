@@ -12,6 +12,7 @@ export interface Datum {
     movieTheaterId: string;
     movie: Movie;
     movieTheater: MovieTheater;
+    TicketSold: number
 }
 
 export interface Movie {
