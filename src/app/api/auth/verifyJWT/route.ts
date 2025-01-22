@@ -61,7 +61,7 @@ export async function GET(request: Request): Promise<Response> {
             maxAge: 6 * 60 * 60,
             path: '/',
             secure: process.env.NODE_ENV === 'production',
-            sameSite: 'strict',
+            sameSite: 'lax',
         });
 
         response.cookies.set('user_id', decoded.id, {
