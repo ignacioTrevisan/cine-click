@@ -21,11 +21,11 @@ export const ImagesSlider = ({ images }: Props) => {
                 clickable: true,
             }}
             slidesPerView={3}
+            spaceBetween={20}
             navigation={true}
             modules={[Autoplay, Pagination, Navigation]}
             loop={true}
             onSwiper={(swiper) => {
-
                 swiper.el.addEventListener("mouseenter", () => {
                     swiper.autoplay.stop();
                 });
@@ -40,14 +40,31 @@ export const ImagesSlider = ({ images }: Props) => {
                     images.map((i) =>
                         <SwiperSlide key={i.name} className="flex">
 
+                            {/* V Desktop  */}
                             <Image src={i.path}
                                 width={1920}
                                 key={i.path}
                                 height={1080}
                                 alt={i.name}
-                                className={`object-cover filter transition-all h-[200px] w-full`}
-                            // style={{ width: '300px' }}
+                                className={`object-cover filter transition-all h-[200px] w-full rounded-lg hidden md:block`}
                             />
+                            {/* V tablet */}
+                            <Image src={i.path}
+                                width={1920}
+                                key={i.path}
+                                height={1080}
+                                alt={i.name}
+                                className={`object-cover filter transition-all h-[100px] w-full rounded-lg hidden sm:block md:hidden`}
+                            />
+                            {/* V mobile */}
+                            <Image src={i.path}
+                                width={1920}
+                                key={i.path}
+                                height={1080}
+                                alt={i.name}
+                                className={`object-cover filter transition-all h-[70px] w-full rounded-lg block sm:hidden`}
+                            />
+
                         </SwiperSlide>
                     )
                 }

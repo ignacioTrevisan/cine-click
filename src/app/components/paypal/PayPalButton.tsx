@@ -1,8 +1,8 @@
 "use client"
 import { PayWithPaypal } from '@/app/core/use-cases/orders/payWithPaypal'
 import { CreateOrder } from '@/app/helpers/checkoutPaypal'
+import { useUserStore } from '@/app/store/user'
 import { PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js'
-import { useCallback } from 'react'
 
 interface Props {
     totalToPay: string,
@@ -16,14 +16,14 @@ export const PayPalButton = ({
     totalToPay,
     movieTransmitionId,
     quantity,
-    userId,
     createdAt,
 }: Props) => {
 
 
     const [{ isPending }] = usePayPalScriptReducer();
+    const userId = useUserStore((state) => state.userId); // Accede a la función para actualizar el id
 
-    if (isPending || quantity === 0) {
+    if (isPending || quantity === 0 || !userId) {
         return (
             <div className="animate-pulse mb-16">
                 <div className="h-11 bg-gray-300 rounded"></div>
@@ -53,6 +53,7 @@ export const PayPalButton = ({
                         quantity,
                         createdAt,
                         totalPrice: +totalToPay,
+                        userId: userId
                     });
                     if (resp.ok) {
                         console.log("Orden aprobada y pagada.");

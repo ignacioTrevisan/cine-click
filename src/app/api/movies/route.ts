@@ -52,7 +52,7 @@ export async function POST(request: Request) {
             });
 
 
-            const PrincipalImagePrisma = await tx.principalImage.create({
+            await tx.principalImage.create({
                 data: {
                     Url: PrincipalImage,
                     movieId: movie.id

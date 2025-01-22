@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { montserrat } from "./config/fonts";
 import "react-big-calendar/lib/css/react-big-calendar.css";
@@ -7,15 +6,7 @@ import { Toaster } from "sonner";
 import { PaypalProvider } from "./components/providers/paypalProvider";
 import 'animate.css';
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   title: "%s - CineClick",
@@ -31,7 +22,7 @@ export default function RootLayout({ children, }: Readonly<{ children: React.Rea
       <body>
 
         <main
-          className={`${montserrat.className}  antialiased min-h-screen h-screen `}>
+          className={`${montserrat.className}  antialiased min-h-screen bg-gradient-to-br from-rose-50 to-teal-50`}>
 
           <div className="relative w-full h-min-screen">
             <Toaster />

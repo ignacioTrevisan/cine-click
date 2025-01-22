@@ -2,7 +2,6 @@
 
 import { ApiResponse } from "@/app/infraestructure/interfaces/api-response"
 import { Datum } from "@/app/infraestructure/interfaces/billboard-response"
-import { MovieTheater } from "@prisma/client"
 
 export const GetAllTransmition = async (): Promise<ApiResponse<Datum[]>> => {
     try {
@@ -21,6 +20,7 @@ export const GetAllTransmition = async (): Promise<ApiResponse<Datum[]>> => {
             data: data.data
         }
     } catch (error) {
+        console.log(error)
         return {
             ok: false
         }

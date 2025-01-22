@@ -13,7 +13,7 @@ interface Props {
 }
 
 
-export const MostImportantReleasesCard = ({ Movies, delay }: Props) => {
+export const MostImportantReleasesCard = ({ Movies }: Props) => {
 
     const [blur, setBlur] = useState<Record<number, boolean>>({});
 
@@ -33,8 +33,8 @@ export const MostImportantReleasesCard = ({ Movies, delay }: Props) => {
 
     return (
         <div className='p-2 sm:p-10'>
-            <h3 className='text-lg sm:text-[50px] mt-5'>Últimos lanzamientos</h3>
-            <div className=" w-full sm:mt-10 mt-2 flex justify-center">
+            <h3 className='text-lg sm:text-[50px] mt-5'>🎥Últimos lanzamientos</h3>
+            <div className=" w-full sm:mt-10 mt-2 flex justify-center ">
                 <div className='w-[100%] sm:w-[900px] '>
 
 
@@ -67,7 +67,10 @@ export const MostImportantReleasesCard = ({ Movies, delay }: Props) => {
                                 onMouseEnter={() => handleMouseEnter(index)}
                                 onMouseLeave={() => handleMouseLeave(index)}
                             >
-                                <div className='justify-center transition-all relative max-h-[500px] duration-300 items-center text-[40px] hover:text-[45px] flex'>
+                                <div className='justify-center transition-all
+                                 relative max-h-[500px] duration-300 items-center text-[40px] hover:text-[45px] flex
+                                 
+                                 '>
                                     <Link className="absolute transition-opacity duration-300 z-10 text-white"
                                         href={`movie/${i.slug!}`}
                                         style={{ opacity: blur[index] ? 1 : 0 }}
@@ -80,7 +83,7 @@ export const MostImportantReleasesCard = ({ Movies, delay }: Props) => {
                                         width={1920}
                                         height={1080}
                                         objectFit='contain'
-                                        className={`transition-all filter ${blur[index] ? 'blur-[8px]' : ''}`}
+                                        className={`transition-all filter rounded-2xl ${blur[index] ? 'blur-[8px]' : ''}`}
                                     />
                                 </div>
                             </SwiperSlide>

@@ -2,20 +2,18 @@
 import { PaypalCheckoutResponse } from "@/app/infraestructure/interfaces/paypal.responses";
 import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
-import { cookies } from "next/headers";
 
 
 interface Props {
     transactionId: string,
     movieTransmitionId: string
     quantity: number
-
+    userId: string
     createdAt: string
     totalPrice: number
 }
-export const PayWithPaypal = async ({ transactionId, movieTransmitionId, quantity, createdAt, totalPrice }: Props): Promise<{ ok: boolean, respuesta?: PaypalCheckoutResponse }> => {
+export const PayWithPaypal = async ({ transactionId, movieTransmitionId, quantity, createdAt, totalPrice, userId }: Props): Promise<{ ok: boolean, respuesta?: PaypalCheckoutResponse }> => {
     try {
-        console.log({ transactionId })
         const accessToken = await getAccessToken();
         const response = await fetch(`https://api.sandbox.paypal.com/v2/checkout/orders/${transactionId}/capture`, {
             method: "POST",
@@ -25,16 +23,14 @@ export const PayWithPaypal = async ({ transactionId, movieTransmitionId, quantit
             },
         });
 
-        const cookieStore = await cookies(); // Devuelve todas las cookies
-        const userId = cookieStore.get("user_id")?.value;
+
         if (!userId) {
             return {
                 ok: false
             }
         }
-        console.log('Hay user id', userId)
+
         const respuesta: PaypalCheckoutResponse = await response.json();
-        console.log({ respuesta })
         if (respuesta.status === 'COMPLETED') {
             const list = await prisma.movieTransmition.findUnique({ where: { id: movieTransmitionId } })
             if (!list) {

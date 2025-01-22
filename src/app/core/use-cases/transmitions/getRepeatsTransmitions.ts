@@ -21,6 +21,7 @@ export const GetRepeatsTransmitions = async (id: string): Promise<ApiResponse<Da
             data: respD.data
         }
     } catch (error) {
+        console.log(error)
         return {
             ok: false
         }

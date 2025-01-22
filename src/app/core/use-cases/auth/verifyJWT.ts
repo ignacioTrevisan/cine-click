@@ -1,8 +1,9 @@
 'use server'
 import { ApiResponse } from "@/app/infraestructure/interfaces/api-response";
+import { JWTResponse } from "@/app/infraestructure/interfaces/JWT-response";
 import { cookies } from "next/headers";
 
-export const verifyJWT = async (): Promise<ApiResponse> => {
+export const verifyJWT = async (): Promise<ApiResponse<JWTResponse>> => {
     try {
         const cookieStore = await cookies();
         const token = cookieStore.get('token');
@@ -22,8 +23,8 @@ export const verifyJWT = async (): Promise<ApiResponse> => {
             return { ok: false, msg: 'Token inválido o expirado' };
         }
 
-        const data = await resp.json();
-        return { ok: true, data };
+        const data = await resp.json() as JWTResponse;
+        return { ok: true, data: data };
     } catch (error) {
         console.error('Error al verificar el JWT:', error);
         return { ok: false, msg: 'Error al verificar el JWT' };

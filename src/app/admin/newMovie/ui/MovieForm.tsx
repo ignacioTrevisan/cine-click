@@ -4,9 +4,9 @@ import { AddMovie } from "@/app/core/use-cases/movies/addMovie";
 import { UploadImagesToCloudinary } from "@/app/helpers/uploadImagesToCloudinary";
 import { SideBarStore } from "@/app/store/sideBarStore";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Toaster, toast } from 'sonner'
+import { toast } from 'sonner'
 
 
 
@@ -26,7 +26,7 @@ interface Props {
     tagsEnum: string[]
 }
 export const MovieForm = ({ isMobile = false, tagsEnum }: Props) => {
-    const { handleSubmit, register, formState: { isValid }, getValues, setValue, watch, reset } =
+    const { handleSubmit, register, reset } =
         useForm<FormInput>({
             // defaultValues:
             // {

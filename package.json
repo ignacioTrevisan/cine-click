@@ -7,9 +7,11 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "seed": "ts-node src/app/seed/seed-database.ts"
+    "seed": "ts-node src/app/seed/seed-database.ts",
+    "analyze": "cross-env ANALYZE=true next build"
   },
   "dependencies": {
+    "@next/bundle-analyzer": "^15.1.5",
     "@paypal/react-paypal-js": "^8.7.0",
     "@prisma/client": "^6.1.0",
     "animate.css": "^4.1.1",
@@ -30,7 +32,7 @@
     "sonner": "^1.7.1",
     "swiper": "^11.1.15",
     "zod": "^3.24.1",
-    "zustand": "^5.0.2"
+    "zustand": "^5.0.3"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
@@ -41,6 +43,7 @@
     "@types/react": "^19",
     "@types/react-big-calendar": "^1.16.1",
     "@types/react-dom": "^19",
+    "cross-env": "^7.0.3",
     "eslint": "^9",
     "eslint-config-next": "15.1.0",
     "postcss": "^8",

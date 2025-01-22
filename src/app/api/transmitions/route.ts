@@ -38,6 +38,7 @@ export async function GET(request: Request) {
             data: transmissions
         }, { status: 200 });
     } catch (error) {
+        console.log(error)
         return NextResponse.json({ ok: false, msg: `Ocurrio un error inesperado, por favor vuelva a intentarlo más tarde.` }, { status: 500 });
     }
 

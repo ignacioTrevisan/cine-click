@@ -18,10 +18,7 @@ export const Table = ({ isMobile, movie, billboardConfig }: Props) => {
     const { closeSideBar } = SideBarStore();
     const filterData = movie.filter((f) => f.title.toLowerCase().includes(search.toLowerCase()))
 
-    const toogleMode = (id: string, modo: string) => {
-        console.log({ id })
-        console.log({ modo })
-    }
+
     return (
         <div className="grid mt-10 ml-2 w-full" onClick={() => (isMobile ? closeSideBar() : {})}>
             <label>Buscar por nombre</label>

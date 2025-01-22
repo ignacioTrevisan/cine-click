@@ -1,9 +1,7 @@
 'use server'
 
 import prisma from "@/lib/prisma";
-import { MovieTransmition } from "@prisma/client";
 import { NextResponse } from "next/server";
-import { z } from "zod";
 import { ApiResponse } from '../../infraestructure/interfaces/api-response';
 import { Datum } from "@/app/infraestructure/interfaces/billboard-response";
 

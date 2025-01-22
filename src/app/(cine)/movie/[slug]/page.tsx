@@ -1,11 +1,11 @@
-import type { Metadata, ResolvingMetadata } from 'next'
+import type { Metadata } from 'next'
 import Image from 'next/image'
 
 import { ImagesSlider } from './ui/imagesSlider';
-import { DayAvailable } from './ui/dayAvailable';
 import { GetMovieBySlug } from '@/app/core/use-cases/movies/getMovieBySlug';
-import { CalendarElement } from './ui/calendar';
 import { GetTransmitionById } from '@/app/core/use-cases/billboard/getTransmitionById';
+import { GetAllSlugs } from '@/app/core/use-cases/movies/getAllSlugs';
+import { CalendarClient } from './ui/calendarClient';
 
 
 
@@ -14,7 +14,23 @@ interface Props {
         slug: string
     }>
 }
-export async function generateMetadata({ params }: Props, parent: ResolvingMetadata): Promise<Metadata> {
+
+
+
+export async function generateStaticParams() {
+    const resp = await GetAllSlugs();
+    if (!resp) {
+        return []
+    };
+    return resp.map(r => ({
+        slug: r.slug
+    }))
+}
+
+export const revalidate = 600;
+
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
     // read route params
     const slug = (await params).slug
 
@@ -28,11 +44,16 @@ export async function generateMetadata({ params }: Props, parent: ResolvingMetad
         },
     }
 }
+
+
+
 export default async function template({ params }: Props) {
     const slug = (await params).slug
     const movie = await GetMovieBySlug(slug);
-    const transmitions = await GetTransmitionById(movie.data?.id!);
-    if (!movie) return;
+    if (!movie.data?.id || !movie) return;
+    const transmitions = await GetTransmitionById(movie.data?.id);
+
+
     const imagesReleases = { name: movie.data!.title, path: movie.data!.PrincipalImage[0].Url }
     const imagesSecondary: { name: string, path: string }[] = [];
     movie.data?.Images.map((img, index) => {
@@ -40,27 +61,42 @@ export default async function template({ params }: Props) {
     });
 
 
-    const transmitionFormatted = transmitions.data?.map((t) => ({
-        start: new Date(+t.date.toString().split('-')[0], +t.date.toString().split('-')[1] - 1, +t.date.toString().split('-')[2].split('T')[0], +t.time.split(':')[0], +t.time.split(':')[1]),
-        end: new Date(+t.date.toString().split('-')[0], +t.date.toString().split('-')[1] - 1, +t.date.toString().split('-')[2].split('T')[0], +t.time.split(':')[0] + 3, +t.time.split(':')[1]),
-        title: 'Comprar',
-        id: t.id
-    })).filter((value, index, self) =>
-        index === self.findIndex((t) => (
-            t.start.getTime() === value.start.getTime() && t.end.getTime() === value.end.getTime()
-        ))
-    );
+
 
     return (
-        <div className='sm:p-10 p-2'>
-            <div className='pt-10'>
+        <div className='sm:p-10 p-2 w-full flex justify-center'>
+            <div className='pt-10 w-[80%] '>
                 {/* Imagen principal */}
-                <div className='w-full'>
+
+                {/* v desktop */}
+                <div className='w-full hidden md:block'>
                     <Image src={imagesReleases.path}
                         width={1920}
                         height={1080}
                         alt={imagesReleases.name}
-                        className={`object-contain filter transition-all h-[400px] w-full`}
+                        className={`object-fit filter transition-all h-[600px] w-full rounded-xl`}
+                    />
+                </div>
+
+                {/* v tablet */}
+
+                <div className='w-full hidden sm:block md:hidden mt-10'>
+                    <Image src={imagesReleases.path}
+                        width={1920}
+                        height={1080}
+                        alt={imagesReleases.name}
+                        className={`object-fit filter transition-all h-[300px] w-full rounded-xl`}
+                    />
+                </div>
+
+                {/* v mobile */}
+
+                <div className='w-full block sm:hidden mt-10'>
+                    <Image src={imagesReleases.path}
+                        width={1920}
+                        height={1080}
+                        alt={imagesReleases.name}
+                        className={`object-fit filter transition-all h-[200px] w-full rounded-xl`}
                     />
                 </div>
                 {/* Imagenes secundarias */}
@@ -73,14 +109,15 @@ export default async function template({ params }: Props) {
 
                 <div className='flex w-full mt-5 justify-center'>
 
-                    <h1 className='text-xl'>{movie.data?.title}</h1>
+                    <h1 className=' text-md font-bold text-teal-600 sm:text-4xl'>{movie.data?.title}</h1>
                 </div>
                 <div className='mt-2'>
                     <p>{movie.data?.description}</p>
                 </div>
+
                 <h3 className='text-xl mt-5'>Días de Proyección</h3>
 
-                <CalendarElement movieTransmitionFormatted={transmitionFormatted!} movieTransmitions={transmitions.data!} />
+                <CalendarClient movieTransmitions={transmitions.data?.normal} movieTransmitionFormatted={transmitions.data?.formatted} />
             </div>
         </div >
     );

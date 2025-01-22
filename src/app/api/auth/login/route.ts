@@ -14,9 +14,9 @@ export async function POST(request: Request) {
     try {
 
 
-        const { email, password } = await request.json();
+        const { email, Password } = await request.json();
 
-        if (!email || !password) {
+        if (!email || !Password) {
             return NextResponse.json(
                 {
                     msg: 'El email y la contraseña son obligatorios.',
@@ -40,7 +40,7 @@ export async function POST(request: Request) {
         }
 
         // Validar la contraseña
-        const isValidPassword = await bcrypt.compare(password, user.password);
+        const isValidPassword = await bcrypt.compare(Password, user.password);
         if (!isValidPassword) {
             return NextResponse.json(
                 {
@@ -59,8 +59,8 @@ export async function POST(request: Request) {
         );
 
         // Excluir la contraseña antes de enviar los datos del usuario
-        const { password: omit, ...rest } = user;
-
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { password, ...rest } = user;
         // Crear la respuesta y establecer la cookie
         const responseBody = {
             ok: true,

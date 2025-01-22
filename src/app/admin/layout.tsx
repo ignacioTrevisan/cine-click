@@ -1,14 +1,22 @@
+export const dynamic = 'force-dynamic';
+
 import { redirect } from "next/navigation";
 import { Sidebar } from "./ui/sidebar";
 import { verifyJWT } from "../core/use-cases/auth/verifyJWT";
+import { NoAccessAdvisement } from "./noAccessAdvisement";
 
 export default async function RootLayout({ children, }: Readonly<{ children: React.ReactNode; }>) {
 
 
-    const resp = await verifyJWT();
+    const { ok, data } = await verifyJWT();
 
-    if (!resp.ok) {
+    if (!ok || !data) {
         redirect('/auth/login');
+    }
+
+    if (data.data.role !== 'admin') {
+        console.log(data.data.role)
+        return (<NoAccessAdvisement />)
     }
     return (
         <div className="flex min-h-screen">

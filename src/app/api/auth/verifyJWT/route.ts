@@ -1,24 +1,49 @@
 'use server'
-import { ApiResponse } from '@/app/infraestructure/interfaces/api-response';
 import { NextResponse } from 'next/server';
 import jwt from 'jsonwebtoken';
 
-export async function GET(request: Request): Promise<ApiResponse> {
+
+
+interface DecodedToken {
+    id: string;
+    email: string;
+    role: string;
+    name: string;
+    iat?: number; // Opcional: incluye la marca de tiempo de emisión.
+    exp?: number; // Opcional: incluye la marca de tiempo de expiración.
+}
+
+export async function GET(request: Request): Promise<Response> {
     const response = NextResponse.next();
 
-    // Agregar cabeceras CORS manualmente
+    // Configuración de cabeceras CORS
     response.headers.set('Access-Control-Allow-Origin', 'http://localhost:3000'); // Tu frontend
     response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
     response.headers.set('Access-Control-Allow-Credentials', 'true');
-    try {
-        const authHeader = request.headers.get('authorization');
 
+    try {
+        // 1. Obtener el token del encabezado Authorization
+        const authHeader = request.headers.get('authorization');
         if (!authHeader) {
-            console.log('No se encontraron cookies en la solicitud');
-            return NextResponse.json({ ok: false, msg: 'No se encontraron cookies en la solicitud' }, { status: 401 });
+            console.log('No se encontró el encabezado Authorization');
+            return NextResponse.json({ ok: false, msg: 'No se encontró el token en la solicitud' }, { status: 401 });
         }
-        const token = authHeader.split(' ')[1];
-        const decoded = jwt.verify(token, process.env.JWT_SECRET!) as any;
+
+        const token = authHeader.split(' ')[1]; // Eliminar el prefijo "Bearer"
+        if (!token) {
+            return NextResponse.json({ ok: false, msg: 'Token no proporcionado' }, { status: 401 });
+        }
+
+        // 2. Validar y decodificar el token
+        if (!process.env.JWT_SECRET) {
+            return NextResponse.json({ ok: false, msg: 'Falta la clave JWT_SECRET en el entorno' }, { status: 500 });
+        }
+
+        const decoded = jwt.verify(token, process.env.JWT_SECRET) as DecodedToken;
+
+        // 3. Leer y loggear los datos del token
+
+        // 4. Renovar el token (opcional)
         const newToken = jwt.sign(
             {
                 id: decoded.id,
@@ -26,27 +51,31 @@ export async function GET(request: Request): Promise<ApiResponse> {
                 role: decoded.role,
                 name: decoded.name,
             },
-            process.env.JWT_SECRET!,
+            process.env.JWT_SECRET,
             { expiresIn: '6h' }
         );
 
+        // 5. Establecer cookies actualizadas
         response.cookies.set('token', newToken, {
             httpOnly: true,
             maxAge: 6 * 60 * 60,
             path: '/',
             secure: process.env.NODE_ENV === 'production',
-            sameSite: 'strict'
+            sameSite: 'strict',
         });
+
         response.cookies.set('user_id', decoded.id, {
             httpOnly: false,
             maxAge: 6 * 60 * 60,
             path: '/',
             secure: false,
         });
-        return NextResponse.json({ ok: true, msg: 'Token autorizado y actualizado correctamente' }, { status: 200 });
-    } catch (error) {
-        console.log(error)
-        return NextResponse.json({ ok: false, msg: `Token no válido: ${error}` }, { status: 401 });
 
+        // 6. Responder con éxito
+        return NextResponse.json({ ok: true, msg: 'Token autorizado y actualizado correctamente', data: decoded }, { status: 200 });
+
+    } catch (error) {
+        console.error('Error al procesar el token:', error);
+        return NextResponse.json({ ok: false, msg: `Token no válido: ${error}` }, { status: 401 });
     }
 }

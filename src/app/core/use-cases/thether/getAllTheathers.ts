@@ -18,6 +18,7 @@ export const GetAllTheathers = async (): Promise<ApiResponse> => {
             data: respD.data
         }
     } catch (error) {
+        console.log(error)
         return {
             ok: false
         }

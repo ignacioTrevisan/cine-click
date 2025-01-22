@@ -89,8 +89,8 @@ export default async function Home() {
             <div className='h-[50px]' />
             <MostImportantReleasesCard Movies={MostImportantReleases} />
             <div className='h-[10px]' />
-            <ThisWeekCard title={'Ésta semana'} Movies={week} />
-            <ThisWeekCard title={'Próximamente'} Movies={MoviesSoon} delay={2600} />
+            <ThisWeekCard title={' Esta semana'} Movies={week} />
+            <ThisWeekCard title={' Próximamente'} Movies={MoviesSoon} delay={2600} />
         </div>
     );
 };

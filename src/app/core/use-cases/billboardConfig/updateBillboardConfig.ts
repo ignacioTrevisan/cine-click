@@ -8,7 +8,7 @@ interface Props {
 }
 export const UpdateBillboardConfig = async ({ id, mode }: Props): Promise<ApiResponse> => {
     try {
-        const resp = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/billboardConfig`, {
+        await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/billboardConfig`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -16,7 +16,6 @@ export const UpdateBillboardConfig = async ({ id, mode }: Props): Promise<ApiRes
             body: JSON.stringify({ idMovie: id, mode }),
         })
 
-        const data = await resp.json();
 
         revalidatePath('/admin/billboard')
         revalidatePath('/')

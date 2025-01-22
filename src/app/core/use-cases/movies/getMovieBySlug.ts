@@ -7,7 +7,6 @@ import { Movie } from "@/app/infraestructure/interfaces/movies-response";
 
 export const GetMovieBySlug = async (slug: string): Promise<ApiResponse<Movie>> => {
     try {
-        console.log(`url: ${process.env.NEXT_PUBLIC_API_URL}/api/movies?slug=${slug}`)
         const resp = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/movies?slug=${slug}`, {
             method: 'GET',
             headers: {

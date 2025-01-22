@@ -2,13 +2,13 @@
 
 interface Props {
     email: string,
-    password: string
+    Password: string
 }
-export const Login = async ({ email, password }: Props) => {
+export const Login = async ({ email, Password }: Props) => {
     try {
 
         const bodyForFetch = {
-            email, password
+            email, Password
         };
 
         const resp = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/login`, {

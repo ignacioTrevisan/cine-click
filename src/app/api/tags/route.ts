@@ -1,19 +1,10 @@
 'use server'
-import prisma from '@/lib/prisma';
 import { NextResponse } from 'next/server';
-import { string, z } from 'zod';
 
 
-const movieSchema = z.object({
-    title: z.string(),
-    description: z.string(),
-    durationMin: z.number().min(0),
-    tags: z.array(string()),
-    PrincipalImage: z.string(),
-    Images: z.array(string()),
-})
 
-export async function GET(request: Request) {
+
+export async function GET() {
     const response = NextResponse.next();
     response.headers.set('Access-Control-Allow-Origin', 'http://localhost:3000'); // Tu frontend
     response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');

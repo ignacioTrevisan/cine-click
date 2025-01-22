@@ -2,7 +2,6 @@
 import prisma from '@/lib/prisma';
 import { NextResponse } from 'next/server';
 import bcrypt from "bcryptjs";
-import jwt from 'jsonwebtoken';
 
 export async function POST(request: Request) {
     try {
@@ -27,16 +26,12 @@ export async function POST(request: Request) {
         }
 
         // Crear nuevo usuario
-        const user = await prisma.user.create({
+        await prisma.user.create({
             data: { email, name, dni, password: CryptedPassword }
         });
 
         // Generar token JWT
-        const token = jwt.sign(
-            { id: user.id, email: user.email, role: user.role, name: user.name },
-            process.env.JWT_SECRET!,
-            { expiresIn: "6h" }
-        );
+
 
         // Configurar respuesta con cookies
         const response = NextResponse.json({

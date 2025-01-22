@@ -120,44 +120,50 @@ export const initalData = {
                 }
             ]
         },
+
         {
-            title: 'Apocalipsis Z: el principio del fin (2024)',
-            description: 'Cuando una especie de rabia que transforma a la gente en criaturas agresivas se extiende por el planeta, Manel se aísla en casa con su gato, recurriendo a su ingenio para sobrevivir; pero pronto deberán salir a buscar comida, por tierra y por mar, sorteando muchos peligros.',
-            durationMin: 120,
-            tags: ['Aventura', 'Drama'],
+            title: "Better Man (2024)",
+            description: "La vida y las experiencias del cantante Robbie Williams caracterizado como un simio",
+            durationMin: 140,
+            slug: "better_man_(2024)",
             isAdult: false,
-            slug: '_ahora_en_retransmisión_en_amazon_prime_video_ahora_en_retransmisión_ver_ahora_apocalipsis_z:_el_principio_del_fin_(2024)',
+            tags: [
+                "Musical",
+                "Comedia",
+                "Drama"
+            ],
             images: [
                 {
-                    Url: 'https://res.cloudinary.com/nachotrevisan/image/upload/v1735591458/cine-click/djazu3tlankxz2brxfis.jpg'
+                    Url: "https://res.cloudinary.com/nachotrevisan/image/upload/v1737237714/cine-click/un5qpbiqooki357y7rag.jpg"
                 },
                 {
-                    Url: 'https://res.cloudinary.com/nachotrevisan/image/upload/v1735591458/cine-click/kulxjsz6ymsksbvawzql.jpg'
+                    Url: "https://res.cloudinary.com/nachotrevisan/image/upload/v1737237714/cine-click/dydsmyeoewskldgsubad.jpg"
+                },
+                {
+                    Url: "https://res.cloudinary.com/nachotrevisan/image/upload/v1737237713/cine-click/lbgomyxkulra3up4kqkb.jpg"
                 }
             ],
-            principalImage: 'https://res.cloudinary.com/nachotrevisan/image/upload/v1735591461/cine-click/id454cajgh2ukykz7jkv.jpg'
-
+            principalImage: "https://res.cloudinary.com/nachotrevisan/image/upload/v1737237717/cine-click/hlwcin8sb8tcf3kfcyn2.jpg"
         },
         {
-            title: 'Godzilla y Kong: El nuevo imperio (2024)',
-            description: 'Una aventura cinematográfica completamente nueva, que enfrentará al todopoderoso Kong y al temible Godzilla contra una colosal amenaza desconocida escondida dentro de nuestro mundo. La nueva y épica película profundizará en las historias de estos titanes, sus orígenes y los misterios de Isla Calavera y más allá, mientras descubre la batalla mítica que ayudó a forjar a estos seres extraordinarios y los unió a la humanidad para siempre.',
-            durationMin: 120,
-            tags: ['Acción', 'Aventura', 'Ciencia_Ficción'],
+            title: "Dexter (2006)",
+            description: "Serie de suspense que narra la historia de un hombre extraño llamado Dexter Morgan. Cuando era niño, Dexter fue maltratado y abandonado por sus padres, ahora es un exitoso e importante forense patológico... pero bajo su carismática personalidad, se esconde una terrible verdad. Dexter ha canalizado sus innatas necesidades homicidas en una segunda profesión que guarda celosamente en secreto: buscar, dar caza y asesinar brutalmente a despiadados criminales.",
+            durationMin: 180,
+            slug: "dexter_(2006)",
             isAdult: false,
-            slug: 'godzilla_y_kong:_el_nuevo_imperio_(2024)',
+            tags: [],
             images: [
                 {
-                    Url: 'https://res.cloudinary.com/nachotrevisan/image/upload/v1735592097/cine-click/zyr4y26iobxtr2odqpjm.jpg'
+                    Url: "https://res.cloudinary.com/nachotrevisan/image/upload/v1737238067/cine-click/bjaqbpygkcznw0rx0az4.jpg"
                 },
                 {
-                    Url: 'https://res.cloudinary.com/nachotrevisan/image/upload/v1735592096/cine-click/lzd19rr1nro4yr0wnnvb.jpg'
+                    Url: "https://res.cloudinary.com/nachotrevisan/image/upload/v1737238069/cine-click/odzgm4hnesrnuxnppcgc.jpg"
                 },
                 {
-                    Url: 'https://res.cloudinary.com/nachotrevisan/image/upload/v1735592096/cine-click/gsu6dfv7lka0pgj5opsa.jpg'
+                    Url: "https://res.cloudinary.com/nachotrevisan/image/upload/v1737238067/cine-click/zmfybczutohkwvnpjncl.jpg"
                 }
             ],
-            principalImage: 'https://res.cloudinary.com/nachotrevisan/image/upload/v1735592098/cine-click/nf7udhf9e4qwpt78s1ri.jpg'
-
+            principalImage: "https://res.cloudinary.com/nachotrevisan/image/upload/v1737238075/cine-click/ix4q9lpipowub8zcszcd.jpg"
         },
         {
             title: "Mufasa: El rey león (2024)",
@@ -205,50 +211,44 @@ export const initalData = {
                 }
             ],
             principalImage: "https://res.cloudinary.com/nachotrevisan/image/upload/v1737237294/cine-click/ppqnzkoagrc8fllpemos.jpg"
-        },
-        {
-            title: "Better Man (2024)",
-            description: "La vida y las experiencias del cantante Robbie Williams caracterizado como un simio",
-            durationMin: 140,
-            slug: "better_man_(2024)",
+        }, {
+            title: 'Apocalipsis Z: el principio del fin (2024)',
+            description: 'Cuando una especie de rabia que transforma a la gente en criaturas agresivas se extiende por el planeta, Manel se aísla en casa con su gato, recurriendo a su ingenio para sobrevivir; pero pronto deberán salir a buscar comida, por tierra y por mar, sorteando muchos peligros.',
+            durationMin: 120,
+            tags: ['Aventura', 'Drama'],
             isAdult: false,
-            tags: [
-                "Musical",
-                "Comedia",
-                "Drama"
-            ],
+            slug: '_ahora_en_retransmisión_en_amazon_prime_video_ahora_en_retransmisión_ver_ahora_apocalipsis_z:_el_principio_del_fin_(2024)',
             images: [
                 {
-                    Url: "https://res.cloudinary.com/nachotrevisan/image/upload/v1737237714/cine-click/un5qpbiqooki357y7rag.jpg"
+                    Url: 'https://res.cloudinary.com/nachotrevisan/image/upload/v1735591458/cine-click/djazu3tlankxz2brxfis.jpg'
                 },
                 {
-                    Url: "https://res.cloudinary.com/nachotrevisan/image/upload/v1737237714/cine-click/dydsmyeoewskldgsubad.jpg"
-                },
-                {
-                    Url: "https://res.cloudinary.com/nachotrevisan/image/upload/v1737237713/cine-click/lbgomyxkulra3up4kqkb.jpg"
+                    Url: 'https://res.cloudinary.com/nachotrevisan/image/upload/v1735591458/cine-click/kulxjsz6ymsksbvawzql.jpg'
                 }
             ],
-            principalImage: "https://res.cloudinary.com/nachotrevisan/image/upload/v1737237717/cine-click/hlwcin8sb8tcf3kfcyn2.jpg"
+            principalImage: 'https://res.cloudinary.com/nachotrevisan/image/upload/v1735591461/cine-click/id454cajgh2ukykz7jkv.jpg'
+
         },
         {
-            title: "Dexter (2006)",
-            description: "Serie de suspense que narra la historia de un hombre extraño llamado Dexter Morgan. Cuando era niño, Dexter fue maltratado y abandonado por sus padres, ahora es un exitoso e importante forense patológico... pero bajo su carismática personalidad, se esconde una terrible verdad. Dexter ha canalizado sus innatas necesidades homicidas en una segunda profesión que guarda celosamente en secreto: buscar, dar caza y asesinar brutalmente a despiadados criminales.",
-            durationMin: 180,
-            slug: "dexter_(2006)",
+            title: 'Godzilla y Kong: El nuevo imperio (2024)',
+            description: 'Una aventura cinematográfica completamente nueva, que enfrentará al todopoderoso Kong y al temible Godzilla contra una colosal amenaza desconocida escondida dentro de nuestro mundo. La nueva y épica película profundizará en las historias de estos titanes, sus orígenes y los misterios de Isla Calavera y más allá, mientras descubre la batalla mítica que ayudó a forjar a estos seres extraordinarios y los unió a la humanidad para siempre.',
+            durationMin: 120,
+            tags: ['Acción', 'Aventura', 'Ciencia_Ficción'],
             isAdult: false,
-            tags: [],
+            slug: 'godzilla_y_kong:_el_nuevo_imperio_(2024)',
             images: [
                 {
-                    Url: "https://res.cloudinary.com/nachotrevisan/image/upload/v1737238067/cine-click/bjaqbpygkcznw0rx0az4.jpg"
+                    Url: 'https://res.cloudinary.com/nachotrevisan/image/upload/v1735592097/cine-click/zyr4y26iobxtr2odqpjm.jpg'
                 },
                 {
-                    Url: "https://res.cloudinary.com/nachotrevisan/image/upload/v1737238069/cine-click/odzgm4hnesrnuxnppcgc.jpg"
+                    Url: 'https://res.cloudinary.com/nachotrevisan/image/upload/v1735592096/cine-click/lzd19rr1nro4yr0wnnvb.jpg'
                 },
                 {
-                    Url: "https://res.cloudinary.com/nachotrevisan/image/upload/v1737238067/cine-click/zmfybczutohkwvnpjncl.jpg"
+                    Url: 'https://res.cloudinary.com/nachotrevisan/image/upload/v1735592096/cine-click/gsu6dfv7lka0pgj5opsa.jpg'
                 }
             ],
-            principalImage: "https://res.cloudinary.com/nachotrevisan/image/upload/v1737238075/cine-click/ix4q9lpipowub8zcszcd.jpg"
-        }
+            principalImage: 'https://res.cloudinary.com/nachotrevisan/image/upload/v1735592098/cine-click/nf7udhf9e4qwpt78s1ri.jpg'
+
+        },
     ]
 }

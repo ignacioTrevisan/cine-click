@@ -9,14 +9,13 @@ interface Props {
 }
 export const TicketTables = ({ transmisions }: Props) => {
 
-    const [pelicula, setPelicula] = useState("Avengers: Endgame")
     const [transmitionSelected, setTransmitionSelected] = useState(transmisions[0])
     const [cantidad, setCantidad] = useState(1)
     const [total, setTotal] = useState(cantidad * transmitionSelected.Price);
 
     useEffect(() => {
         setTotal(cantidad * transmitionSelected.Price);
-        console.log(transmitionSelected)
+
     }, [cantidad, transmitionSelected]);
 
 
@@ -28,7 +27,7 @@ export const TicketTables = ({ transmisions }: Props) => {
         setSalon(newOptionSelected.movieTheater.id);
         setTransmitionSelected(newOptionSelected);
         setCantidad(0)
-        //TODO: Todavia hay que controlar el stock de entradas
+
     };
 
     const cambiarCantidad = (nuevaCantidad: string) => {
@@ -108,7 +107,7 @@ export const TicketTables = ({ transmisions }: Props) => {
                         <div className="space-y-4">
                             <div className="flex gap-2">
                                 <h3 className="font-semibold mb-2">Película</h3>
-                                <p>{pelicula}</p>
+                                <p>{transmitionSelected.movie.title}</p>
                             </div>
                             <div className="flex gap-2">
                                 <h3 className="font-semibold mb-2">Horario</h3>

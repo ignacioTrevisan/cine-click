@@ -67,13 +67,21 @@ export const ThisWeekCard = ({ title, Movies, delay = 2500 }: Props) => {
                                     onMouseEnter={() => handleMouseEnter(index)}
                                     onMouseLeave={() => handleMouseLeave(index)}
                                 >
-
-                                    <Link className="absolute transition-opacity duration-300 z-10"
+                                    {/* V mobile */}
+                                    <Link className="absolute transition-opacity duration-300 z-10 hidden sm:block"
                                         href={`movie/${i.slug!}`}
                                         style={{ opacity: blur[index] ? 1 : 0 }}
                                     >
                                         Ver más
                                     </Link>
+                                    {/* V desktop */}
+                                    <Link className="absolute transition-opacity duration-300 z-10  sm:hidden block text-sm"
+                                        href={`movie/${i.slug!}`}
+                                        style={{ opacity: blur[index] ? 1 : 0 }}
+                                    >
+                                        Ver más
+                                    </Link>
+
                                     <Image
                                         src={i.path}
                                         alt={`${i.name} image`}

@@ -1,53 +1,25 @@
 "use client"
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { QRCodeSVG } from 'qrcode.react'
 import { Datum } from '@/app/infraestructure/interfaces/ticketsReponse'
+import { useUserStore } from '@/app/store/user'
+import { GetTicketsByUser } from '@/app/core/use-cases/tickets/getTicketsByUser'
 
-type Ticket = {
-    ticket_id: string
-    pelicula: string
-    cantidad_personas: number
-    salon: string
-    fecha: string
-    hora: string
-    total_pagado: number
-}
 
-const tickets: Ticket[] = [
-    {
-        ticket_id: "T001",
-        pelicula: "Inception",
-        cantidad_personas: 2,
-        salon: "Sala 1",
-        fecha: "2023-06-15",
-        hora: "19:30",
-        total_pagado: 25.00
-    },
-    {
-        ticket_id: "T002",
-        pelicula: "The Avengers",
-        cantidad_personas: 4,
-        salon: "Sala 3",
-        fecha: "2023-06-16",
-        hora: "20:00",
-        total_pagado: 48.00
-    },
-    {
-        ticket_id: "T003",
-        pelicula: "Jurassic Park",
-        cantidad_personas: 3,
-        salon: "Sala 2",
-        fecha: "2023-06-17",
-        hora: "18:45",
-        total_pagado: 36.00
-    },
-]
 
-interface Props {
-    tickets: Datum[]
-}
 
-const TicketsTable: React.FC<Props> = ({ tickets }: Props) => {
+const TicketsTable: React.FC = () => {
+    const userId = useUserStore((state) => state.userId);
+    const [tickets, setTickets] = useState<Datum[]>([])
+    useEffect(() => {
+        if (!userId) return;
+        const getTickets = async () => {
+            const resp = await GetTicketsByUser(userId);
+            setTickets(resp.data)
+        }
+        getTickets()
+    }, [userId])
+
     const [selectedTicket, setSelectedTicket] = useState<string | null>(null)
 
     const handleGenerateQR = (ticketId: string) => {

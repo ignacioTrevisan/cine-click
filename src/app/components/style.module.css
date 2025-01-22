@@ -1,0 +1,12 @@
+/* style.module.css */
+
+.animacion {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+}
+
+.scrolled {
+    opacity: 0.1;
+    transform: translateY(-50px);
+}

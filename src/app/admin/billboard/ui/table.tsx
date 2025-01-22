@@ -40,7 +40,7 @@ setDefaultLocale('es');
 
 interface FormInput {
     date: Date;
-    Price: Number;
+    Price: number;
     MovieSelected: { id: number, movie: string };
     filterSalon: string;
 }
@@ -49,7 +49,7 @@ interface FormInput {
 
 export const Table = ({ isMobile, movie, theathers, billboard }: Props) => {
 
-    const { handleSubmit, register, formState: { isValid }, getValues, setValue, watch } =
+    const { handleSubmit, register, setValue } =
         useForm<FormInput>({
         })
     const [filterSalon, setFilterSalon] = useState(""); // Estado para el salón

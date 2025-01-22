@@ -2,13 +2,12 @@
 
 import { ApiResponse } from "@/app/infraestructure/interfaces/api-response"
 import { revalidatePath } from "next/cache";
-import { NextResponse } from "next/server";
 
 interface bodyFormPost {
     movieId: string;
     date: string;
     time: string;
-    Price: Number;
+    Price: number;
     movieTheaterId: string;
 }
 

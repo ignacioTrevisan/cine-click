@@ -1,4 +1,4 @@
-import type { Metadata, ResolvingMetadata } from 'next'
+import type { Metadata } from 'next'
 import { TicketTables } from './ui/ticketTables'
 import { GetRepeatsTransmitions } from '../../../core/use-cases/transmitions/getRepeatsTransmitions';
 
@@ -8,7 +8,7 @@ interface Props {
     }>
 }
 
-export async function generateMetadata({ params }: Props, parent: ResolvingMetadata): Promise<Metadata> {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
     // read route params
     const idTransmition = (await params).idTransmition
 

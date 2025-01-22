@@ -1,5 +1,4 @@
 'use server';
-import prisma from '@/lib/prisma';
 interface Props {
     amount: string,
 }

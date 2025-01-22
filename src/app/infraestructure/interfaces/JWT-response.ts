@@ -1,9 +1,10 @@
 export interface JWTResponse {
     ok: boolean;
-    user: User;
+    msg: string;
+    data: Data;
 }
 
-export interface User {
+export interface Data {
     id: string;
     email: string;
     role: string;

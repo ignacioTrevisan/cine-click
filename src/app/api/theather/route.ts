@@ -2,7 +2,6 @@
 
 import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
-import { z } from "zod";
 
 
 
@@ -36,7 +35,7 @@ export async function POST(request: Request) {
 
 }
 
-export async function GET(request: Request) {
+export async function GET() {
     const response = NextResponse.next();
 
     // Agregar cabeceras CORS manualmente
