@@ -9,7 +9,6 @@ interface Reponse {
 }
 export const CreateOrder = async ({ amount }: Props): Promise<{ resp?: Reponse, ok: boolean }> => {
     try {
-        console.log({ amount })
         const accessToken = await getAccessToken();
         const formattedQuantity = Number(amount).toFixed(2);
         const order = await fetch("https://api-m.sandbox.paypal.com/v2/checkout/orders", {

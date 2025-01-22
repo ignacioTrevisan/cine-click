@@ -297,7 +297,6 @@ export const Table = ({ isMobile, movie, theathers, billboard }: Props) => {
                         {/* TODO: Las fechas solo tienen que ser de 3 en */}
                     </div>
                 </div>
-                {/* <button className="btn btn-primary" onClick={() => { console.log(MovieSelected) }}>Confirmar</button> */}
                 <div className="grid ml-2">
                     <span>Precio</span>
                     <input

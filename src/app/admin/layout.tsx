@@ -15,7 +15,6 @@ export default async function RootLayout({ children, }: Readonly<{ children: Rea
     }
 
     if (data.data.role !== 'admin') {
-        console.log(data.data.role)
         return (<NoAccessAdvisement />)
     }
     return (

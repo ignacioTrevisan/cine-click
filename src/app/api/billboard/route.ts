@@ -29,7 +29,6 @@ export async function POST(request: Request): Promise<NextResponse<{ ok: boolean
             Price,
             movieTheaterId
         } = await request.json();
-        console.log({ date })
 
 
         const findMovieTransmition = await prisma.movieTransmition.findFirst({
