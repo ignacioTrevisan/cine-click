@@ -10,6 +10,8 @@ import { useForm } from 'react-hook-form';
 import { BsArrowRight } from 'react-icons/bs';
 import { IoMailOutline } from 'react-icons/io5';
 import { MdSecurity } from 'react-icons/md';
+import { useRouter } from 'next/router';
+
 
 export interface FormInputs {
 
@@ -18,6 +20,7 @@ export interface FormInputs {
 }
 
 export const LoginForm = () => {
+    const router = useRouter();
     const { register, handleSubmit, formState } = useForm<FormInputs>();
     const setUserId = useUserStore((state) => state.setUserId); // Accede a la función para actualizar el id
     const [errorMessage, setErrorMessage] = useState('')
@@ -27,7 +30,7 @@ export const LoginForm = () => {
         if (resp.ok) {
 
             setUserId(resp.user.id)
-            window.location.replace('/')
+            router.push('/'); // Navegación interna sin recargar la página
         } else {
             setErrorMessage(resp.msg)
         }
