@@ -26,7 +26,7 @@ export const LoginForm = () => {
     const [errorMessage, setErrorMessage] = useState('')
     const onSubmit = async (data: FormInputs) => {
         const resp = await Login({ email: data.email.toLowerCase(), Password: data.password })
-
+        console.log(resp)
         if (resp.ok) {
 
             setUserId(resp.user.id)

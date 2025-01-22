@@ -10,6 +10,7 @@ export default async function RootLayout({ children, }: Readonly<{ children: Rea
     const resp = await verifyJWT();
     const movies = await GetAllForSearch();
     const router = useRouter()
+
     if (!resp.ok) {
         router.push('/auth/login');
     }
