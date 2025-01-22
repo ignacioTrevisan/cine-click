@@ -18,7 +18,7 @@ export const verifyJWT = async (): Promise<ApiResponse<JWTResponse>> => {
             },
             credentials: 'include', // Incluir cookies en la petición
         });
-
+        console.log('pasó esto.')
         if (!resp.ok) {
             return { ok: false, msg: 'Token inválido o expirado' };
         }

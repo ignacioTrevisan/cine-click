@@ -1,5 +1,5 @@
 
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { Navbar } from "../components/navbar";
 import { verifyJWT } from "../core/use-cases/auth/verifyJWT";
 import { GetAllForSearch } from "../core/use-cases/movies/getAllForSearch";
@@ -9,8 +9,9 @@ export default async function RootLayout({ children, }: Readonly<{ children: Rea
 
     const resp = await verifyJWT();
     const movies = await GetAllForSearch();
+    const router = useRouter()
     if (!resp.ok) {
-        redirect('/auth/login');
+        router.push('/auth/login');
     }
 
     return (
