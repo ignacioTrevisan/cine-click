@@ -10,7 +10,7 @@ export const Login = async ({ email, Password }: Props) => {
         const bodyForFetch = {
             email, Password
         };
-
+        console.log('hola')
         const resp = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/login`, {
             method: 'POST', // Asegúrate de especificar el método
             headers: {
@@ -19,7 +19,7 @@ export const Login = async ({ email, Password }: Props) => {
             body: JSON.stringify(bodyForFetch), // Convierte el objeto a JSON
             credentials: 'include'
         });
-
+        console.log(resp)
         const data = await resp.json(); // Procesa la respuesta si es necesario
         return data;
     } catch (error) {
