@@ -4,9 +4,9 @@ import { JWTResponse } from "@/app/infraestructure/interfaces/JWT-response";
 import { cookies } from "next/headers";
 
 export const verifyJWT = async (): Promise<ApiResponse<JWTResponse>> => {
+    const cookieStore = await cookies();
+    const token = cookieStore.get('token');
     try {
-        const cookieStore = await cookies();
-        const token = cookieStore.get('token');
         if (!token) {
             return { ok: false, msg: 'No se encontraron cookies en la solicitud' };
         }
