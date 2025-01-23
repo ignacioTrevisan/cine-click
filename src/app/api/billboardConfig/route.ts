@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 
 export async function GET(): Promise<Response> {
     const response = NextResponse.next();
-    response.headers.set('Access-Control-Allow-Origin', 'http://localhost:3000'); // Tu frontend
+    response.headers.set('Access-Control-Allow-Origin', '*'); // Tu frontend
     response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
     response.headers.set('Access-Control-Allow-Credentials', 'true');
     try {
@@ -19,7 +19,7 @@ export async function GET(): Promise<Response> {
 
 export async function POST(request: Request): Promise<Response> {
     const response = NextResponse.next();
-    response.headers.set('Access-Control-Allow-Origin', 'http://localhost:3000'); // Tu frontend
+    response.headers.set('Access-Control-Allow-Origin', '*'); // Tu frontend
     response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
     response.headers.set('Access-Control-Allow-Credentials', 'true');
     try {

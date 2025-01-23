@@ -6,7 +6,7 @@ import { NextResponse } from 'next/server';
 
 export async function GET() {
     const response = NextResponse.next();
-    response.headers.set('Access-Control-Allow-Origin', 'http://localhost:3000'); // Tu frontend
+    response.headers.set('Access-Control-Allow-Origin', '*'); // Tu frontend
     response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
     response.headers.set('Access-Control-Allow-Credentials', 'true');
     try {

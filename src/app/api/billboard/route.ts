@@ -17,7 +17,7 @@ export async function POST(request: Request): Promise<NextResponse<{ ok: boolean
     const response = NextResponse.next();
 
     // Agregar cabeceras CORS manualmente
-    response.headers.set('Access-Control-Allow-Origin', 'http://localhost:3000'); // Tu frontend
+    response.headers.set('Access-Control-Allow-Origin', '*'); // Tu frontend
     response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
     response.headers.set('Access-Control-Allow-Credentials', 'true');
 
@@ -64,7 +64,7 @@ export async function POST(request: Request): Promise<NextResponse<{ ok: boolean
 
 export async function GET(request: Request): Promise<NextResponse<ApiResponse<Datum[]>>> {
     const response = NextResponse.next();
-    response.headers.set('Access-Control-Allow-Origin', 'http://localhost:3000');
+    response.headers.set('Access-Control-Allow-Origin', '*');
     response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
     response.headers.set('Access-Control-Allow-Credentials', 'true');
     try {

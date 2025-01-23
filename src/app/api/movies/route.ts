@@ -16,7 +16,7 @@ const movieSchema = z.object({
 
 export async function POST(request: Request) {
     const response = NextResponse.next();
-    response.headers.set('Access-Control-Allow-Origin', 'http://localhost:3000'); // Tu frontend
+    response.headers.set('Access-Control-Allow-Origin', '*'); // Tu frontend
     response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
     response.headers.set('Access-Control-Allow-Credentials', 'true');
     try {
@@ -90,7 +90,7 @@ export async function POST(request: Request) {
 
 export async function GET(request: Request) {
     const response = NextResponse.next();
-    response.headers.set('Access-Control-Allow-Origin', 'http://localhost:3000'); // Tu frontend
+    response.headers.set('Access-Control-Allow-Origin', '*'); // Tu frontend
     response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
     response.headers.set('Access-Control-Allow-Credentials', 'true');
 
