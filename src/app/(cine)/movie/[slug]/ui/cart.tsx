@@ -15,7 +15,7 @@ export const Cart = ({ start, id }: Props) => {
         setMovieId(id)
     }
     return (
-        <div key={id} className={`border rounded-md p-5 transition-all ${movieId === id ? 'bg-teal-600 translate-x-3   text-white' : 'hover:bg-slate-200'} cursor-pointer bg-white `} onClick={() => selectEvent(id)}>
+        <div key={id} className={`border rounded-md p-5  transition-all ${movieId === id ? 'bg-teal-500 translate-x-3  text-white  ' : 'hover:bg-slate-200'} cursor-pointer bg-white `} onClick={() => selectEvent(id)}>
             <div className="flex items-center font-bold gap-1">
                 <BiCalendar /><p>{Translanter(start.toString().split(' ')[0].toLowerCase())} {start.toString().split(' ')[2]}</p>
             </div>
