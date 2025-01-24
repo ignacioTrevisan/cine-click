@@ -85,12 +85,39 @@ export default async function Home() {
 
 
     return (
-        <div className='w-full row'>
-            <div className='h-[50px]' />
-            <MostImportantReleasesCard Movies={MostImportantReleases} />
-            <div className='h-[10px]' />
-            <ThisWeekCard title={' Esta semana'} Movies={week} />
-            <ThisWeekCard title={' Próximamente'} Movies={MoviesSoon} delay={2600} />
+        <div className="w-full h-screen flex flex-col  ">
+            {/* Primer elemento: ocupa el 50% de la pantalla */}
+            <div className="h-auto w-full  relative z-40 ">
+
+                <MostImportantReleasesCard Movies={MostImportantReleases} />
+            </div>
+
+            <div className=" flex-1 sm:flex-auto flex-col hidden sm:flex">
+                <div className="flex-1 sm:flex-auto w-full  z-20">
+                    <ThisWeekCard title={' Esta semana'} Movies={week} />
+
+
+                </div>
+
+                <div className="flex-1 sm:flex-auto w-full ">
+                    <ThisWeekCard title={' Próximamente'} Movies={MoviesSoon} delay={2600} />
+
+
+                </div>
+            </div>
+            <div className="flex-row  sm:hidden gap-y-10">
+
+                <ThisWeekCard title={' Esta semana'} Movies={week} />
+
+
+
+
+
+                <ThisWeekCard title={' Próximamente'} Movies={MoviesSoon} delay={2600} />
+
+
+
+            </div>
         </div>
     );
 };

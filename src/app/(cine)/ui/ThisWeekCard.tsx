@@ -34,7 +34,7 @@ export const ThisWeekCard = ({ title, Movies, delay = 2500 }: Props) => {
 
     return (
         <div className='p-2 sm:p-10'>
-            <h3 className='text-lg sm:text-[50px]'>{title}</h3>
+            <h3 className='text-lg sm:mt-10 mt-15 sm:text-[50px]'>{title}</h3>
             <div className="w-full sm:mt-10 mt-2 flex justify-center">
                 <div className='w-full'>
                     <Swiper
@@ -46,7 +46,26 @@ export const ThisWeekCard = ({ title, Movies, delay = 2500 }: Props) => {
                         pagination={{
                             clickable: true,
                         }}
-                        slidesPerView={4}
+                        slidesPerView={4} // Valor predeterminado para pantallas grandes
+                        spaceBetween={30} // Espaciado entre slides
+                        breakpoints={{
+                            // Pantallas pequeñas (<= 640px)
+                            640: {
+                                slidesPerView: 1,
+                            },
+                            // Pantallas medianas (<= 768px)
+                            768: {
+                                slidesPerView: 2,
+                            },
+                            // Pantallas grandes (<= 1024px)
+                            1024: {
+                                slidesPerView: 3,
+                            },
+                            // Pantallas extra grandes (>= 1280px)
+                            1280: {
+                                slidesPerView: 4,
+                            },
+                        }}
                         navigation={true}
                         modules={[Autoplay, Pagination, Navigation]}
                         loop={true}
@@ -75,7 +94,7 @@ export const ThisWeekCard = ({ title, Movies, delay = 2500 }: Props) => {
                                         Ver más
                                     </Link>
                                     {/* V desktop */}
-                                    <Link className="absolute transition-opacity duration-300 z-10  sm:hidden block text-sm"
+                                    <Link className="absolute transition-opacity duration-300 z-10 sm:hidden block text-sm"
                                         href={`movie/${i.slug!}`}
                                         style={{ opacity: blur[index] ? 1 : 0 }}
                                     >
@@ -87,7 +106,7 @@ export const ThisWeekCard = ({ title, Movies, delay = 2500 }: Props) => {
                                         alt={`${i.name} image`}
                                         width={1920}
                                         height={1080}
-                                        className={`object-cover filter transition-all sm:h-[180px] h-[80px] ${blur[index] ? 'blur-[12px]' : ''}`}
+                                        className={`object-cover filter transition-all h-[150px] sm:h-[200px] md:h-[250] lg:h-[300]  ${blur[index] ? 'blur-[12px]' : ''}`}
                                     />
                                 </div>
                             </SwiperSlide>
