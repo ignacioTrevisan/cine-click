@@ -1,4 +1,4 @@
-export interface TicketsBYIDAPIResponse {
+export interface TicketsBYUSERAPIResponse {
     ok: boolean;
     data: Datum[];
 }
@@ -17,7 +17,52 @@ export interface Datum {
 export interface MovieTransmition {
     id: string;
     movieId: string;
-    date: Date;
+    date: string;
+    time: string;
+    Price: number;
+    movieTheaterId: string;
+    TicketSold: number;
+    movie: Movie;
+    movieTheater: MovieTheater;
+}
+
+export interface Movie {
+    id: string;
+    title: string;
+    description: string;
+    durationMin: number;
+    slug: string;
+    isAdult: boolean;
+    tags: string[];
+}
+
+export interface MovieTheater {
+    id: string;
+    capacity: number;
+    name: string;
+}
+
+
+export interface TicketsByIDResponse {
+    ok: boolean;
+    data: TicketByIdData;
+}
+
+export interface TicketByIdData {
+    id: string;
+    movieTransmitionId: string;
+    quantity: number;
+    userId: string;
+    createdAt: Date;
+    paidAt: Date;
+    totalPrice: string;
+    movieTransmition: MovieTransmition;
+}
+
+export interface MovieTransmition {
+    id: string;
+    movieId: string;
+    date: string;
     time: string;
     Price: number;
     movieTheaterId: string;

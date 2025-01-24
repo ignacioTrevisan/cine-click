@@ -121,11 +121,13 @@ export const Navbar = ({ forSearch }: Props) => {
                                     <>
                                         <div className="hidden md:flex items-center space-x-3">
 
-                                            <div onClick={() => window.location.replace('/profile')} className="relative my-3 ml-2 items-center sm:flex hidden ">
+                                            <div onClick={() => window.location.replace('/profile')}
+                                                className="relative ml-2 items-center md:flex hidden text-sm rounded border-b-2 cursor-pointer border-gray-200 bg-gray-50 hover:border-teal-600"
+                                            >
                                                 <IoPersonOutline size={20} className='absolute  left-2' />
 
                                                 <button
-                                                    className='w-full bg-gray-50 rounded pl-10 py-1 pr-10 border-b-2 text-sm border-gray-200 focus:outline-none focus:border-blue-500'
+                                                    className="w-full pl-10 py-1 pr-10 outline-none"
                                                 >
                                                     Perfil
                                                 </button>
@@ -143,15 +145,19 @@ export const Navbar = ({ forSearch }: Props) => {
                                     :
                                     <>
 
-                                        <div onClick={() => window.location.replace('/')} className="relative ml-2  items-center md:flex hidden ">
-                                            <IoHomeOutline size={20} className='absolute  left-2' />
+                                        <div
+                                            onClick={() => window.location.replace('/')}
+                                            className="relative ml-2 items-center md:flex hidden text-sm rounded cursor-pointer border-b-2 border-gray-200 bg-gray-50 hover:border-teal-600"
+                                        >
+                                            <IoHomeOutline size={20} className="absolute left-2" />
 
                                             <button
-                                                className='w-full bg-gray-50 rounded pl-10 py-1 pr-10 border-b-2 text-sm border-gray-200 focus:outline-none focus:border-blue-500'
+                                                className="w-full pl-10 py-1 pr-10 outline-none"
                                             >
                                                 Inicio
                                             </button>
                                         </div>
+
                                         <div onClick={() => window.location.replace('/')} className="relative ml-2 mt-3 items-center md:hidden flex h-8 ">
                                             <IoHomeOutline size={20} className='absolute left-2' />
 
@@ -167,10 +173,12 @@ export const Navbar = ({ forSearch }: Props) => {
                                     <>
 
 
-                                        <Link href={'/admin'} className="relative ml-2  items-center md:flex hidden ">
+                                        <Link href={'/admin'}
+                                            className="relative ml-2 items-center md:flex hidden text-sm rounded border-b-2 cursor-pointer border-gray-200 bg-gray-50 hover:border-teal-600"
+                                        >
                                             <IoConstructOutline size={20} className='absolute  left-2' />
                                             <button
-                                                className='w-full bg-gray-50 rounded pl-10 py-1 pr-10 border-b-2 text-sm border-gray-200 hover:outline-none hover:border-teal-600'
+                                                className="w-full pl-10 py-1 pr-10 outline-none"
                                             >
                                                 Configuracion
 
@@ -188,11 +196,14 @@ export const Navbar = ({ forSearch }: Props) => {
                                     :
                                     <>
 
-                                        <div onClick={() => window.location.replace('/')} className="relative  ml-2 items-center md:flex hidden ">
-                                            <IoHomeOutline size={20} className='absolute  left-2' />
+                                        <div
+                                            onClick={() => window.location.replace('/')}
+                                            className="relative ml-2 items-center md:flex hidden text-sm rounded border-b-2 cursor-pointer border-gray-200 bg-gray-50 hover:border-teal-600"
+                                        >
+                                            <IoHomeOutline size={20} className="absolute left-2" />
 
                                             <button
-                                                className='w-full bg-gray-50 rounded pl-10 py-1 pr-10 border-b-2 text-sm border-gray-200 hover:outline-none hover:border-teal-600'
+                                                className="w-full pl-10 py-1 pr-10 outline-none"
                                             >
                                                 Inicio
                                             </button>
@@ -208,28 +219,34 @@ export const Navbar = ({ forSearch }: Props) => {
                                     </>
 
                             }
-                            <div className="relative  ml-2 items-center md:flex hidden "
-                                onClick={() => closeSession()}
-                            >
-                                <IoLogInOutline size={20} className='absolute  left-2'
+                            <div className="hidden md:flex items-center space-x-3">
 
-                                />
+                                <div
 
-                                <button
-                                    className='w-full bg-gray-50 rounded pl-10 py-1 pr-10 border-b-2 text-sm border-gray-200 hover:outline-none hover:border-teal-600'
+                                    className="relative ml-2 items-center md:flex hidden text-sm rounded border-b-2 cursor-pointer border-gray-200 bg-gray-50 hover:border-teal-600"
+                                    onClick={() => closeSession()}
                                 >
-                                    Cerrar sesión
-                                </button>
-                            </div>
-                            <div className="relative my-3 ml-2 items-center md:hidden flex h-8 "
-                                onClick={() => closeSession()}
-                            >
-                                <IoLogInOutline size={20} className='absolute left-2' />
+                                    <IoLogInOutline size={20} className='absolute  left-2'
 
-                                <button
-                                    className='w-full bg-gray-50 rounded  py-1 h-full pr-10 border-b-2 text-sm border-gray-200 hover:outline-none hover:border-teal-600'
-                                />
+                                    />
 
+                                    <button
+                                        className="w-full pl-10 py-1 pr-10 outline-none"
+                                    >
+                                        Cerrar sesión
+                                    </button>
+                                </div>
+                                <div
+                                    className="relative my-3 ml-2 items-center md:hidden flex h-8 "
+                                    onClick={() => closeSession()}
+                                >
+                                    <IoLogInOutline size={20} className='absolute left-2' />
+
+                                    <button
+                                        className='w-full bg-gray-50 rounded  py-1 h-full pr-10 border-b-2 text-sm border-gray-200 hover:outline-none hover:border-teal-600'
+                                    />
+
+                                </div>
                             </div>
 
                         </div>

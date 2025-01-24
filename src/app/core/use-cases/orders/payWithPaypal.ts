@@ -12,8 +12,10 @@ interface Props {
     createdAt: string
     totalPrice: number
 }
-export const PayWithPaypal = async ({ transactionId, movieTransmitionId, quantity, createdAt, totalPrice, userId }: Props): Promise<{ ok: boolean, respuesta?: PaypalCheckoutResponse }> => {
+export const PayWithPaypal = async ({ transactionId, movieTransmitionId, quantity, createdAt, totalPrice, userId }: Props): Promise<{ ok: boolean, respuesta?: PaypalCheckoutResponse, idTicket?: string, }> => {
     try {
+        console.log('hola')
+        let idTicket = '';
         const accessToken = await getAccessToken();
         const response = await fetch(`https://api.sandbox.paypal.com/v2/checkout/orders/${transactionId}/capture`, {
             method: "POST",
@@ -48,7 +50,7 @@ export const PayWithPaypal = async ({ transactionId, movieTransmitionId, quantit
                     totalPrice: totalPrice
                 }
             })
-
+            idTicket = ticket.id
             await prisma.movieTransmition.update({
                 where: { id: movieTransmitionId },
                 data: { TicketSold: (list.TicketSold + quantity) }
@@ -59,7 +61,7 @@ export const PayWithPaypal = async ({ transactionId, movieTransmitionId, quantit
                 ok: false
             }
         }
-        return { ok: true, respuesta }
+        return { ok: true, respuesta, idTicket: idTicket }
 
     } catch (error) {
         console.log(error)

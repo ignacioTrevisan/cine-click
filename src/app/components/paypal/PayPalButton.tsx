@@ -3,6 +3,7 @@ import { PayWithPaypal } from '@/app/core/use-cases/orders/payWithPaypal'
 import { CreateOrder } from '@/app/helpers/checkoutPaypal'
 import { useUserStore } from '@/app/store/user'
 import { PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js'
+import { redirect } from 'next/navigation'
 
 interface Props {
     totalToPay: string,
@@ -55,8 +56,9 @@ export const PayPalButton = ({
                         totalPrice: +totalToPay,
                         userId: userId
                     });
+                    console.log('resp', resp)
                     if (resp.ok) {
-                        console.log("Orden aprobada y pagada.");
+                        redirect(`ticketSold/${resp.idTicket}`);
                     }
                 }}
                 onError={(err) => {

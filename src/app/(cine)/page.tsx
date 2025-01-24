@@ -87,7 +87,7 @@ export default async function Home() {
     return (
         <div className="w-full h-screen flex flex-col  ">
             {/* Primer elemento: ocupa el 50% de la pantalla */}
-            <div className="h-auto w-full  relative z-40 ">
+            <div className="h-auto w-full  relative ">
 
                 <MostImportantReleasesCard Movies={MostImportantReleases} />
             </div>

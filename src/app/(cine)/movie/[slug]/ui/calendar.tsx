@@ -6,6 +6,8 @@ import { useRouter } from 'next/navigation';
 import { Translanter, TranslateMonth } from '../../../../helpers/translanteText';
 import { useState } from 'react';
 import { BiArrowFromLeft, BiArrowFromRight, BiCalendar, BiTimeFive } from 'react-icons/bi';
+import { Cart } from './cart';
+import useTransmitionsSelectedStore from '@/app/store/transmitionsSelected';
 
 
 interface Props {
@@ -16,8 +18,10 @@ export const CalendarElement = ({ movieTransmitionFormatted, movieTransmitions }
     const router = useRouter();
     const monthArr = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     const [monthForView, setMonthForView] = useState(new Date().getMonth())
-    const selectEvent = (id: string) => {
-        const findTransmitions = movieTransmitions?.filter((t) => t.id === id);
+    const { movieId, clearMovieId } = useTransmitionsSelectedStore()
+
+    const selectEvent = () => {
+        const findTransmitions = movieTransmitions?.filter((t) => t.id === movieId);
         const findStepTwo = movieTransmitions?.filter((t) => t.date === findTransmitions![0].date && t.time === findTransmitions![0].time);
         if (findStepTwo && findStepTwo.length > 0) {
             router.push(`/order/${findStepTwo![0].id}`)
@@ -32,12 +36,23 @@ export const CalendarElement = ({ movieTransmitionFormatted, movieTransmitions }
                 <BiArrowFromRight onClick={() => {
                     if (monthForView === 0) {
                         setMonthForView(11)
+                        clearMovieId()
                         return;
                     } setMonthForView(monthForView - 1)
+                    clearMovieId()
                 }} />
             </div>
             <h3>{TranslateMonth(monthArr[monthForView])}</h3>
-            <div className='cursor-pointer hover:text-teal-600' onClick={() => setMonthForView(monthForView + 1)}>
+            <div className='cursor-pointer hover:text-teal-600' onClick={() => {
+                clearMovieId()
+                if (monthForView === 11) {
+                    setMonthForView(0)
+                    clearMovieId()
+                    return;
+                }
+                setMonthForView(monthForView + 1)
+                clearMovieId()
+            }}>
 
                 <BiArrowFromLeft />
             </div>
@@ -48,19 +63,14 @@ export const CalendarElement = ({ movieTransmitionFormatted, movieTransmitions }
 
                     transmitionInScreen && transmitionInScreen.length > 0 ?
                         transmitionInScreen.map((t) => (
-                            <div key={t.id} className='border rounded-md p-5  hover:bg-slate-200 cursor-pointer bg-white' onClick={() => selectEvent(t.id)}>
-                                <div className="flex items-center font-bold gap-1">
-                                    <BiCalendar /><p>{Translanter(t.start.toString().split(' ')[0].toLowerCase())} {t.start.toString().split(' ')[2]}</p>
-                                </div>
-                                <div className="flex items-center font-bold gap-1">
-                                    <BiTimeFive /><p>{t.start.toString().split(' ')[4].split(':')[0]}:00</p>
-                                </div>
-                            </div>
+                            <Cart {...t} />
                         ))
 
                         : <h3>Aún no hay funciones disponibles :(</h3>
                 }
             </div>
+            {movieId &&
+                <div className='w-full flex justify-center mt-5 '> <button onClick={selectEvent} className='w-[200px] text-sm h-[50px] text-white border rounded-md bg-teal-600'>Continuar con la compra</button></div>}
         </>
     )
 }

@@ -1,8 +1,8 @@
 "use server"
 
-import { TicketsBYIDAPIResponse } from "@/app/infraestructure/interfaces/ticketsReponse";
+import { TicketsBYUSERAPIResponse } from "@/app/infraestructure/interfaces/ticketsReponse";
 
-export const GetTicketsByUser = async (userId: string): Promise<TicketsBYIDAPIResponse> => {
+export const GetTicketsByUser = async (userId: string): Promise<TicketsBYUSERAPIResponse> => {
     try {
 
         const resp = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/tickets?id=${userId}`, {
@@ -12,7 +12,7 @@ export const GetTicketsByUser = async (userId: string): Promise<TicketsBYIDAPIRe
             },
 
         });
-        const data = await resp.json() as TicketsBYIDAPIResponse;
+        const data = await resp.json() as TicketsBYUSERAPIResponse;
         return data;
     } catch (error) {
         console.log(error)

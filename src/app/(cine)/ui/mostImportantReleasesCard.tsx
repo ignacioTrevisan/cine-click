@@ -32,7 +32,7 @@ export const MostImportantReleasesCard = ({ Movies }: Props) => {
     };
 
     return (
-        <div className='p-2 sm:p-10 h-full mt-[50px] '>
+        <div className='p-2 sm:p-10 h-full mt-[70px] '>
             <h3 className='text-lg sm:text-[50px]'>🎥Últimos lanzamientos</h3>
             <div className="w-full sm:mt-10 mt-2 flex justify-center">
                 <div className='w-[100%] sm:w-[900px] relative'>
