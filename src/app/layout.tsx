@@ -18,24 +18,25 @@ export default function RootLayout({ children, }: Readonly<{ children: React.Rea
 
 
   return (
-    <html lang="en">
-      <body>
-
-        <main
-          className={`${montserrat.className}  antialiased min-h-screen bg-gradient-to-br from-rose-50 to-teal-50`}>
-
-          <div className="relative w-full h-min-screen">
-            <Toaster />
-
-          </div>
-          <PaypalProvider>
-
-            {children}
-          </PaypalProvider>
-        </main>
+    <html className="h-full">
+      <body className="h-full">
+        <div
+          className="min-h-screen"
+          style={{
+            backgroundAttachment: "fixed",
+          }}
+        >
+          <main className={`${montserrat.className} antialiased`}>
+            <div className="relative w-full">
+              <Toaster />
+            </div>
+            <PaypalProvider>{children}</PaypalProvider>
+          </main>
+        </div>
       </body>
-
-
     </html>
+
+
+
   );
 }

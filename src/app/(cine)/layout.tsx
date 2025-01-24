@@ -15,7 +15,7 @@ export default async function RootLayout({ children, }: Readonly<{ children: Rea
     }
 
     return (
-        <div className="bg-gradient-to-br from-rose-50 to-teal-50">
+        <div className="">
             <Navbar forSearch={movies} />
             {children}
         </div>
