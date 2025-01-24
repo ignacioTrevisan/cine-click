@@ -3,9 +3,9 @@
 
 import { Datum } from '@/app/infraestructure/interfaces/billboard-response';
 import { useRouter } from 'next/navigation';
-import { Translanter, TranslateMonth } from '../../../../helpers/translanteText';
+import { TranslateMonth } from '../../../../helpers/translanteText';
 import { useState } from 'react';
-import { BiArrowFromLeft, BiArrowFromRight, BiCalendar, BiTimeFive } from 'react-icons/bi';
+import { BiArrowFromLeft, BiArrowFromRight } from 'react-icons/bi';
 import { Cart } from './cart';
 import useTransmitionsSelectedStore from '@/app/store/transmitionsSelected';
 
@@ -63,7 +63,7 @@ export const CalendarElement = ({ movieTransmitionFormatted, movieTransmitions }
 
                     transmitionInScreen && transmitionInScreen.length > 0 ?
                         transmitionInScreen.map((t) => (
-                            <Cart {...t} />
+                            <Cart {...t} key={t.id} />
                         ))
 
                         : <h3>Aún no hay funciones disponibles :(</h3>
