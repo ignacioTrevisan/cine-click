@@ -106,7 +106,7 @@ export const ThisWeekCard = ({ title, Movies, delay = 2500 }: Props) => {
                                         alt={`${i.name} image`}
                                         width={1920}
                                         height={1080}
-                                        className={`object-cover filter transition-all h-[150px] sm:h-[200px] md:h-[250] lg:h-[300]  ${blur[index] ? 'blur-[12px]' : ''}`}
+                                        className={`object-cover filter rounded-lg transition-all h-[150px] sm:h-[200px] md:h-[250] lg:h-[300]  ${blur[index] ? 'blur-[12px]' : ''}`}
                                     />
                                 </div>
                             </SwiperSlide>
