@@ -1,6 +1,7 @@
 import { Tags } from "@prisma/client";
 import prisma from "../../lib/prisma";
 import { initalData } from "./seedMovies";
+import bcrypt from 'bcryptjs';
 
 
 
@@ -15,6 +16,7 @@ async function firstSeed() {
     await prisma.movieTransmition.deleteMany();
     await prisma.movie.deleteMany();
     await prisma.movieTheater.deleteMany();
+    await prisma.user.deleteMany();
 
     for (const m of initalData.movies) {
         const movie = await prisma.movie.create({
@@ -114,6 +116,16 @@ async function secondSeed() {
         })
 
     }
+    const CryptedPassword = bcrypt.hashSync('admin', 10);
+
+    await prisma.user.create({
+        data: {
+            name: 'admin',
+            password: CryptedPassword,
+            dni: '43908656',
+            email: 'admin@gmail.com',
+        }
+    })
 
 
 }
