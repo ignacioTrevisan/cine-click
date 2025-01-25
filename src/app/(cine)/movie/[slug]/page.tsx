@@ -6,6 +6,7 @@ import { GetMovieBySlug } from '@/app/core/use-cases/movies/getMovieBySlug';
 import { GetTransmitionById } from '@/app/core/use-cases/billboard/getTransmitionById';
 import { GetAllSlugs } from '@/app/core/use-cases/movies/getAllSlugs';
 import { CalendarClient } from './ui/calendarClient';
+import { Footer } from '@/app/components/footer';
 
 
 
@@ -122,6 +123,7 @@ export default async function template({ params }: Props) {
                     <CalendarClient movieTransmitions={transmitions.data?.normal} movieTransmitionFormatted={transmitions.data?.formatted} />
                 </div>
             </div >
+            <Footer />
 
         </>
     );

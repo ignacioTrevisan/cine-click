@@ -47,10 +47,8 @@ export const TicketTables = ({ transmisions }: Props) => {
     }
     return (
         <div className="pt-[60px]">
-            <div className="w-full absolute flex justify-center mt-10">
-                <h1 className="text-2xl font-bold">Generar Orden de Compra</h1>
-            </div>
-            <div className="w-full p-2 h-screen justify-center items-center flex">
+
+            <div className="w-full p-2 h-screen justify-center items-center flex sm:mt-[60px]">
                 <div className="grid md:grid-cols-2 gap-6 ">
                     {/* Recuadro de selección */}
                     <div className="border rounded-lg p-4">
@@ -100,7 +98,7 @@ export const TicketTables = ({ transmisions }: Props) => {
                     </div>
 
                     {/* Recuadro de resumen */}
-                    <div className="border rounded-lg p-4">
+                    <div className="border rounded-lg p-4 sm:mb-10">
                         <div>
                             <h1 className="text-xl font-bold mb-3">Resumen de Compra</h1>
                         </div>

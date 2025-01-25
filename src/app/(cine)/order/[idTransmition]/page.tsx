@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { TicketTables } from './ui/ticketTables'
 import { GetRepeatsTransmitions } from '../../../core/use-cases/transmitions/getRepeatsTransmitions';
+import { Footer } from '@/app/components/footer';
 
 interface Props {
     params: Promise<{
@@ -30,6 +31,12 @@ export default async function OrderPage({ params }: Props) {
     const transmitions = await GetRepeatsTransmitions(idTransmition);
     if (!transmitions.data) return;
     return (
-        <TicketTables transmisions={transmitions.data} />
+        <>
+            <div className="w-full absolute flex justify-center sm:mt-[80px]">
+                <h1 className="text-2xl font-bold">Generar Orden de Compra</h1>
+            </div>
+            <TicketTables transmisions={transmitions.data} />
+            <Footer />
+        </>
     )
 }
