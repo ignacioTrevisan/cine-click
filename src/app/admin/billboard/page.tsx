@@ -20,7 +20,7 @@ export default async function Billboard() {
 
     return (
         <div className=' w-full pl-2 '>
-            <h1 className='text-2xl sm:text-4xl ml-10'>Peliculas a proyectar</h1>
+            <h1 className='text-2xl sm:text-4xl mt-10 ml-10'>Peliculas a proyectar</h1>
             <div className='sm:hidden block'>
 
                 <Table isMobile={true} movie={allMovies.data!} theathers={allTheathers.data as { id: string, capacity: number, name: string }[]} billboard={allBillboard!.data!} />

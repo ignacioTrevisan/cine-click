@@ -47,7 +47,7 @@ export const TicketTables = ({ transmisions }: Props) => {
     }
     return (
         <div className="pt-[60px]">
-            <div className="w-full absolute flex justify-center">
+            <div className="w-full absolute flex justify-center mt-10">
                 <h1 className="text-2xl font-bold">Generar Orden de Compra</h1>
             </div>
             <div className="w-full p-2 h-screen justify-center items-center flex">
