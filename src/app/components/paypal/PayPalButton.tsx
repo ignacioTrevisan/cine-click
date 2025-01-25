@@ -3,7 +3,7 @@ import { PayWithPaypal } from '@/app/core/use-cases/orders/payWithPaypal'
 import { CreateOrder } from '@/app/helpers/checkoutPaypal'
 import { useUserStore } from '@/app/store/user'
 import { PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js'
-import { redirect } from 'next/navigation'
+import { redirect, useRouter } from 'next/navigation'
 
 interface Props {
     totalToPay: string,
@@ -23,7 +23,7 @@ export const PayPalButton = ({
 
     const [{ isPending }] = usePayPalScriptReducer();
     const userId = useUserStore((state) => state.userId); // Accede a la función para actualizar el id
-
+    const router = useRouter();
     if (isPending || quantity === 0 || !userId) {
         return (
             <div className="animate-pulse mb-16">
@@ -58,7 +58,7 @@ export const PayPalButton = ({
                     });
                     console.log('resp', resp)
                     if (resp.ok) {
-                        redirect(`ticketSold/${resp.idTicket}`);
+                        router.push(`/ticketSold/${resp.idTicket}`);
                     }
                 }}
                 onError={(err) => {

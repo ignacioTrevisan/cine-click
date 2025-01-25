@@ -24,7 +24,9 @@ export const LoginForm = () => {
     const { register, handleSubmit, formState } = useForm<FormInputs>();
     const setUserId = useUserStore((state) => state.setUserId); // Accede a la función para actualizar el id
     const [errorMessage, setErrorMessage] = useState('')
+    const [loading, setLoading] = useState(false)
     const onSubmit = async (data: FormInputs) => {
+        setLoading(true)
         const resp = await Login({ email: data.email.toLowerCase(), Password: data.password })
         console.log(resp)
         if (resp.ok) {
@@ -36,7 +38,7 @@ export const LoginForm = () => {
         }
     }
     return (
-        <form className="flex flex-col mb-10 w-full  "
+        <form className="flex flex-col mb-10 w-full   "
             onSubmit={handleSubmit(onSubmit)}
         // onSubmit={handleSubmit}
         >
@@ -88,8 +90,9 @@ export const LoginForm = () => {
             >
 
             </div>
-            <LoginButton />
-
+            <button className={`${!loading ? 'btn-primary' : 'btn-disabled'} flex h-[40px] items-center`} disabled={loading} type='submit'>
+                Log in <BsArrowRight className='ml-auto h-5 w-5 text-gray-50' />
+            </button>
 
             {/* divisor l ine */}
             <div className="flex items-center my-5">
@@ -97,7 +100,6 @@ export const LoginForm = () => {
                 <div className="px-2 text-gray-800">O</div>
                 <div className="flex-1 border-t border-gray-500"></div>
             </div>
-
             <Link
                 href="/auth/register"
                 className="btn-secondary text-center">
@@ -109,12 +111,3 @@ export const LoginForm = () => {
 }
 
 
-function LoginButton() {
-    const { pending } = useFormStatus()
-
-    return (
-        <button className={`${!pending ? 'btn-primary' : 'btn-disabled'} flex h-[40px] items-center`} disabled={pending} type='submit'>
-            Log in <BsArrowRight className='ml-auto h-5 w-5 text-gray-50' />
-        </button>
-    )
-}

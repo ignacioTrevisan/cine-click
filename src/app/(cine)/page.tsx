@@ -85,7 +85,7 @@ export default async function Home() {
 
 
     return (
-        <div className="w-full h-screen flex flex-col  ">
+        <div className="w-full h-screen flex flex-col animate__animated animate__fadeIn ">
             {/* Primer elemento: ocupa el 50% de la pantalla */}
             <div className="h-auto w-full  relative ">
 

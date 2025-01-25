@@ -5,8 +5,9 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { User } from '../core/entities/userEntities';
 import { GetUserInfo } from '../core/use-cases/user/getUserInfo'
-import { BiSearch } from 'react-icons/bi'
+import { BiHome, BiSearch } from 'react-icons/bi'
 import style from './style.module.css'
+import { useRouter } from 'next/navigation'
 
 interface Props {
     forSearch: {
@@ -57,6 +58,7 @@ export const Navbar = ({ forSearch }: Props) => {
         setMoviesFind(search);
     }, [textForSearch])
     const [isSearchOpen, setIsSearchOpen] = useState(false)
+    const router = useRouter()
     return (
 
         loaded && User &&
@@ -106,14 +108,17 @@ export const Navbar = ({ forSearch }: Props) => {
                         </div>
 
 
-                        <div className='flex'>
-                            <div className='flex md:hidden items-center space-x-3 rounded cursor-pointer '>
+                        <div className='flex items-center'>
+
+
+                            <div
+                                className="relative ml-2 items-center md:hidden flex h-8 hover:outline-none hover:border-teal-600 rounded border-b-2 cursor-pointer hover:text-teal-600">
+
+                                <BiSearch size={20} className="absolute left-2 rounded" />
                                 <button
                                     onClick={() => setIsSearchOpen(!isSearchOpen)}
-                                    className="p-2 text-gray-700 hover:text-teal-600 bg-gray-50"
-                                >
-                                    <BiSearch className="w-5 h-5" />
-                                </button>
+                                    className='w-full bg-gray-50  py-1 h-full pr-10  text-sm border-gray-200 rounded '
+                                />
                             </div>
                             {User.role === 'user' ?
                                 window.location.pathname === '/' ?
@@ -133,14 +138,17 @@ export const Navbar = ({ forSearch }: Props) => {
                                                 </button>
                                             </div>
                                         </div>
-                                        <div onClick={() => window.location.replace('/profile')} className="relative my-3 ml-2 items-center md:hidden flex h-8 ">
+                                        <div onClick={() => router.push('/profile')}
+                                            className="relative ml-2 items-center md:hidden flex h-8 hover:outline-none hover:border-teal-600 rounded border-b-2 cursor-pointer hover:text-teal-600">
                                             <IoPersonOutline size={20} className='absolute left-2' />
 
                                             <button
-                                                className='w-full bg-gray-50 rounded  py-1 h-full pr-10 border-b-2 text-sm border-gray-200 focus:outline-none focus:border-blue-500'
+                                                className='w-full bg-gray-50  py-1 h-full pr-10  text-sm border-gray-200 rounded'
                                             />
 
                                         </div>
+
+
                                     </>
                                     :
                                     <>
@@ -158,20 +166,25 @@ export const Navbar = ({ forSearch }: Props) => {
                                             </button>
                                         </div>
 
-                                        <div onClick={() => window.location.replace('/')} className="relative ml-2 mt-3 items-center md:hidden flex h-8 ">
-                                            <IoHomeOutline size={20} className='absolute left-2' />
+                                        <div onClick={() => router.push('/')}
+                                            className="relative ml-2 items-center md:hidden flex h-8 hover:outline-none hover:border-teal-600 rounded border-b-2 cursor-pointer hover:text-teal-600">
+                                            <BiHome size={20} className='absolute left-2' />
 
                                             <button
-                                                className='w-full bg-gray-50 rounded  py-1 h-full pr-10 border-b-2 text-sm border-gray-200 focus:outline-none focus:border-blue-500'
+                                                className='w-full bg-gray-50  py-1 h-full pr-10  text-sm border-gray-200 rounded'
                                             />
 
                                         </div>
                                     </>
 
                                 :
+
+                                //VERSION ADMIN
+
                                 window.location.pathname === '/' ?
                                     <>
 
+                                        {/* VERSION WINDOW BOTTON CONFIGURATION */}
 
                                         <Link href={'/admin'}
                                             className="relative ml-2 items-center md:flex hidden text-sm rounded border-b-2 cursor-pointer border-gray-200 bg-gray-50 hover:border-teal-600"
@@ -184,11 +197,13 @@ export const Navbar = ({ forSearch }: Props) => {
 
                                             </button>
                                         </Link>
-                                        <Link href={'/admin'} className="relative ml-2 mt-3 items-center md:hidden flex h-8 ">
+
+                                        {/* VERSION MOBILE BOTTON CONFIGURATION */}
+                                        <Link href={'/admin'} className="relative ml-2  items-center md:hidden flex h-8 hover:outline-none hover:text-teal-600 hover:border-teal-600 rounded border-b-2">
                                             <IoConstructOutline size={20} className='absolute left-2' />
 
                                             <button
-                                                className='w-full bg-gray-50 rounded  py-1 h-full pr-10 border-b-2 text-sm border-gray-200 hover:outline-none hover:border-teal-600'
+                                                className='w-full bg-gray-50  py-1 h-full pr-10  text-sm border-gray-200 rounded'
                                             />
 
                                         </Link>
@@ -200,7 +215,7 @@ export const Navbar = ({ forSearch }: Props) => {
                                             onClick={() => window.location.replace('/')}
                                             className="relative ml-2 items-center md:flex hidden text-sm rounded border-b-2 cursor-pointer border-gray-200 bg-gray-50 hover:border-teal-600"
                                         >
-                                            <IoHomeOutline size={20} className="absolute left-2" />
+                                            <BiHome size={20} className="absolute left-2" />
 
                                             <button
                                                 className="w-full pl-10 py-1 pr-10 outline-none"
@@ -208,45 +223,48 @@ export const Navbar = ({ forSearch }: Props) => {
                                                 Inicio
                                             </button>
                                         </div>
-                                        <div onClick={() => window.location.replace('/')} className="relative  mt-3 ml-2 items-center md:hidden flex h-8 ">
-                                            <IoHomeOutline size={20} className='absolute left-2' />
+
+                                        <div onClick={() => router.push('/')}
+                                            className="relative ml-2 items-center md:hidden flex h-8 hover:outline-none hover:border-teal-600 rounded border-b-2 cursor-pointer hover:text-teal-600">
+                                            <BiHome size={20} className='absolute left-2' />
 
                                             <button
-                                                className='w-full bg-gray-50 rounded  py-1 h-full pr-10 border-b-2 mt-5 text-sm border-gray-200 hover:outline-none hover:border-teal-600'
+                                                className='w-full bg-gray-50  py-1 h-full pr-10  text-sm border-gray-200 rounded'
                                             />
 
                                         </div>
+
+
+
                                     </>
 
                             }
-                            <div className="hidden md:flex items-center space-x-3">
 
-                                <div
+                            <div
 
-                                    className="relative ml-2 items-center md:flex hidden text-sm rounded border-b-2 cursor-pointer border-gray-200 bg-gray-50 hover:border-teal-600"
-                                    onClick={() => closeSession()}
+                                className="relative ml-2 items-center md:flex hidden text-sm rounded border-b-2 cursor-pointer border-gray-200 bg-gray-50 hover:border-teal-600"
+                                onClick={() => closeSession()}
+                            >
+                                <IoLogInOutline size={20} className='absolute  left-2'
+
+                                />
+
+                                <button
+                                    className="w-full pl-10 py-1 pr-10 outline-none"
                                 >
-                                    <IoLogInOutline size={20} className='absolute  left-2'
+                                    Cerrar sesión
+                                </button>
+                            </div>
+                            <div
+                                className="relative my-3 ml-2 items-center md:hidden flex h-8 border-b-2 rounded  border-gray-200 hover:outline-none hover:border-teal-600 hover:text-teal-600 cursor-pointer "
+                                onClick={() => closeSession()}
+                            >
+                                <IoLogInOutline size={20} className='absolute left-2' />
 
-                                    />
+                                <button
+                                    className='w-full bg-gray-50 rounded  py-1 h-full pr-10 text-sm '
+                                />
 
-                                    <button
-                                        className="w-full pl-10 py-1 pr-10 outline-none"
-                                    >
-                                        Cerrar sesión
-                                    </button>
-                                </div>
-                                <div
-                                    className="relative my-3 ml-2 items-center md:hidden flex h-8 "
-                                    onClick={() => closeSession()}
-                                >
-                                    <IoLogInOutline size={20} className='absolute left-2' />
-
-                                    <button
-                                        className='w-full bg-gray-50 rounded  py-1 h-full pr-10 border-b-2 text-sm border-gray-200 hover:outline-none hover:border-teal-600'
-                                    />
-
-                                </div>
                             </div>
 
                         </div>
@@ -288,6 +306,6 @@ export const Navbar = ({ forSearch }: Props) => {
 
                 </div>
             </div>
-        </nav>
+        </nav >
     )
 }

@@ -19,7 +19,7 @@ export default async function template({ params }: Props) {
     if (!ticketInfo.data) return;
     console.log(ticketInfo)
     return (
-        <div className="min-h-screen bg-gray-50 p-8">
+        <div className="min-h-screen bg-gray-50 p-8 animate__animated animate__fadeIn">
             <Cart
                 date={ticketInfo.data.movieTransmition.date}
                 movie={ticketInfo.data.movieTransmition.movie.title}

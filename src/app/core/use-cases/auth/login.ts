@@ -10,7 +10,6 @@ export const Login = async ({ email, Password }: Props) => {
         const bodyForFetch = {
             email, Password
         };
-        console.log('hola')
         const resp = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/login`, {
             method: 'POST', // Asegúrate de especificar el método
             headers: {
