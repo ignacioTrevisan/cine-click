@@ -6,7 +6,6 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
-import { useFormStatus } from 'react-dom';
 import { useForm } from 'react-hook-form';
 import { BsArrowRight } from 'react-icons/bs';
 import { IoMailOutline } from 'react-icons/io5';

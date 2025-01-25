@@ -3,7 +3,7 @@ import { PayWithPaypal } from '@/app/core/use-cases/orders/payWithPaypal'
 import { CreateOrder } from '@/app/helpers/checkoutPaypal'
 import { useUserStore } from '@/app/store/user'
 import { PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js'
-import { redirect, useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 
 interface Props {
     totalToPay: string,
