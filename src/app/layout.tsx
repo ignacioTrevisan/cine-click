@@ -13,12 +13,9 @@ export const metadata: Metadata = {
   description: "Una cartelera de cine genial",
 };
 
-export default function RootLayout({ children, }: Readonly<{ children: React.ReactNode; }>) {
-
-
-
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html className="h-full">
+    <html lang="en" className="h-full">
       <body className="h-full">
         <div
           className="min-h-screen"
@@ -32,11 +29,9 @@ export default function RootLayout({ children, }: Readonly<{ children: React.Rea
             </div>
             <PaypalProvider>{children}</PaypalProvider>
           </main>
+
         </div>
       </body>
     </html>
-
-
-
   );
 }

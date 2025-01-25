@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { Navbar } from "../components/navbar";
 import { verifyJWT } from "../core/use-cases/auth/verifyJWT";
 import { GetAllForSearch } from "../core/use-cases/movies/getAllForSearch";
+import { Footer } from "../components/footer";
 
 
 export default async function RootLayout({ children, }: Readonly<{ children: React.ReactNode; }>) {
@@ -18,6 +19,7 @@ export default async function RootLayout({ children, }: Readonly<{ children: Rea
         <div className="">
             <Navbar forSearch={movies} />
             {children}
+            <Footer />
         </div>
 
     );

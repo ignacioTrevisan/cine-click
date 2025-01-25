@@ -4,6 +4,7 @@ import { ThisWeekCard } from './ui/ThisWeekCard';
 import { GetAllBillboardConfig } from '../core/use-cases/billboardConfig/getAllBillboardConfig';
 import { GetAllMovies } from '../core/use-cases/movies/getMovies';
 import { GetAllTransmition } from '../core/use-cases/billboard/getAllTransmition';
+import { Footer } from '../components/footer';
 
 
 export const metadata: Metadata = {
@@ -118,6 +119,7 @@ export default async function Home() {
 
 
             </div>
+            <Footer />
         </div>
     );
 };
