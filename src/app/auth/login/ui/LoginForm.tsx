@@ -35,6 +35,7 @@ export const LoginForm = () => {
         } else {
             setErrorMessage(resp.msg)
         }
+        setLoading(false)
     }
     return (
         <form className="flex flex-col mb-10 w-full   "
